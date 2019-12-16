@@ -1,0 +1,93 @@
+<template>
+  <v-group>
+    <!-- <v-rect :config="{width:50,height:50,fill:'red'}"></v-rect> -->
+    <v-image id="okleina" :config="{image:okleinaimage,width:width,height:height}"></v-image>
+    <v-image id="prawegora" :config="{image:nlt,width:grubosc,height:grubosc}"></v-image>
+    <v-image id="lewe" :config="{image:nl,y:grubosc,width:grubosc,height:height }"></v-image>
+    <v-image id="gora" :config="{image:nt,x:grubosc,height:grubosc,width:width-2*grubosc }"></v-image>
+    <v-image id="prawegora" :config="{image:nlt,x:width,height:grubosc,width:grubosc,scaleX:-1, }"></v-image>
+    <v-image id="prawe" :config="{image:nl,x:width,height:height-grubosc,y:grubosc,width:grubosc,scaleX:-1}"></v-image>
+
+
+
+
+
+    <!-- <div id="prawegora" style="position:absolute;transform: scaleX(-1);background-size:contain" v-bind:style="{ backgroundImage: 'url(images/naswietle/nlt.png',height:grubosc+'px',width:grubosc+'px',left:width+grubosc+'px' }"></div>
+    <div id="prawe" style="position:absolute;transform: scaleX(-1);background-size:contain" v-bind:style="{ backgroundImage: 'url(images/naswietle/nl.png',left:width+grubosc+'px',top:grubosc+'px',width:grubosc+'px',height:height+'px' }"></div>
+    <div id="okleinaosc" style="position:absolute;z-index:-1000" v-bind:style="{ backgroundImage: 'url(images/okleiny/'+okleina+'.jpg',height:height+grubosc+'px',width:width+2*grubosc+'px' }"> </div> -->
+
+  </v-group>
+</template>
+
+<script>
+import {mapState} from 'vuex';
+
+
+export default {
+  props:['width','height','grubosc','back'],
+  watch:{
+
+  },
+  data(){
+    return {
+    nl:null,
+    nlt:null,
+    nt:null,
+    okleinaimage:null
+    }
+  },
+  watch:{
+    back(){
+      this.drawOscieznicaParts();
+    },
+    "product.kolor":function(){
+      this.drawOkleina();
+    }
+  },
+  methods:{
+    drawOscieznicaParts:function(){
+     let self=this;
+     let nlt = new Image();
+     let nl = new Image();
+     let nt = new Image();
+     let b='';
+
+     if(this.back==true){
+       b='b'
+     }
+
+     nlt.src = `/images/naswietle/${b}nlt.png`;
+     nl.src = `/images/naswietle/${b}nl.png`;
+     nt.src = `/images/naswietle/${b}nt.png`;
+
+     nlt.onload=function(){
+       self.nlt = nlt;
+       self.nl = nl;
+       self.nt = nt;
+     }
+
+   },
+   drawOkleina:function(){
+     const okleinaObj = new Image();
+     okleinaObj.src = `/images/okleiny/${this.product.kolor}.jpg`;
+     okleinaObj.onload = () => {
+       this.okleinaimage = okleinaObj;
+     };
+   }
+ },
+ created(){
+   this.drawOscieznicaParts();
+   this.drawOkleina();
+ },
+ computed:{
+   ...mapState({
+     product:'product',
+   }),
+ }
+
+
+}
+</script>
+
+<style lang="css" scoped>
+</style>
