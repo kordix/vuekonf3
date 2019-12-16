@@ -34,7 +34,7 @@
   </div>
   <div class="" v-show="activeTab=='Podsumowanie'">
 
-    <prezenter></prezenter>
+    <!-- <prezenter></prezenter> -->
 
  </div>
 

@@ -2,10 +2,7 @@
   <div class="" id="wizcon" style="transition:1s;opacity:0;position:relative">
 
   <v-stage :config="{width:width,height:height}">
-    <v-layer :config="flipC">
-      <oscieznica :grubosc="gruboscc" :height="height" :width="width" :back="backbool"></oscieznica>
-      <skrzydlo :left="gruboscc" :top="gruboscc" :height="height-gruboscc" :width="width-2*gruboscc"  ></skrzydlo>
-    </v-layer>
+    <drzwi></drzwi>
 
   </v-stage>
 </div>
@@ -16,13 +13,14 @@
 <script>
 import {mapState} from 'vuex';
 import {mapGetters} from 'vuex';
-import oscieznica from '@/components/Oscieznicakonva.vue';
-import skrzydlo from '@/components/Skrzydlo.vue';
+import drzwi from '@/components/Drzwi.vue'
+// import oscieznica from '@/components/Oscieznicakonva.vue';
+// import skrzydlo from '@/components/Skrzydlo.vue';
 
 
 export default {
   components:{
-    oscieznica,skrzydlo
+    drzwi
   },
   data(){
     return{
