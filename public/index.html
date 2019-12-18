@@ -6,12 +6,34 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"></link>
-    <script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    
+    <!-- <script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.1/jspdf.debug.js"></script>
+    <script src="https://wiked.pl/wp-content/scripts/Metropolis-normal.js"></script>
+    <script src="https://wiked.pl/wp-content/scripts/Metropolis-bold.js"></script>
+
+
+
     <title>vuekonf3</title>
     <style>
+    .row{
+    margin-right: 0px;
+    margin-left: 0px;
+    }
+
+    .col{
+      padding-right: 0px !important;
+     padding-left: 0px !important;
+    }
+
+    .col-md-8{
+      padding-right: 0px !important;
+     padding-left: 0px !important;
+    }
+
     :root {
       --mygreen: #8fcc25;
+      --mygreenhov: rgb(0,200,50);
+      --mygray:#c2c2c2;
     }
 
   .container{

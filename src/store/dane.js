@@ -70,7 +70,7 @@ wzorytablica:[
   {"artnr":"F9A","bez":"FI09A","typ":"FI","odpszyb":"FI09A","odpszybkonf":"FI09"},
   {"artnr":"F9B","bez":"FI09B","typ":"FI","odpszyb":"FI09B","odpszybkonf":"FI09"},
   {"artnr":"F9C","bez":"FI09C","typ":"FI","odpszyb":"FI09C","odpszybkonf":"FI09"},
-  {"artnr":"F0A","bez":"F0A","typ":"FI","odpszyb":"F0A","odpszybkonf":"F0A"},
+  {"artnr":"F0A","bez":"FI10A","typ":"FI","odpszyb":"F0A","odpszybkonf":"F0A"},
   {"artnr":"42","bez":"42","typ":"PCV","odpszyb":"42","odpszybkonf":"42"	},
   {"artnr":"41B","bez":"41B","typ":"INOX","odpszyb":"41B","odpszybkonf":"41B"	},
   {"artnr":"41A","bez":"41A","typ":"INOX","odpszyb":"41A","odpszybkonf":"41A"	},
@@ -548,7 +548,7 @@ wzorydoklamki:{
   'Pock45':['1','12','12A','25','25B','26A','26B','30','32','32B','FI01A','FI01C','F1D','FI02A','FI02B','F4A','F4C','F5A','F5C','F6A','F6C','F7A','F7C','F8A']
 
 },
-inoxlista:['12','12A','12B','12C','19','20','21','22','22A','22B','23','23','24','25','25A','25B','26','26A','26B','29','30','31','31A','32',
+inoxlista:['12','12A','12B','12C','19','20','21','22','22A','22B','23','23','24','25','25A','25B','26','26A','26B','26H','29','30','31','31A','32',
 '32A','32B','35','36','37','37A','38','38A','39','39A','39B','40','40A','41','41A','41B','P04','P05','P06','P07','P08','X01','X02','X03','X04','X05','X06',
 'M01','M02','M03','M04','21A','23A','23A','26H','25C','FI01A','G1A','G1B','G1C','G2A','G2B','G3A','F1B','FI01C','FI02A','FI02B','FI03A','FI03B','F4A','FI04B','F4C','FI04D','FI04E','F5A','FI05B','F5C','FI05D','FI05E','F6A','F6B','F6C','F6D','F6E','F7A','F7B','F7C','F7D','F7E','F8A','FI09A','F9B','F0A','F1D','FI09C'],
 koloryklamek: {

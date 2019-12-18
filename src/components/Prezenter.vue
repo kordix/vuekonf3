@@ -1,55 +1,114 @@
 <template>
-  <div class="" style="positon:relative" id="prezent">
-    <wizualizacja style="position:absolute;z-index:1000;transform:scale(0.15,0.17);transform-origin:0px 0px; left:360px;top:360px" ></wizualizacja>
+  <div class="">
 
-  <div class="" style="z-index:-1000">
-    <div class="" style="width:800px;height:600px;z-index:-1000;background:url('https://assets.archon.pl/images/products/mfe42422780eaf/widok-1-projekt-dom-w-balsamowcach-2-1575514654__289.jpg')"></div>
-  </div>
+  <v-stage :config="{width:800,height:600}" @mousedown="handleStageMouseDown">
+    <v-layer id="tlo">
+      <v-image :config="{image:backgroundimage}" id="tloimage"></v-image>
+    </v-layer>
+    <drzwi :dragprop="dragbool" :width="width" :height="height" :xprop="activebackground.x" :yprop="activebackground.y" :scalexprop="activebackground.scalex" :scaleyprop="activebackground.scaley"> </drzwi>
+  </v-stage>
 
-  </div>
+</div>
 
 
 </template>
 
 <script>
-import Wizualizacja from '@/components/Drzwi.vue';
+import {mapState} from 'vuex';
+import {mapGetters} from 'vuex';
+import drzwi from '@/components/Drzwi.vue';
+import {EventBus} from '@/event-bus.js';
+
+
+
 
 export default {
+  watch:{
+    activebackground:function(){
+      console.log('asfd');
+      this.loadbackground();
+    }
+  },
   components:{
-    Wizualizacja
+    drzwi
   },
   data(){
-    return {
-      backgrounds:[
-        {url:'',x:0,y:0,scalex:0.25,scaley:0.25},
-        {url:'/images/backgrounds/1.jpg',x:330,y:312,scalex:0.1,scaley:0.1},
-        {url:'/images/backgrounds/2.jpg  ',x:159,y:325,scalex:0.1,scaley:0.1},
-        {url:'/images/backgrounds/3.jpg  ',x:432,y:215,scalex:0.1,scaley:0.1}
-      ],
-      activebackground:{},
-
+    return{
+      width:300,
+      height:600,
+      backgroundimage:null,
+      scalexbuf:0.4,
+      scaleybuf:0.4,
+      dragbool:false,
+      transformbool:false
     }
+  },
+  methods:{
+    loadbackground(){
+      let imgObject = new Image();
+      let self = this;
+      imgObject.src = this.activebackground.url;
+      imgObject.onload = () => {
+        self.backgroundimage = imgObject;
+      }
+    },
+    handleStageMouseDown(e){
+      if(!this.transformbool){
+        return
+      }
 
+      console.log(e.target);
+      console.log(e.target.getStage());
+
+      if (e.target === e.target.getStage() || e.target.attrs.id=='tloimage') {
+        console.log('wyłącz');
+        this.updateTransformer('detach');
+        return;
+      }
+
+
+       this.updateTransformer('');
+     },
+   updateTransformer(mode){
+     const transformerNode = this.$children[0].$children[1].$refs.transformer.getStage();
+     const stage = transformerNode.getStage();
+     const selectedNode = stage.findOne('.' + 'D1');
+
+     if(mode=='detach'){
+       console.log('detach');
+       transformerNode.detach();
+       transformerNode.getLayer().batchDraw();
+       
+       return
+     }
+
+      transformerNode.attachTo(selectedNode);
+      transformerNode.getLayer().batchDraw();
+      console.log(this.$children);
+
+
+   }
   },
   mounted(){
-    setTimeout(function(){
-      html2canvas(document.querySelector("#wiz")).then(canvas => {
-        // document.body.appendChild(canvas)
+    this.loadbackground();
+    EventBus.$on('loadcustombackground', payload => {
+      this.backgroundimage = this.$store.state.custombackgroundimg;
+      this.transformbool=true;
+      this.dragbool=true;
+      this.updateTransformer();
 
-        let url = canvas.toDataURL();
-
-        let imgObj = new Image();
-        imgObj.src = url;
-        imgObj.setAttribute('id','test');
-        document.getElementById("prezent").appendChild(imgObj);
     });
-  },5000)
-
-
+  },
+  computed:{
+    ...mapState({
+      backgrounds:'backgrounds',
+      activebackground:'activebackground',
+      custombackgroundimg:'custombackgroundimg'
+    })
   }
 
 }
 </script>
 
-<style>
+<style lang="css" scoped>
 </style>

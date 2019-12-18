@@ -2,7 +2,7 @@
   <div class="" id="wizcon" style="transition:1s;opacity:0;position:relative">
 
   <v-stage :config="{width:width,height:height}">
-    <drzwi></drzwi>
+    <drzwi :width="width" :height="height"></drzwi>
 
   </v-stage>
 </div>
@@ -36,6 +36,9 @@ export default {
       this.fadeIn();
     },
     "product.szyba":function(){
+      this.fadeIn();
+    },
+    "selectedwidok":function(){
       this.fadeIn();
     }
   },

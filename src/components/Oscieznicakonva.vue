@@ -3,7 +3,7 @@
     <!-- <v-rect :config="{width:50,height:50,fill:'red'}"></v-rect> -->
     <v-image id="okleina" :config="{image:okleinaimage,width:width,height:height}"></v-image>
     <v-image id="prawegora" :config="{image:nlt,width:grubosc,height:grubosc}"></v-image>
-    <v-image id="lewe" :config="{image:nl,y:grubosc,width:grubosc,height:height }"></v-image>
+    <v-image id="lewe" :config="{image:nl,y:grubosc,width:grubosc,height:height-grubosc }"></v-image>
     <v-image id="gora" :config="{image:nt,x:grubosc,height:grubosc,width:width-2*grubosc }"></v-image>
     <v-image id="prawegora" :config="{image:nlt,x:width,height:grubosc,width:grubosc,scaleX:-1, }"></v-image>
     <v-image id="prawe" :config="{image:nl,x:width,height:height-grubosc,y:grubosc,width:grubosc,scaleX:-1}"></v-image>

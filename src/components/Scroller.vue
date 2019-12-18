@@ -1,23 +1,23 @@
 <template>
-  <div class="">
+    <div class="">
 
-  <div class="myrow scroller" :class="{scroll:scroll}">
-    <!-- :class="{active:item.artnr==activeItem}" -->
-    <div v-for="item in scrollerdata" class="scroller-item mycolumn col-3" :class="{active:item.artnr==activeItem,col5k:col=='5'}"  @click="handleitemclick(item.artnr)">
-      <div class="" style="margin:15px 15px 5px 15px">
-        <img v-if="noimage" style="display:none">
-        <img v-else-if="folder=='Przeszklenia' && item.artnr=='00'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/pusty.jpg.png' ">
-        <img v-else-if="folder=='Przeszklenia' && item.artnr=='19'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/'+odpszybkonf+'_06.jpg' ">
-        <img v-else-if="folder=='Przeszklenia'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/'+odpszybkonf+'_'+item.artnr+'.jpg' ">
-       <img v-else class="img-fluid" :src="`/images/konfigurator/${folder}/${item.artnr}.jpg` ">
-       <label class="caption">{{item.bez}}</label></b>
-       </div>
+    <div class="myrow scroller" :class="{scroll:scroll}">
+      <!-- :class="{active:item.artnr==activeItem}" -->
+      <div v-for="item in scrollerdata" class="scroller-item mycolumn col-3" :class="{active:item.artnr==activeItem,col5k:col=='5'}"  @click="handleitemclick(item.artnr)">
+        <div class="" style="margin:15px 15px 5px 15px">
+          <img v-if="noimage" style="display:none">
+          <img v-else-if="folder=='Przeszklenia' && item.artnr=='00'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/pusty.jpg.png' ">
+          <img v-else-if="folder=='Przeszklenia' && item.artnr=='19'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/'+odpszybkonf+'_06.jpg' ">
+          <img v-else-if="folder=='Przeszklenia'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/'+odpszybkonf+'_'+item.artnr+'.jpg' ">
+         <img v-else class="img-fluid" :src="`/images/konfigurator/${folder}/${item.artnr}.jpg` ">
+         <label class="caption">{{item.bez}}</label></b>
+         </div>
+      </div>
+     </div>
+      <select class="" name="" v-model="thevalue" style="display:none">
+        <option v-for="item in scrollerdata" :value="item.artnr">{{item.bez}}</option>
+      </select>
     </div>
-   </div>
-    <select class="" name="" v-model="thevalue" style="display:none">
-      <option v-for="item in scrollerdata" :value="item.artnr">{{item.bez}}</option>
-    </select>
-  </div>
 </template>
 
 <script>
@@ -25,11 +25,11 @@
       props:{attr:String,scroll:{type:Boolean,default:true},scrollerdata:Array,folder:String,odpszyb:String,noimage:Boolean,scroll:{type:Boolean,default:false},col:{type:String,default:'col-3'}},
         data(){
           return{
-            thevalue:''
+            thevalue:null
           }
         },
         mounted(){
-          // console.log(this.$parent.$parent.klamka);
+
         },
         methods:{
           handleitemclick:function(val){

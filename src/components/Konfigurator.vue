@@ -1,28 +1,31 @@
 <template>
 <div class="">
-  <div class="" v-show="activeTab=='Model'">
-    <p class="scrollerheading">Kolekcja</p>
-    <scroller   :attr="'kolekcja'" :noimage="true" :scrollerdata="kolekcja.dane" :col="'5'" ></scroller>
-    <p class="scrollerheading">Wzór</p>
-    <scroller   :attr="'wzor'" :folder="'wzory'" :scrollerdata="wzorFilter" :scroll="true"></scroller>
-    <div class="" v-if="showInox">
-      <p class="scrollerheading">Strona ramki inox</p>
-      <scroller  :attr="'inoxstrona'"  :scrollerdata="inoxstrona.dane" :noimage="true" ></scroller>
+
+  <transition-group name="list" tag="div">
+  <div :key="'a'" class="" v-show="activeTab=='Model'" >
+    <p :key="'b'"  class="scrollerheading">Kolekcja</p>
+    <scroller :key="'c'"   :attr="'kolekcja'" :noimage="true" :scrollerdata="kolekcja.dane" :col="'5'" ></scroller>
+    <p :key="'d'"  class="scrollerheading">Wzór</p>
+    <scroller :key="'e'"    :attr="'wzor'" :folder="'wzory'" :scrollerdata="wzorFilter" :scroll="true"></scroller>
+    <div :key="'f'"  class="" v-if="showInox">
+      <p  class="scrollerheading">Strona ramki inox</p>
+      <scroller :key="'h'"   :attr="'inoxstrona'"  :scrollerdata="inoxstrona.dane" :noimage="true" ></scroller>
     </div>
-    <div class="" v-if="showInox">
-      <p class="scrollerheading">Kolor ramki inox</p>
-      <scroller :attr="'inoxkolor'" :scrollerdata="ramkakolorfilter" :folder="'koloryakc'" ></scroller>
+    <div :key="'i'"  class="" v-if="showInox">
+      <p  class="scrollerheading">Kolor ramki inox</p>
+      <scroller :key="'k'" :attr="'inoxkolor'" :scrollerdata="ramkakolorfilter" :folder="'koloryakc'" ></scroller>
     </div>
   </div>
-  <div class="" v-show="activeTab=='Kolor'">
+  <div :key="'l'" class="" v-if="activeTab=='Kolor'">
     <p class="scrollerheading">Kolor:</p>
-    <scroller  :attr="'kolor'" :folder="'okleiny'" :scrollerdata="kolorFilter" :col="'5'" ></scroller>
+    <scroller :attr="'kolor'" :folder="'okleiny'" :scrollerdata="kolorFilter" :col="'5'" ></scroller>
   </div>
-  <div class="" v-show="activeTab=='Szyba'">
+
+  <div :key="'o'" class="" v-show="activeTab=='Szyba'">
     <p class="scrollerheading">Przeszklenie:</p>
     <scroller :attr="'szyba'" :folder="'Przeszklenia'" :scrollerdata="szybyFilter" ></scroller>
   </div>
-  <div class="" v-show="activeTab=='Okucia'">
+  <div :key="'p'"  class="" v-show="activeTab=='Okucia'">
     <p class="scrollerheading">Kierunek otwierania:</p>
     <scroller :attr="'kierunek'"  :scrollerdata="kierunek.dane" :folder="'kotw'" :col="'5'" ></scroller>
     <p class="scrollerheading">Sposób otwierania:</p>
@@ -32,11 +35,22 @@
     <p class="scrollerheading">Kolor klamki:</p>
     <scroller :attr="'klamkakolor'" :scrollerdata="klamkakolorfilter" :folder="'koloryakc'" :col="'5'" ></scroller>
   </div>
-  <div class="" v-show="activeTab=='Podsumowanie'">
+  <div :key="'r'" class="" v-show="activeTab=='Podsumowanie'">
+    <div style="margin-bottom:10px">
+      <customimagebutton></customimagebutton>
+      <myselect style="margin-right:1em"></myselect>
+      <pdfbutton style="margin-right:1em"></pdfbutton>
+    </div>
 
-    <!-- <prezenter></prezenter> -->
 
- </div>
+    <prezenter></prezenter>
+  </div>
+
+</transition-group>
+
+
+<navbuttons></navbuttons>
+
 
 
 
@@ -60,6 +74,12 @@
 <script>
 import Scroller from '@/components/Scroller.vue';
 import Prezenter from '@/components/Prezenter.vue';
+import Myselect from '@/components/Myselect.vue';
+import Navbuttons from '@/components/Navbuttons.vue';
+import Pdfbutton from '@/components/Pdfbutton.vue';
+import Customimagebutton from '@/components/customimagebutton.vue';
+
+
 
 
 import { mapState } from 'vuex';
@@ -67,7 +87,7 @@ import { mapGetters} from 'vuex';
 
 
 export default {
-  components:{Scroller,Prezenter},
+  components:{Scroller,Prezenter,Myselect,Navbuttons,Pdfbutton,Customimagebutton},
   watch:{
     "product.wzor":function(){
       this.$store.state.product.szyba = this.szybyFilter[0].artnr;
@@ -89,7 +109,7 @@ export default {
   },
   data(){
     return {
-
+      elems:[1,2,3,4]
     }
   },
   mounted(){
@@ -133,6 +153,25 @@ export default {
 </script>
 
 <style scoped>
+.list-item {
+  position:absolute;
+  top:0;left:0;
+  /* display: inline-block; */
+  margin-right: 10px;
+}
+.list-enter-active, .list-leave-active {
+  position:absolute;
+  top:0;left:0;
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(0px);
+  position:absolute;
+  top:0;left:0;
+}
+
+
 .scrollerheading{
   font-weight:bold;
 }

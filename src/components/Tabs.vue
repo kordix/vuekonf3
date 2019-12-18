@@ -1,14 +1,14 @@
-<template >
+<template>
 <div class="" class="tabscontainer">
 
 <div class="">
   <ul style="display:flex;justify-content:center;align-items:center;">
 
-  <li class="tablineparent" v-for="tab in tabsFilter" @click="activeTab=tab.bez" :class="{active:activeTab==tab.bez}">
+  <li class="tablineparent" v-for="tab in tabsFilter" @click="handleClick(tab.bez)" :class="{active:activeTab==tab.bez,nonactive:activeTab!=tab.bez }">
     <span class="tabline"></span>
     <span class="dotdummy" v-if="activeTab==tab.bez"></span>
 
-    <p class="caption" :style="{left:'-'+tab.offset+'px',color:activeTab==tab.bez ? '#8fcc25' : '#c2c2c2'  }">{{tab.bez}}</p>
+    <p class="caption" :style="{left:'-'+tab.offset+'px'}">{{tab.bez}}</p>
   </li>
 
 </ul>
@@ -31,13 +31,16 @@
 <script>
 import {mapGetters} from 'vuex';
 import {mapState} from 'vuex';
+import {mapActions} from 'vuex';
+import {EventBus} from '@/event-bus.js';
+
+
 
 
 export default {
   data(){
     return{
-      tabs:['model','kolor','szyba','okucia'],
-      activeTab:'Model'
+      // tabs:['model','kolor','szyba','okucia']
     }
   },
   watch:{
@@ -47,15 +50,27 @@ export default {
     }
   },
   methods:{
+    ...mapActions({
+      setNextTab:'setNextTab'
+    }),
     setActiveTab(){
       let self = this;
       this.$store.commit('setActiveTab',self.activeTab);
+    },
+    handleClick(bez){
+      EventBus.$emit('nav', '');
+      this.$store.state.activeTab=bez;
     }
   },
   computed:{
+    ...mapState({
+      activeTab:'activeTab'
+    }),
     ...mapGetters({
       tabsFilter:'tabsFilter'
     })
+  },
+  mounted(){
   }
 }
 </script>
@@ -66,15 +81,18 @@ ul{
 }
 
 .tabscontainer{
+  transition:0.3s;
+
   background: rgb(248, 248, 248);position:relative;
   padding-bottom:10px;
   margin-bottom:12px;
 }
 
 .dotdummy::before{
+  transition:0.3s;
+
    content: '';
    position:absolute;
-   transition: 0.5s;
    border-radius: 2em;
    /* width:6px;
    height:6px; */
@@ -86,7 +104,8 @@ ul{
 }
 
 .tabline{
-  transition: 0.5s;
+  transition:0.3s;
+
   position: absolute;
   display: block;
   top: 0;
@@ -100,8 +119,10 @@ ul{
   box-shadow: 1px 1px 1px #c6c6c6;
 }
 
+
 .tabline::before{
-  transition: 0.5s;
+  transition:color 0.3s;
+
   content: '';
   display: block;
   position: absolute;
@@ -118,6 +139,8 @@ ul{
 }
 
 .active > .tabline::before{
+  transition:color 0.3s;
+
   font-weight:bold;
   border:2px var(--mygreen) solid !important;
   left:-2px;
@@ -125,11 +148,37 @@ ul{
 }
 
 .active > .tabline{
+  transition:0.3s;
+
   font-weight:bold;
   border:2px var(--mygreen) solid !important;
 }
 
+.tablineparent.nonactive:hover > .tabline{
+  transition:0.3s;
+
+  font-weight:bold;
+  border:2px var(--mygreenhov) solid !important;
+}
+
+.tablineparent.nonactive:hover > .tabline::before{
+  transition:0.3s;
+
+  font-weight:bold;
+  border:2px var(--mygreenhov) solid !important;
+  left:-2px;
+}
+
+.tablineparent.nonactive:hover > .caption{
+  font-weight:500;
+  color:var(--mygreenhov) !important;
+  left:-2px;
+}
+
+
+
 li.active > p{
+  color:var(--mygreen) !important;
   font-weight:500 !important;
 }
 
@@ -140,10 +189,12 @@ ul:last-child {
 }
 
 .tablineparent{
+  transition:0.3s;
   float:left;
   position:relative;
   width:20%;
   height:100px;
+  cursor:pointer;
 }
 
 ul li:last-child {
@@ -151,6 +202,9 @@ width:0px;
 }
 
 .caption{
+  font-weight:500;
+  color:var(--mygray) !important;
+  /* transition:0.3s; */
   font-size:14px !important;
   cursor: pointer;
     position: absolute;

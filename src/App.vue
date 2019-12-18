@@ -8,7 +8,7 @@
       <div class="col-md-4">
         <wizualizacja style="z-index:1000"></wizualizacja>
         <switcher></switcher>
-        <p>Cena:{{parseInt(basicprice)}} zł</p>
+        <p style="font-size:18px">Cena:{{parseInt(basicprice)}} zł</p>
       </div>
   </div>
   </div>

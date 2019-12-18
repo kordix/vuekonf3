@@ -63,9 +63,21 @@ export default new Vuex.Store({
       klamka:'Magnus',
       klamkakolor:'10301',
       inoxstrona:'',
-      inoxkolor:''
+      inoxkolor:'',
+      logoobject:null
     },
-    cenytablica:ceny
+    cenytablica:ceny,
+    backgrounds:[
+   {url:'/images/backgrounds/1.jpg',x:330,y:312,scalex:0.15,scaley:0.15},
+   {url:'/images/backgrounds/2.jpg',x:159,y:325,scalex:0.11,scaley:0.11},
+   {url:'/images/backgrounds/3.jpg',x:432,y:215,scalex:0.1,scaley:0.12}
+    ],
+    activebackground:{url:'/images/backgrounds/1.jpg',x:330,y:312,scalex:0.15,scaley:0.15},
+    exportImageObj:null,
+    exportImageObjInner:null,
+    custombackgroundimg:null
+
+
   },
   mutations: {
     setActiveWzor(state,val){
@@ -76,6 +88,19 @@ export default new Vuex.Store({
     },
     setProductAttribute(state,payload){
       state.product[payload.attr]=payload.val;
+    },
+    setActiveBackground(state,payload){
+      state.activebackground=payload;
+    },
+    setNextTab(state){
+      let num = state.tabs2.findIndex((el)=>el.bez==state.activeTab);
+      let tab = state.tabs2.filter((el,index)=>index > num)[0].bez;
+      state.activeTab=tab;
+    },
+    setPrevTab(state){
+      let num = state.tabs2.findIndex((el)=>el.bez==state.activeTab);
+      let tab = state.tabs2[num-1].bez;
+      state.activeTab=tab;
     }
   },
   actions: {
@@ -87,7 +112,16 @@ export default new Vuex.Store({
     },
     setActiveTab(context,val){
       context.commit('setActiveTab',val)
-    }
+    },
+    setActiveBackground(context,payload){
+     context.commit('setActiveBackground',payload)
+   },
+   setNextTab(context){
+     context.commit('setNextTab');
+   },
+   setPrevTab(context){
+     context.commit('setPrevTab');
+   }
   },
   getters:{
     kolorFilter: state => {
@@ -102,9 +136,19 @@ export default new Vuex.Store({
   activeKlamka: state => {
     return state.klamka.dane.find((el)=>el.artnr == state.product.klamka);
   },
+  activeKlamkaKolor: state => {
+    return state.klamkakolor.dane.find((el)=>el.artnr == state.product.klamkakolor);
+  },
   activeSotw: state => {
     return state.sposobotw.dane.find((el)=>el.artnr == state.product.sposobotw);
   },
+  activeSzyba: state => {
+    return state.szyba.dane.find((el)=>el.artnr == state.product.szyba);
+  },
+  activeKierunek: state => {
+    return state.kierunek.dane.find((el)=>el.artnr == state.product.kierunek);
+  },
+
   odpszyb: state => {
     return state.wzor.dane.find((el)=>el.artnr == state.product.wzor).odpszyb;
   },
