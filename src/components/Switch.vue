@@ -3,20 +3,17 @@
     <p style="display:inline-block;">widok zewnątrz</p>
       <div class="switch" id="switch" @click="performSwitch" style="width:40px;margin-top:2px;margin-left:8px;margin-right:8px" >
           <div class="bar"></div>
-          <div class="dot" :style="{left:left+'px',backgroundColor:color}"></div>
+          <div class="dot" :style="{left:leftc+'px',backgroundColor:color}"></div>
       </div>
       <p>widok wewnątrz</p>
     </div>
-
-
-
-
-
 </template>
 
 
 <script>
 export default {
+
+
   data(){
     return {
       state: 'off',
@@ -27,11 +24,16 @@ export default {
   methods: {
       performSwitch() {
         this.$store.state.selectedwidok == 'Z' ? this.$store.state.selectedwidok='W' : this.$store.state.selectedwidok='Z';
-          this.left == 0 ? this.left = 20 : this.left = 0;
+          // this.left == 0 ? this.left = 20 : this.left = 0;
           // this.color == 'eaeaea' ? this.color = 'blue' : this.color = 'red';
-
       }
   },
+  computed:{
+    leftc(){
+      return this.$store.state.selectedwidok=='Z' ? 0 : 20;
+    }
+  },
+
   mounted(){
 
   }

@@ -47,7 +47,15 @@ export default {
     activeTab(){
       let self = this;
       this.$store.commit('setActiveTab',self.activeTab);
+    },
+    "product.wzor":function(val){
+      if(this.szybyFilter.length==1 && this.szybyFilter[0].artnr=='00'){
+        this.$store.dispatch('manipulateTab',false);
+      }else{
+        this.$store.dispatch('manipulateTab',true);
+      }
     }
+
   },
   methods:{
     ...mapActions({
@@ -64,10 +72,12 @@ export default {
   },
   computed:{
     ...mapState({
-      activeTab:'activeTab'
+      activeTab:'activeTab',
+      product:'product'
     }),
     ...mapGetters({
-      tabsFilter:'tabsFilter'
+      tabsFilter:'tabsFilter',
+      szybyFilter:'szybyFilter'
     })
   },
   mounted(){

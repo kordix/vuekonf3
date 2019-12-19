@@ -1,7 +1,7 @@
 <template>
-  <div class="" style="display:inline-block">
+  <div class="" style="display:inline-block;cursor:pointer">
     <input type="file" id="file" ref="myFiles" class="" @change="loadcustombackground" style="display:none">
-    <label for="file" class="btn btn-primary" style="margin-right:1em">Wgraj zdjęcie swojego domu</label>
+    <label for="file" class="btn btn-primary" style="margin-right:1em;cursor:pointer">Wgraj zdjęcie swojego domu</label>
   </div>
 
 </template>

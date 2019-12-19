@@ -33,7 +33,7 @@ export default {
       let self = this;
       setTimeout(function(){
         self.show = true;
-      },1200);
+      },400);
     }
   },
   mounted(){

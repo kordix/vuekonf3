@@ -55,7 +55,6 @@ export default {
       this.drawSzyba();
     },
     "product.wzor":function(){
-      console.log('drawtloczenie');
       this.drawTloczenie();
       this.drawSzyba();
     },
@@ -113,6 +112,13 @@ export default {
        file = this.product.wzor+'_black';
        }
 
+       if(typeof(this.tloczeniepcv) !='undefined'){
+       if (this.tloczeniepcv==true){
+       file = this.product.wzor+'_00';
+       }
+     }
+
+
        if(this.inoxpelne==true){
          file = this.product.wzor+'_PELNE';
        }
@@ -132,7 +138,8 @@ export default {
     }),
     ...mapGetters({
       odpszyb:'odpszyb',
-      inoxpelne:'inoxpelne'
+      inoxpelne:'inoxpelne',
+      activeModel:'activeModel'
     }),
     mixc(){
      return (this.mixdanetab.find((el)=>el.model == this.product.wzor)) ? this.mixdanetab.find((el)=>el.model == this.product.wzor).dane : {}
@@ -165,6 +172,9 @@ export default {
       }else{
         return this.activeklamka.artnr
       }
+    },
+    tloczeniepcv(){
+       return (this.activeModel.typ=='PCV' && this.product.szyba=='00') ? true : false ;
     },
 
   },

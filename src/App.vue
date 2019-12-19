@@ -8,7 +8,7 @@
       <div class="col-md-4">
         <wizualizacja style="z-index:1000"></wizualizacja>
         <switcher></switcher>
-        <p style="font-size:18px">Cena:{{parseInt(basicprice)}} zł</p>
+        <p style="font-size:18px">Cena: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
       </div>
   </div>
   </div>
@@ -31,7 +31,7 @@ export default {
   watch:{
     product:{
       deep:true,
-      handler:function(){
+      handler:function(val){
         this.getBasicPrice()
       }
     }

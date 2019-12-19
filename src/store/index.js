@@ -10,7 +10,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tabs2:[{bez:'Typ',bez2:'typ',available:false,shown:true,offset:2 },
-    // {bez:'Seria',bez2:'serię',current:false,available:true,show:false,offset:5,hover:false},
+    {bez:'Seria',bez2:'serię',current:false,available:true,show:false,offset:5,hover:false},
     {bez:'Model',bez2:'model',available:true,shown:false,offset:8},
     {bez:'Kolor',bez2:'kolor',available:true,shown:false,offset:6},
     {bez:'Szyba',bez2:'szybę',available:true,shown:false,offset:8},
@@ -57,7 +57,7 @@ export default new Vuex.Store({
       kolor2: '06',
       szyba:'06',
       ramka:'',
-      seria:'20',
+      seria:'30',
       kierunek:'Lw',
       sposobotw:'KK',
       klamka:'Magnus',
@@ -101,6 +101,10 @@ export default new Vuex.Store({
       let num = state.tabs2.findIndex((el)=>el.bez==state.activeTab);
       let tab = state.tabs2[num-1].bez;
       state.activeTab=tab;
+    },
+    manipulateTab(state,payload){
+      state.tabs2.find((el)=>el.bez=='Szyba').available=payload;
+
     }
   },
   actions: {
@@ -121,7 +125,11 @@ export default new Vuex.Store({
    },
    setPrevTab(context){
      context.commit('setPrevTab');
+   },
+   manipulateTab(context,payload){
+     context.commit('manipulateTab',payload);
    }
+
   },
   getters:{
     kolorFilter: state => {

@@ -1,11 +1,11 @@
 <template>
   <div class="">
 
-  <v-stage :config="{width:800,height:600}" @mousedown="handleStageMouseDown">
+  <v-stage ref="stage" :config="{width:800,height:600,draggable:true}" @mousedown="handleStageMouseDown" @wheel="zoom">
     <v-layer id="tlo">
       <v-image :config="{image:backgroundimage}" id="tloimage"></v-image>
     </v-layer>
-    <drzwi :dragprop="dragbool" :width="width" :height="height" :xprop="activebackground.x" :yprop="activebackground.y" :scalexprop="activebackground.scalex" :scaleyprop="activebackground.scaley"> </drzwi>
+    <drzwi :turnable="false" :dragprop="dragbool" :width="width" :height="height" :xprop="activebackground.x" :yprop="activebackground.y" :scalexprop="activebackground.scalex" :scaleyprop="activebackground.scaley"> </drzwi>
   </v-stage>
 
 </div>
@@ -40,7 +40,8 @@ export default {
       scalexbuf:0.4,
       scaleybuf:0.4,
       dragbool:false,
-      transformbool:false
+      transformbool:false,
+      zoombool:true
     }
   },
   methods:{
@@ -78,7 +79,7 @@ export default {
        console.log('detach');
        transformerNode.detach();
        transformerNode.getLayer().batchDraw();
-       
+
        return
      }
 
@@ -87,7 +88,32 @@ export default {
       console.log(this.$children);
 
 
-   }
+   },
+   zoom:function(e){
+    if(this.zoombool==true){
+    let scaleBy=1.1;
+    let stage = this.$refs.stage.getStage();
+    e.evt.preventDefault();
+    var oldScale = stage.scaleX();
+    var mousePointTo = {
+        x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+        y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale
+    };
+    var newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+    stage.scale({
+        x: newScale,
+        y: newScale
+    });
+
+    var newPos = {
+        x:-(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+        y:-(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
+    };
+    stage.position(newPos);
+    stage.batchDraw();
+
+    }
+  },
   },
   mounted(){
     this.loadbackground();

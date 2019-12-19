@@ -2,7 +2,11 @@
 <div class="">
 
   <transition-group name="list" tag="div">
-  <div :key="'a'" class="" v-show="activeTab=='Model'" >
+    <div id="Seria" class="" v-show="activeTab=='Seria'">
+      <scroller></scroller>
+    </div>
+
+  <div id="Model" :key="'a'" class="" v-show="activeTab=='Model'" >
     <p :key="'b'"  class="scrollerheading">Kolekcja</p>
     <scroller :key="'c'"   :attr="'kolekcja'" :noimage="true" :scrollerdata="kolekcja.dane" :col="'5'" ></scroller>
     <p :key="'d'"  class="scrollerheading">Wzór</p>
@@ -16,16 +20,16 @@
       <scroller :key="'k'" :attr="'inoxkolor'" :scrollerdata="ramkakolorfilter" :folder="'koloryakc'" ></scroller>
     </div>
   </div>
-  <div :key="'l'" class="" v-if="activeTab=='Kolor'">
+  <div id="Kolor" :key="'l'" class="" v-if="activeTab=='Kolor'">
     <p class="scrollerheading">Kolor:</p>
     <scroller :attr="'kolor'" :folder="'okleiny'" :scrollerdata="kolorFilter" :col="'5'" ></scroller>
   </div>
 
-  <div :key="'o'" class="" v-show="activeTab=='Szyba'">
+  <div id="Szyba" :key="'o'" class="" v-show="activeTab=='Szyba'">
     <p class="scrollerheading">Przeszklenie:</p>
     <scroller :attr="'szyba'" :folder="'Przeszklenia'" :scrollerdata="szybyFilter" ></scroller>
   </div>
-  <div :key="'p'"  class="" v-show="activeTab=='Okucia'">
+  <div id="Okucia" :key="'p'"  class="" v-show="activeTab=='Okucia'">
     <p class="scrollerheading">Kierunek otwierania:</p>
     <scroller :attr="'kierunek'"  :scrollerdata="kierunek.dane" :folder="'kotw'" :col="'5'" ></scroller>
     <p class="scrollerheading">Sposób otwierania:</p>
@@ -35,7 +39,7 @@
     <p class="scrollerheading">Kolor klamki:</p>
     <scroller :attr="'klamkakolor'" :scrollerdata="klamkakolorfilter" :folder="'koloryakc'" :col="'5'" ></scroller>
   </div>
-  <div :key="'r'" class="" v-show="activeTab=='Podsumowanie'">
+  <div id="Podsumowanie" :key="'r'" class="" v-show="activeTab=='Podsumowanie'">
     <div style="margin-bottom:10px">
       <customimagebutton></customimagebutton>
       <myselect style="margin-right:1em"></myselect>
@@ -154,21 +158,25 @@ export default {
 
 <style scoped>
 .list-item {
-  position:absolute;
-  top:0;left:0;
-  /* display: inline-block; */
+  display: inline-block;
   margin-right: 10px;
 }
-.list-enter-active, .list-leave-active {
-  position:absolute;
-  top:0;left:0;
+.list-enter-active{
   transition: all 1s;
 }
-.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+
+.list-leave-active {
+  transition: all 0s;
+}
+
+.list-enter /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;
-  transform: translateY(0px);
-  position:absolute;
-  top:0;left:0;
+  transform: translateY(30px);
+}
+
+.list-leave-to{
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 

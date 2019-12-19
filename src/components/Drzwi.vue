@@ -29,7 +29,8 @@ export default {
     scaleyprop:{type:Number,default:1},
     xprop:{type:Number,default:0},
     yprop:{type:Number,default:0},
-    dragprop:{type:Boolean,default:false}
+    dragprop:{type:Boolean,default:false},
+    turnable:{type:Boolean,default:true}
   },
   data(){
     return{
@@ -114,31 +115,38 @@ export default {
       product:'product'
     }),
     gruboscc:function(){
-      if(this.selectedwidok=='Z'){
+      if(this.selectedwidokc=='Z'){
         return 20
       }else {
         return 15
       }
     },
     backbool:function(){
-        if(this.selectedwidok=='Z'){
+        if(this.selectedwidokc=='Z'){
           return false
         }else {
           return true
         }
     },
     flipCx:function(){
-      if(this.selectedwidok=='Z'){
+      if(this.selectedwidokc=='Z'){
         return 0
       }else {
         return this.width
       }
     },
     flipCscale:function(){
-      if(this.selectedwidok=='Z'){
+      if(this.selectedwidokc=='Z'){
         return 1
       }else {
         return -1
+      }
+    },
+    selectedwidokc:function(){
+      if(this.turnable==false){
+        return 'Z'
+      }else{
+        return this.selectedwidok
       }
     }
 
