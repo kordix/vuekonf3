@@ -1,28 +1,39 @@
 <template>
 <div class="">
 
-  <transition-group name="list" tag="div">
-    <div id="Seria" class="" v-show="activeTab=='Seria'">
-      <scroller></scroller>
+  <transition-group name="test" tag="div">
+    <div :key="'seria'" id="Seria" class="" v-show="activeTab=='Seria'">
+      <p class="scrollerheading">Seria</p>
+      <scroller :scrollerdata="seria.dane" :attr="'seria'" :folder="'serie'" :col="'5'"></scroller>
     </div>
 
   <div id="Model" :key="'a'" class="" v-show="activeTab=='Model'" >
     <p :key="'b'"  class="scrollerheading">Kolekcja</p>
     <scroller :key="'c'"   :attr="'kolekcja'" :noimage="true" :scrollerdata="kolekcja.dane" :col="'5'" ></scroller>
     <p :key="'d'"  class="scrollerheading">Wzór</p>
-    <scroller :key="'e'"    :attr="'wzor'" :folder="'wzory'" :scrollerdata="wzorFilter" :scroll="true"></scroller>
-    <div :key="'f'"  class="" v-if="showInox">
-      <p  class="scrollerheading">Strona ramki inox</p>
-      <scroller :key="'h'"   :attr="'inoxstrona'"  :scrollerdata="inoxstrona.dane" :noimage="true" ></scroller>
-    </div>
-    <div :key="'i'"  class="" v-if="showInox">
-      <p  class="scrollerheading">Kolor ramki inox</p>
-      <scroller :key="'k'" :attr="'inoxkolor'" :scrollerdata="ramkakolorfilter" :folder="'koloryakc'" ></scroller>
-    </div>
+    <scroller :key="'e'"    :attr="'wzor'" :folder="'wzory'" :scrollerdata="wzorFilter" :col="'4'" :scroll="true"></scroller>
+      <transition-group :key="'asdf'" name="test" tag="div">
+        <p  :key="'ff'" class="scrollerheading" v-if="showInox">Strona ramki inox</p>
+        <scroller :key="'h'"   :attr="'inoxstrona'"  :scrollerdata="inoxstrona.dane" :noimage="true" v-if="showInox"></scroller>
+        <p  :key="'ii'" class="scrollerheading" v-if="showInox"> Kolor ramki inox</p>
+        <scroller :key="'k'" :attr="'inoxkolor'" :scrollerdata="ramkakolorfilter" :folder="'koloryakc'"  v-if="showInox"></scroller>
+      </transition-group name="test" tag="div">
+
   </div>
   <div id="Kolor" :key="'l'" class="" v-if="activeTab=='Kolor'">
-    <p class="scrollerheading">Kolor:</p>
+    <p class="scrollerheading">Wariant koloru:</p>
+    <scroller :attr="'wariant'" :noimage="true" :scrollerdata="wariantFilter"></scroller>
+    <p  class="scrollerheading" v-if="product.wariant == 'B'">Kolor zewnątrz</p>
+      <p class="scrollerheading"  v-if="product.wariant == 'M'">Kolor główny</p>
+      <p class="scrollerheading" v-if="product.wariant == 'S'">Kolor zewnętrzny/wewnętrzny</p>
     <scroller :attr="'kolor'" :folder="'okleiny'" :scrollerdata="kolorFilter" :col="'5'" ></scroller>
+
+    <transition-group :key="'asdf'" name="test" tag="div">
+      <p :key="'1'" style="font-weight:bold" v-if="product.wariant == 'B'">Kolor wewnątrz</p>
+      <p :key="'2'" style="font-weight:bold" v-if="product.wariant == 'M'">Kolor dodatkowy</p>
+      <scroller :key="'3'" :attr="'kolor2'" :folder="'okleiny'" :scrollerdata="kolorFilter" :col="'5'" v-if="product.wariant == 'B' || product.wariant=='M'" ></scroller>
+    </transition-group name="test" tag="div">
+
   </div>
 
   <div id="Szyba" :key="'o'" class="" v-show="activeTab=='Szyba'">
@@ -35,10 +46,29 @@
     <p class="scrollerheading">Sposób otwierania:</p>
     <scroller :attr="'sposobotw'" :scrollerdata="sposobotw.dane" :folder="'sposobyotw'" :col="'5'" ></scroller>
     <p class="scrollerheading">Klamka </p>
-    <scroller :attr="'klamka'" :scrollerdata="klamkifilter" :folder="'Klamki'" :col="'5'" ></scroller>
+    <scroller :attr="'klamka'" :scrollerdata="klamkifilter" :folder="'Klamki'" :col="'5'" :scroll="true"></scroller>
     <p class="scrollerheading">Kolor klamki:</p>
     <scroller :attr="'klamkakolor'" :scrollerdata="klamkakolorfilter" :folder="'koloryakc'" :col="'5'" ></scroller>
   </div>
+  <div :key="'akc'" class="" v-show="activeTab=='Akcesoria'">
+    <p class="scrollerheading" >Samozamykacz</p>
+     <scroller :scrollerdata="samozamykacz.dane" :attr="'samozamykacz'" :folder="'samozamykacz'"></scroller>
+     <transition-group :key="'asdff'" name="test" tag="div" >
+       <p :key="'a'" class="scrollerheading" v-if="product.samozamykacz != '-'">Kolor samozamykacza</p>
+       <scroller :key="'b'" :scrollerdata="samkolorfilter" :folder="'koloryakc'" v-if="product.samozamykacz != '-'" :attr="'samozamykaczKolor'"></scroller>
+     </transition-group>
+
+     <p class="scrollerheading " >Wizjer</p>
+     <scroller :scrollerdata="wizjer.dane" :attr="'wizjer'" :folder="'wizjer'"></scroller>
+     <p class="scrollerheading" :noimage="true" >Elektrozaczep</p>
+     <scroller :scrollerdata="elektrozaczep.dane" :attr="'elektrozaczep'" :noimage="true"></scroller>
+     <p class="scrollerheading">Kopniak</p>
+     <scroller :scrollerdata="kopniak.dane"  :attr="'kopniak'" :folder="'kopniak'" :noimage="true"></scroller>
+     <p class="scrollerheading">System automatyki</p>
+     <scroller :scrollerdata="automatyka.dane"  :attr="'automatyka'" :folder="'automatyka'"></scroller>
+  </div>
+
+
   <div id="Podsumowanie" :key="'r'" class="" v-show="activeTab=='Podsumowanie'">
     <div style="margin-bottom:10px">
       <customimagebutton></customimagebutton>
@@ -95,6 +125,11 @@ export default {
   watch:{
     "product.wzor":function(){
       this.$store.state.product.szyba = this.szybyFilter[0].artnr;
+      this.$store.state.product.wariant='S';
+      if(this.$store.getters.activeModel.typ=='INOX'){
+        this.$store.state.product.inoxstrona = this.$store.state.inoxstrona.dane[0].artnr;
+        this.$store.state.product.inoxkolor = this.$store.getters.ramkakolorfilter[0].artnr;
+      }
     },
     "product.klamka":function(){
       this.$store.state.product.klamkakolor = this.klamkakolorfilter[0].artnr;
@@ -131,10 +166,21 @@ export default {
    klamka:'klamka',
    klamkakolor:'klamkakolor',
    inoxkolor:'inoxkolor',
-   inoxstrona:'inoxstrona'
+   inoxstrona:'inoxstrona',
+   seria:'seria',
+   samozamykacz:'samozamykacz',
+   wizjer:'wizjer',
+   kopniak:'kopniak',
+   elektrozaczep:'elektrozaczep',
+   automatyka:'automatyka',
+   wariant:'wariant'
+
+
+
 
  }),
  ...mapGetters({
+   wariantFilter:'wariantFilter',
    kolorFilter:'kolorFilter',
    szybyFilter:'szybyFilter',
    klamkifilter:'klamkifilter',
@@ -144,6 +190,7 @@ export default {
    showInox:'showInox',
    ramkakolorfilter:'ramkakolorfilter',
    klamkakolorfilter:'klamkakolorfilter',
+   samkolorfilter:'samkolorfilter',
    cena:'cena'
 
  })
@@ -178,6 +225,22 @@ export default {
   opacity: 0;
   transform: translateY(30px);
 }
+
+.test-enter  {
+  opacity: 0;
+  transition:1s;
+}
+
+.test-enter-to{
+  opacity:1;
+  transition:1s;
+}
+
+.test-leave-to{
+  opacity:0;
+  transition:0s;
+}
+
 
 
 .scrollerheading{

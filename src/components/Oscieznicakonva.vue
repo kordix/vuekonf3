@@ -8,19 +8,13 @@
     <v-image id="prawegora" :config="{image:nlt,x:width,height:grubosc,width:grubosc,scaleX:-1, }"></v-image>
     <v-image id="prawe" :config="{image:nl,x:width,height:height-grubosc,y:grubosc,width:grubosc,scaleX:-1}"></v-image>
 
-
-
-
-
-    <!-- <div id="prawegora" style="position:absolute;transform: scaleX(-1);background-size:contain" v-bind:style="{ backgroundImage: 'url(images/naswietle/nlt.png',height:grubosc+'px',width:grubosc+'px',left:width+grubosc+'px' }"></div>
-    <div id="prawe" style="position:absolute;transform: scaleX(-1);background-size:contain" v-bind:style="{ backgroundImage: 'url(images/naswietle/nl.png',left:width+grubosc+'px',top:grubosc+'px',width:grubosc+'px',height:height+'px' }"></div>
-    <div id="okleinaosc" style="position:absolute;z-index:-1000" v-bind:style="{ backgroundImage: 'url(images/okleiny/'+okleina+'.jpg',height:height+grubosc+'px',width:width+2*grubosc+'px' }"> </div> -->
-
   </v-group>
 </template>
 
 <script>
 import {mapState} from 'vuex';
+import {mapGetters} from 'vuex';
+
 
 
 export default {
@@ -41,6 +35,12 @@ export default {
       this.drawOscieznicaParts();
     },
     "product.kolor":function(){
+      this.drawOkleina();
+    },
+    "product.kolor2":function(){
+      this.drawOkleina();
+    },
+    selectedwidok:function(){
       this.drawOkleina();
     }
   },
@@ -68,8 +68,9 @@ export default {
 
    },
    drawOkleina:function(){
+     console.log('drawokleina');
      const okleinaObj = new Image();
-     okleinaObj.src = `/images/okleiny/${this.product.kolor}.jpg`;
+     okleinaObj.src = `/images/okleiny/${this.kolorc}.jpg`;
      okleinaObj.onload = () => {
        this.okleinaimage = okleinaObj;
      };
@@ -82,7 +83,11 @@ export default {
  computed:{
    ...mapState({
      product:'product',
+     selectedwidok:'selectedwidok'
    }),
+   ...mapGetters({
+     kolorc:'kolorc'
+   })
  }
 
 

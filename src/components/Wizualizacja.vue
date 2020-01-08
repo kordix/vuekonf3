@@ -1,5 +1,5 @@
 <template>
-  <div class="" id="wizcon" style="transition:1s;opacity:0;position:relative">
+  <div class="" id="wizcon" style="transition:1s;opacity:1;position:relative">
 
   <v-stage :config="{width:width,height:height}">
     <drzwi :width="width" :height="height"></drzwi>
@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted(){
-    this.fadeIn();
+    // this.fadeIn();
 
   },
   computed:{

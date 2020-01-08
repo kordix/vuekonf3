@@ -1,16 +1,16 @@
 <template>
     <div class="">
-
-    <div class="myrow scroller" :class="{scroll:scroll}">
+<!-- :style="{maxHeight:height+'px'}" -->
+    <div class="myrow scroller" :class="{scroll:scroll}" >
       <!-- :class="{active:item.artnr==activeItem}" -->
-      <div v-for="item in scrollerdata" class="scroller-item mycolumn col-3" :class="{active:item.artnr==activeItem,col5k:col=='5'}"  @click="handleitemclick(item.artnr)">
+      <div v-for="item in scrollerdata" class="scroller-item mycolumn col-4"  :class="{active:item.artnr==activeItem,col5k:col=='5',col4k:col=='4'}"  @click="handleitemclick(item.artnr)">
         <div class="" style="margin:15px 15px 5px 15px">
           <img v-if="noimage" style="display:none">
           <img v-else-if="folder=='Przeszklenia' && item.artnr=='00'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/pusty.jpg.png' ">
           <img v-else-if="folder=='Przeszklenia' && item.artnr=='19'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/'+odpszybkonf+'_06.jpg' ">
           <img v-else-if="folder=='Przeszklenia'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/'+odpszybkonf+'_'+item.artnr+'.jpg' ">
          <img v-else class="img-fluid" :src="`/images/konfigurator/${folder}/${item.artnr}.jpg` ">
-         <label class="caption">{{item.bez}}</label></b>
+         <label class="caption" style="cursor:pointer" :class="{captionnoimg:noimage}">{{item.bez}}</label></b>
          </div>
       </div>
      </div>
@@ -22,7 +22,7 @@
 
 <script>
     export default {
-      props:{attr:String,scroll:{type:Boolean,default:true},scrollerdata:Array,folder:String,odpszyb:String,noimage:Boolean,scroll:{type:Boolean,default:false},col:{type:String,default:'col-3'}},
+      props:{attr:String,scroll:{type:Boolean,default:true},scrollerdata:Array,folder:String,odpszyb:String,noimage:Boolean,scroll:{type:Boolean,default:false},col:{type:String,default:'col-3'},height:{type:String,default:"400"} },
         data(){
           return{
             thevalue:null
@@ -104,6 +104,11 @@ flex: 0 0 20% !important;
 max-width: 20% !important;
 }
 
+.col4k{
+flex: 0 0 25% !important;
+max-width: 25% !important;
+}
+
 .col2k{
 flex: 0 0 50% !important;
 max-width: 50% !important;
@@ -116,6 +121,9 @@ max-width: 50% !important;
   }
 }
 
+.captionnoimg{
+  margin-bottom:13px;
+}
 
 
 </style>

@@ -40,14 +40,19 @@ export default {
         {model:'F6C',dane:{x:52,width:40,correctx:5,cropwidth:100,correctwidth:0}},
         {model:'F6D',dane:{x:165,width:42,correctx:7,cropwidth:100,correctwidth:0}},
         {model:'F6E',dane:{x:165,width:42,correctx:7,cropwidth:100,correctwidth:0}}
-      ],
-      mixkolorlista:['F1A','F1B','F1C','F1D','F2A','F2B','F4A','F4B','F4C','F4D','F4E','F6A','F6B','F6C','F6D','F6E']
+      ]
     }
   },
   watch:{
     "product.kolor":function(){
       this.drawOkleina();
     },
+    "product.kolor2":function(){
+      this.drawMix();
+      this.drawOkleina();
+
+    },
+
     "product.klamka":function(){
       this.drawKlamka();
     },
@@ -70,12 +75,13 @@ export default {
     },
     selectedwidok:function(){
       this.drawTloczenie();
+      this.drawOkleina();
     }
   },
   methods:{
     drawOkleina:function(){
       const imageObj = new Image();
-      imageObj.src = `/images/okleiny/${this.product.kolor}.jpg`;
+      imageObj.src = `/images/okleiny/${this.kolorc}.jpg`;
       imageObj.onload = () => {
         this.okleinaimage = imageObj;
       };
@@ -123,7 +129,7 @@ export default {
          file = this.product.wzor+'_PELNE';
        }
 
-      imageObj.src = 'images/tloczenia/'+file+'.png';
+      imageObj.src = '/images/tloczenia/'+file+'.png';
       imageObj.onload = () => {
         this.tloczenieimage = imageObj;
       };
@@ -134,12 +140,14 @@ export default {
     ...mapState({
       product:'product',
       selectedwidok:'selectedwidok',
-      activeSotw:'activeSotw'
+      activeSotw:'activeSotw',
+      mixkolorlista:'mixkolorlista'
     }),
     ...mapGetters({
       odpszyb:'odpszyb',
       inoxpelne:'inoxpelne',
-      activeModel:'activeModel'
+      activeModel:'activeModel',
+      kolorc:'kolorc'
     }),
     mixc(){
      return (this.mixdanetab.find((el)=>el.model == this.product.wzor)) ? this.mixdanetab.find((el)=>el.model == this.product.wzor).dane : {}

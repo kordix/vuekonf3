@@ -34,7 +34,7 @@ export default {
   },
   data(){
     return{
-      grubosc:20,
+      grubosc:30,
       gruboscback:10,
       // height:600,
       // width:300,

@@ -4,7 +4,7 @@
 <div class="">
   <ul style="display:flex;justify-content:center;align-items:center;">
 
-  <li class="tablineparent" v-for="tab in tabsFilter" @click="handleClick(tab.bez)" :class="{active:activeTab==tab.bez,nonactive:activeTab!=tab.bez }">
+  <li class="tablineparent" v-for="tab in tabsFilter" @click="handleClick(tab.bez)" :class="{shown:tab.shown==true,active:activeTab==tab.bez,nonactive:activeTab!=tab.bez }">
     <span class="tabline"></span>
     <span class="dotdummy" v-if="activeTab==tab.bez"></span>
 
@@ -150,14 +150,26 @@ ul{
 
 .active > .tabline::before{
   transition:color 0.3s;
-
   font-weight:bold;
   border:2px var(--mygreen) solid !important;
   left:-2px;
-
 }
 
 .active > .tabline{
+  transition:0.3s;
+
+  font-weight:bold;
+  border:2px var(--mygreen) solid !important;
+}
+
+.shown > .tabline::before{
+  transition:color 0.3s;
+  font-weight:bold;
+  border:2px var(--mygreen) solid !important;
+  left:-2px;
+}
+
+.shown > .tabline{
   transition:0.3s;
 
   font-weight:bold;
@@ -202,9 +214,10 @@ ul:last-child {
   transition:0.3s;
   float:left;
   position:relative;
-  width:20%;
+  width:14%;
   height:100px;
   cursor:pointer;
+  left:-30px;
 }
 
 ul li:last-child {
@@ -223,6 +236,24 @@ width:0px;
     top: 60px;
     left: -12px;
 }
+
+@media(max-width:600px){
+  .tablineparent{
+    left:-35px;
+    width:16%;
+    /* font-size:6px !important; */
+  }
+
+  .caption{
+    font-size:10px !important;
+  }
+
+  .widthresp{
+    width:17% !important;
+    font-size:7px !important;
+  }
+}
+
 
 
 </style>

@@ -14,5 +14,8 @@ Vue.use(VueKonva);
 
 new Vue({
   store,
+  data:{
+    test:'asdf'
+  },
   render: h => h(App)
 }).$mount('#app')

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import all from './dane.js'
 import ceny from './ceny.js'
+import cenyPochwyt from './cenypochwyt.js'
+
 
 Vue.config.devtools = true
 
@@ -9,23 +11,35 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    seria:{
+      dane:[
+      {artnr:'20',bez:'Premium'},
+      {artnr:'21',bez:'Premium Termo'},
+      {artnr:'30',bez:'Optimum'},
+      {artnr:'31',bez:'Optimum Termo'},
+      {artnr:'41',bez:'Prestige Termo'}
+    ]
+    },
+
     tabs2:[{bez:'Typ',bez2:'typ',available:false,shown:true,offset:2 },
-    {bez:'Seria',bez2:'serię',current:false,available:true,show:false,offset:5,hover:false},
+    {bez:'Seria',bez2:'serię',available:true,shown:true,offset:5},
     {bez:'Model',bez2:'model',available:true,shown:false,offset:8},
     {bez:'Kolor',bez2:'kolor',available:true,shown:false,offset:6},
     {bez:'Szyba',bez2:'szybę',available:true,shown:false,offset:8},
     {bez:'Okucia',bez2:'okucia',available:true,shown:false,offset:10},
-    // {bez:'Akcesoria',bez2:'akcesoria',current:false,available:true,show:false,offset:17,hover:false},
-    // {bez:'Dostawka',bez2:'dostawkę',current:false,available:false,show:false,offset:0,hover:false},
+    {bez:'Akcesoria',bez2:'akcesoria',available:true,shown:false,offset:17},
+    // {bez:'Dostawka',bez2:'dostawkę',available:false,show:false,offset:0,hover:false},
     {bez:'Podsumowanie',bez2:'',available:true,shown:false,offset:30},
   ],
+  mixkolorlista:['F1A','F1B','F1C','F1D','F2A','F2B','F4A','F4B','F4C','F4D','F4E','F6A','F6B','F6C','F6D','F6E'],
   selectedwidok:'Z',
-  activeTab:'Model',
+  activeTab:'Seria',
     wzor:{dane:all.wzorytablica},
     inoxlista:all.inoxlista,
-    inoxkolor:{dane:[{artnr:'10304',bez:'Black',current:false},{artnr:'10301',bez:'Inox',current:false}]},
-    inoxstrona:{dane:[{artnr:'0',bez:'obustronnie',current:false},{artnr:'1',bez:'wewnątrz',current:false},{artnr:'2',bez:'zewnątrz',current:false}]},
+    inoxkolor:{dane:[{artnr:'10301',bez:'Inox'},{artnr:'10304',bez:'Black'}]},
+    inoxstrona:{dane:[{artnr:'0',bez:'obustronnie'},{artnr:'1',bez:'wewnątrz'},{artnr:'2',bez:'zewnątrz'}]},
     koloryramek:all.koloryramek,
+    wariant:{dane:[{artnr:'S',bez:'Standard'},{artnr:'B',bez:'Bikolor'},{artnr:'M',bez:'Mixkolor'}]},
     kolor:{dane:all.kolortablica},
     szyba:{dane:all.szybatablica},
     kolekcja:{dane:all.kolekcjatablica},
@@ -50,23 +64,70 @@ export default new Vuex.Store({
       {artnr:'10304',bez:'Black'} ]},
     koloryklamek:all.koloryklamek,
     activeKolorTyp:'DEK',
+    samozamykacz:{dane:[
+      {artnr:'-',bez:'Brak'},
+      {artnr:'LN',bez:'Samozamykacz listwowy nawierzchniowy'},
+      {artnr:'LC',bez:'Samozamykacz listwowy chowany'},
+      {artnr:'R',bez:'Samozamykacz z ramieniem'},
+      {artnr:'RB',bez:'Samozamykacz z ramieniem i blokadą'},
+      {artnr:'W',bez:'Tylko wzmocnienie pod samozamykacz'}
+    ]},
+    kolorsam:{bez:'Kolor samozamykacza', dane:[
+      {artnr:'srebrny',bez:'Srebrny'},
+      {artnr:'braz',bez:'Brązowy'}
+    ]},
+    wizjer:{bez:'Wizjer',dane:[
+      {artnr:'-',bez:'Brak' },
+      {artnr:'S',bez:'Szerokokątny' },
+      {artnr:'C',bez:'Cyfrowy' }
+    ]},
+    kopniak:{bez:'Kopniak',dane:[
+      {artnr:'-',bez:'Brak'},
+      {artnr:'1',bez:'Wewnątrz' },
+      {artnr:'2',bez:'Zewnątrz' },
+      {artnr:'3',bez:'Obustronnie' }
+    ]},
+    elektrozaczep:{bez:'Elektrozaczep',dane:[
+      {artnr:'N',bez:'NIE' },
+      {artnr:'J',bez:'TAK' },
+    ]},
+    wkladka:{bez:'Wkładka', dane:[
+    {artnr:'INVEST',bez:'Wkładka Investlock' },
+    {artnr:'KL_C',bez:'Wkładka klasy C wg oferty' },
+    {artnr:'STD',bez:'Wkładka standard wg oferty' }
+    ]},
+    automatyka:{bez:'System automatycznego otwierania', dane:[
+    {artnr:'-',bez:'Brak'},
+    {artnr:'B',bez:'Biometryczny'},
+    {artnr:'K',bez:'Kodowy'},
+    {artnr:'Z',bez:'Zbliżeniowy'}
+
+    ]},
     product:{
       kolekcja:'all',
-      wzor: '12',
+      wzor: '01',
+      wariant:'S',
       kolor: '04',
-      kolor2: '06',
-      szyba:'06',
+      kolor2: '04',
+      szyba:'00',
       ramka:'',
       seria:'30',
       kierunek:'Lw',
-      sposobotw:'KK',
-      klamka:'Magnus',
+      sposobotw:'PP',
+      klamka:'P120o90',
       klamkakolor:'10301',
       inoxstrona:'',
       inoxkolor:'',
-      logoobject:null
+      samozamykacz:'-',
+      samozamykaczKolor:'-',
+      wizjer:'-',
+      kopniak:'-',
+      elektrozaczep:'N',
+      automatyka:'-'
     },
     cenytablica:ceny,
+    cenyPochwytTablica:cenyPochwyt,
+
     backgrounds:[
    {url:'/images/backgrounds/1.jpg',x:330,y:312,scalex:0.15,scaley:0.15},
    {url:'/images/backgrounds/2.jpg',x:159,y:325,scalex:0.11,scaley:0.11},
@@ -85,6 +146,7 @@ export default new Vuex.Store({
     },
     setActiveTab(state,val){
       state.activeTab=val;
+      state.tabs2.find((el)=>el.bez==val).shown=true;
     },
     setProductAttribute(state,payload){
       state.product[payload.attr]=payload.val;
@@ -135,6 +197,9 @@ export default new Vuex.Store({
     kolorFilter: state => {
     return state.kolor.dane.filter((el)=>el.typ == state.activeKolorTyp);
   },
+  wariantFilter: state => {
+      return (state.mixkolorlista.indexOf(state.product.wzor) == -1 ) ? state.wariant.dane.slice(0,2) : state.wariant.dane.filter((el)=>el.artnr != 'B')
+    },
   activeModel: state => {
     return state.wzor.dane.find((el)=>el.artnr == state.product.wzor);
   },
@@ -156,7 +221,9 @@ export default new Vuex.Store({
   activeKierunek: state => {
     return state.kierunek.dane.find((el)=>el.artnr == state.product.kierunek);
   },
-
+  kolorc: state => {
+      return (state.selectedwidok=='W' && state.product.wariant=='B') ? state.product.kolor2 : state.product.kolor
+  },
   odpszyb: state => {
     return state.wzor.dane.find((el)=>el.artnr == state.product.wzor).odpszyb;
   },
@@ -216,15 +283,20 @@ export default new Vuex.Store({
       return []
      }
     },
+    stronaramkifilter:(state) =>{
+     return state.product.szyba!='00' ? state.inoxstrona.dane.slice(0,1) : state.inoxstrona.dane;
+   },
+   samkolorfilter:(state)=>{
+     if(state.product.samozamykacz=='LC' || state.product.samozamykacz=='LN' ){
+       return state.kolorsam.dane.slice(0,1);
+     }else{
+       return state.kolorsam.dane
+     }
+
+   },
+
     tabsFilter:(state,getters)=>{
       return state.tabs2.filter((el)=>el.available==true)
-    },
-    cena: (state)=>{
-      if(state.cenytablica.find((el)=>el.model == state.product.wzor)[state.product.seria]){
-      return state.cenytablica.find((el)=>el.model == state.product.wzor)[state.product.seria]
-    } else {
-      return 0
-    }
     }
 
   },
