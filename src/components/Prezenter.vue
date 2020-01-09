@@ -1,7 +1,7 @@
 <template>
   <div class="">
 
-  <v-stage ref="stage" :config="{width:800,height:600,draggable:true}" @mousedown="handleStageMouseDown" @wheel="zoom">
+  <v-stage ref="stage" :config="{width:650,height:550,draggable:true}" @mousedown="handleStageMouseDown" @wheel="zoom">
     <v-layer id="tlo">
       <v-image :config="{image:backgroundimage}" id="tloimage"></v-image>
     </v-layer>
@@ -25,7 +25,6 @@ import {EventBus} from '@/event-bus.js';
 export default {
   watch:{
     activebackground:function(){
-      console.log('asfd');
       this.loadbackground();
     }
   },
@@ -58,11 +57,7 @@ export default {
         return
       }
 
-      console.log(e.target);
-      console.log(e.target.getStage());
-
       if (e.target === e.target.getStage() || e.target.attrs.id=='tloimage') {
-        console.log('wyłącz');
         this.updateTransformer('detach');
         return;
       }
@@ -76,7 +71,6 @@ export default {
      const selectedNode = stage.findOne('.' + 'D1');
 
      if(mode=='detach'){
-       console.log('detach');
        transformerNode.detach();
        transformerNode.getLayer().batchDraw();
 
@@ -85,7 +79,6 @@ export default {
 
       transformerNode.attachTo(selectedNode);
       transformerNode.getLayer().batchDraw();
-      console.log(this.$children);
 
 
    },

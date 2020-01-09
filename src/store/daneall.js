@@ -20,7 +20,6 @@ koloryramek
 
 */
 
-console.log('dane');
 let seriatablica = [
   {artnr:'41',bez:'PRESTIGE TERMO'},
   {artnr:'30',bez:'OPTIMUM'},

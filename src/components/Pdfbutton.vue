@@ -44,16 +44,13 @@ computed:{
 },
 methods:{
   handlePDF(){
-    console.log('handlepdf');
     let self = this;
     EventBus.$emit('exportImages', '');
     setTimeout(function(){
       self.makePDF();
-      // console.log('makepdf');
     },5000);
   },
   test(){
-    console.log('asdfdaffsdfsdfd');
   },
   makePDF(){
     let self = this;

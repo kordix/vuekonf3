@@ -1,5 +1,5 @@
 <template>
-  <div class="contain myrow" v-cloak id="all" style="position:relative;z-index:2000">
+  <div class="contain myrow" v-cloak id="all" style="position:relative;z-index:2000;margin-top:10px">
     <p style="display:inline-block;">widok zewnątrz</p>
       <div class="switch" id="switch" @click="performSwitch" style="width:40px;margin-top:2px;margin-left:8px;margin-right:8px" >
           <div class="bar"></div>

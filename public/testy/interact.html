@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 </head>
+
 <body>
   <div class="draggable" style="width:300px;height:600px;background:red" id="capture">
     <p>afsdfd</p>
@@ -13,83 +15,86 @@
     <!-- <p style="position:absolute">fasdsfdasfdasfd</p>
     <img src="../images/okleiny/06.jpg" style="width:300px;height:600px;position:absolute:" alt=""> -->
 
-</div>
+  </div>
 
 
 
-<script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script src="https://unpkg.com/interactjs@1.7.2/dist/interact.js"></script>
 
   <script>
+    html2canvas(document.querySelector("#capture")).then(canvas => {
+      // document.body.appendChild(canvas)
 
-  html2canvas(document.querySelector("#capture")).then(canvas => {
-    // document.body.appendChild(canvas)
+      let url = canvas.toDataURL();
 
-    let url = canvas.toDataURL();
-    console.log(url);
-
-    let imgObj = new Image();
-    imgObj.src = url;
-    imgObj.setAttribute('id','test');
-});
+      let imgObj = new Image();
+      imgObj.src = url;
+      imgObj.setAttribute('id', 'test');
+    });
 
 
 
 
     // target elements with the "draggable" class
     interact('.draggable')
-    .draggable({
-      onmove: window.dragMoveListener,
-      modifiers: [
-        interact.modifiers.restrictRect({
-          // restriction: 'parent'
-        })
-      ]
-    })
-    .resizable({
-      // resize from all edges and corners
-      edges: { left: true, right: true, bottom: true, top: true }
-    })
-    .on('resizemove', function (event) {
-      var target = event.target
-      var x = (parseFloat(target.getAttribute('data-x')) || 0)
-      var y = (parseFloat(target.getAttribute('data-y')) || 0)
+      .draggable({
+        onmove: window.dragMoveListener,
+        modifiers: [
+          interact.modifiers.restrictRect({
+            // restriction: 'parent'
+          })
+        ]
+      })
+      .resizable({
+        // resize from all edges and corners
+        edges: {
+          left: true,
+          right: true,
+          bottom: true,
+          top: true
+        }
+      })
+      .on('resizemove', function(event) {
+        var target = event.target
+        var x = (parseFloat(target.getAttribute('data-x')) || 0)
+        var y = (parseFloat(target.getAttribute('data-y')) || 0)
 
-      // update the element's style
-      target.style.width = event.rect.width + 'px'
-      target.style.height = event.rect.height + 'px'
+        // update the element's style
+        target.style.width = event.rect.width + 'px'
+        target.style.height = event.rect.height + 'px'
 
-      // translate when resizing from top or left edges
-      x += event.deltaRect.left
-      y += event.deltaRect.top
+        // translate when resizing from top or left edges
+        x += event.deltaRect.left
+        y += event.deltaRect.top
 
-      target.style.webkitTransform = target.style.transform =
+        target.style.webkitTransform = target.style.transform =
           'translate(' + x + 'px,' + y + 'px)'
 
-      target.setAttribute('data-x', x)
-      target.setAttribute('data-y', y)
-      // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
-    })
+        target.setAttribute('data-x', x)
+        target.setAttribute('data-y', y)
+        // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
+      })
 
-  function dragMoveListener (event) {
-    var target = event.target
-    // keep the dragged position in the data-x/data-y attributes
-    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
-    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+    function dragMoveListener(event) {
+      var target = event.target
+      // keep the dragged position in the data-x/data-y attributes
+      var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+      var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
-    // translate the element
-    target.style.webkitTransform =
-      target.style.transform =
+      // translate the element
+      target.style.webkitTransform =
+        target.style.transform =
         'translate(' + x + 'px, ' + y + 'px)'
 
-    // update the posiion attributes
-    target.setAttribute('data-x', x)
-    target.setAttribute('data-y', y)
-  }
+      // update the posiion attributes
+      target.setAttribute('data-x', x)
+      target.setAttribute('data-y', y)
+    }
 
-  // this is used later in the resizing and gesture demos
-  window.dragMoveListener = dragMoveListener
-
+    // this is used later in the resizing and gesture demos
+    window.dragMoveListener = dragMoveListener
   </script>
 </body>
+
 </html>

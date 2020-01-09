@@ -72,13 +72,7 @@ export default {
         return 15
       }
     },
-    backbool:function(){
-        if(this.selectedwidok=='Z'){
-          return false
-        }else {
-          return true
-        }
-    },
+
     flipC:function(){
       if(this.selectedwidok=='Z'){
         return {scaleX:1,x:0,draggable:true}

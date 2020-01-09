@@ -10,6 +10,10 @@
         <switcher></switcher>
         <p style="font-size:18px">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
         <p v-if="priceokucia>0" style="font-size:18px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
+        <p v-if="samozamykaczCena>0" style="font-size:18px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
+        <p v-if="wizjerCena>0" style="font-size:18px">Wizjer: <span style="font-weight:bold">{{parseInt(wizjerCena)}} zł</span></p>
+        <p v-if="ezaczepCena>0" style="font-size:18px">Elektrozaczep<span v-if="$store.state.product.seria == 41">(x3)</span>: <span style="font-weight:bold">{{parseInt(ezaczepCena)}} zł</span></p>
+        <p v-if="kopniakCena>0" style="font-size:18px">Kopniak: <span style="font-weight:bold">{{parseInt(kopniakCena)}} zł</span></p>
 
       </div>
   </div>
@@ -98,7 +102,6 @@ export default {
 
     },
     getCenaPochwyt(){
-      console.log('getCenaPochwyt');
       if(this.product.sposobotw=='KK') return;
 
       let kolorlocal = '';
@@ -121,7 +124,10 @@ export default {
       product:'product'
     }),
     ...mapGetters({
-
+      samozamykaczCena:'samozamykaczCena',
+      wizjerCena:'wizjerCena',
+      ezaczepCena:'ezaczepCena',
+      kopniakCena:'kopniakCena'
     }),
     seriac(){
       if(this.product.seria=='21') return '20'

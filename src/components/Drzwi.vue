@@ -100,7 +100,6 @@ export default {
   mounted(){
     this.fadeIn();
     EventBus.$on('exportImages', payload => {
-      console.log('exportuje na event');
       this.handleExports();
     // this.exportImage();
     // this.exportImageInner();
@@ -115,32 +114,38 @@ export default {
       product:'product'
     }),
     gruboscc:function(){
-      if(this.selectedwidokc=='Z'){
-        return 20
-      }else {
+      if(this.backbool==true){
         return 15
+      }else{
+        return 20
       }
     },
     backbool:function(){
-        if(this.selectedwidokc=='Z'){
-          return false
-        }else {
-          return true
-        }
+        if(this.selectedwidokc=='Z' && this.product.kierunek=='Lz'){return true}
+        else if(this.selectedwidokc=='Z' && this.product.kierunek=='Lw'){return false}
+        else if(this.selectedwidokc=='Z' && this.product.kierunek=='Pz'){return true}
+        else if(this.selectedwidokc=='Z' && this.product.kierunek=='Pw'){return false}
+        else if(this.selectedwidokc=='W' && this.product.kierunek=='Lz'){return false}
+        else if(this.selectedwidokc=='W' && this.product.kierunek=='Lw'){return true}
+        else if(this.selectedwidokc=='W' && this.product.kierunek=='Pz'){return false}
+        else if(this.selectedwidokc=='W' && this.product.kierunek=='Pw'){return true}
     },
     flipCx:function(){
-      if(this.selectedwidokc=='Z'){
+      if(this.flipCscale===1){
         return 0
       }else {
         return this.width
       }
     },
     flipCscale:function(){
-      if(this.selectedwidokc=='Z'){
-        return 1
-      }else {
-        return -1
-      }
+      if(this.selectedwidokc=='Z' && this.product.kierunek=='Lw'){return -1}
+      else if(this.selectedwidokc=='Z' && this.product.kierunek=='Lz'){return 1}
+      else if(this.selectedwidokc=='Z' && this.product.kierunek=='Pz'){return -1}
+      else if(this.selectedwidokc=='Z' && this.product.kierunek=='Pw'){return 1}
+      else if(this.selectedwidokc=='W' && this.product.kierunek=='Lz'){return -1}
+      else if(this.selectedwidokc=='W' && this.product.kierunek=='Lw'){return 1}
+      else if(this.selectedwidokc=='W' && this.product.kierunek=='Pz'){return 1}
+      else if(this.selectedwidokc=='W' && this.product.kierunek=='Pw'){return -1}
     },
     selectedwidokc:function(){
       if(this.turnable==false){

@@ -13,10 +13,10 @@
     <p :key="'d'"  class="scrollerheading">Wzór</p>
     <scroller :key="'e'"    :attr="'wzor'" :folder="'wzory'" :scrollerdata="wzorFilter" :col="'4'" :scroll="true"></scroller>
       <transition-group :key="'asdf'" name="test" tag="div">
-        <p  :key="'ff'" class="scrollerheading" v-if="showInox">Strona ramki inox</p>
-        <scroller :key="'h'"   :attr="'inoxstrona'"  :scrollerdata="inoxstrona.dane" :noimage="true" v-if="showInox"></scroller>
-        <p  :key="'ii'" class="scrollerheading" v-if="showInox"> Kolor ramki inox</p>
-        <scroller :key="'k'" :attr="'inoxkolor'" :scrollerdata="ramkakolorfilter" :folder="'koloryakc'"  v-if="showInox"></scroller>
+        <p  :key="'ff'" class="scrollerheading" v-show="showInox">Strona ramki inox</p>
+        <scroller :key="'h'"   :attr="'inoxstrona'"  :scrollerdata="inoxstrona.dane" :noimage="true" v-show="showInox"></scroller>
+        <p  :key="'ii'" class="scrollerheading" v-show="showInox"> Kolor ramki inox</p>
+        <scroller :key="'k'" :attr="'inoxkolor'" :scrollerdata="ramkakolorfilter" :folder="'koloryakc'"  v-show="showInox"></scroller>
       </transition-group name="test" tag="div">
 
   </div>
@@ -52,20 +52,20 @@
   </div>
   <div :key="'akc'" class="" v-show="activeTab=='Akcesoria'">
     <p class="scrollerheading" >Samozamykacz</p>
-     <scroller :scrollerdata="samozamykacz.dane" :attr="'samozamykacz'" :folder="'samozamykacz'"></scroller>
+     <scroller :scrollerdata="samozamykaczFilter" :attr="'samozamykacz'" :folder="'samozamykacz'" :col="'4'"></scroller>
      <transition-group :key="'asdff'" name="test" tag="div" >
        <p :key="'a'" class="scrollerheading" v-if="product.samozamykacz != '-'">Kolor samozamykacza</p>
-       <scroller :key="'b'" :scrollerdata="samkolorfilter" :folder="'koloryakc'" v-if="product.samozamykacz != '-'" :attr="'samozamykaczKolor'"></scroller>
+       <scroller :key="'b'" :scrollerdata="samkolorfilter" :folder="'koloryakc'" v-if="product.samozamykacz != '-'" :attr="'samozamykaczKolor'" :col="'4'"></scroller>
      </transition-group>
 
      <p class="scrollerheading " >Wizjer</p>
-     <scroller :scrollerdata="wizjer.dane" :attr="'wizjer'" :folder="'wizjer'"></scroller>
+     <scroller :scrollerdata="wizjer.dane" :attr="'wizjer'" :folder="'wizjer'" :col="'4'"></scroller>
      <p class="scrollerheading" :noimage="true" >Elektrozaczep</p>
-     <scroller :scrollerdata="elektrozaczep.dane" :attr="'elektrozaczep'" :noimage="true"></scroller>
+     <scroller :scrollerdata="elektrozaczep.dane" :attr="'elektrozaczep'" :noimage="true" :col="'4'"></scroller>
      <p class="scrollerheading">Kopniak</p>
-     <scroller :scrollerdata="kopniak.dane"  :attr="'kopniak'" :folder="'kopniak'" :noimage="true"></scroller>
-     <p class="scrollerheading">System automatyki</p>
-     <scroller :scrollerdata="automatyka.dane"  :attr="'automatyka'" :folder="'automatyka'"></scroller>
+     <scroller :scrollerdata="kopniak.dane"  :attr="'kopniak'" :folder="'kopniak'" :noimage="true" :col="'4'"></scroller>
+     <p class="scrollerheading" v-if="$store.state.product.seria=='41'">System automatyki</p>
+     <scroller :scrollerdata="automatyka.dane"  :attr="'automatyka'" :folder="'automatyka'" :col="'4'" v-if="$store.state.product.seria=='41'"></scroller>
   </div>
 
 
@@ -86,22 +86,6 @@
 <navbuttons></navbuttons>
 
 
-
-
-
-  <!-- <scroller :key="'wkl'" :scrollerdata="wkladka.dane" :folder="'wkladka'"></scroller> -->
-  <!-- <scroller :key="'aut'" :scrollerdata="automatyka.dane" :folder="'automatyka'"></scroller> -->
-  <!-- <scroller :key="'sam'" :scrollerdata="samozamykaczfilter" :folder="'samozamykacz'" ></scroller> -->
-  <!-- <scroller :key="'samkolor'" :scrollerdata="samkolorfilter" :folder="'koloryakc'" v-if="activesam.artnr && activesam.artnr != '-'"></scroller> -->
-  <!-- <scroller :key="'wiz'" :scrollerdata="wizjerfilter" :folder="'wizjer'" ></scroller> -->
-  <!-- <scroller :key="'kop'" :scrollerdata="kopniak.dane" :folder="'kopniak'" :noimage="true" ></scroller> -->
-  <!-- <scroller :key="'ele'" :scrollerdata="elektrozaczep.dane" :folder="'elektrozaczep'" :noimage="true" ></scroller> -->
-
-
-
-  <!-- {{wzor.dane}} -->
-
-  <!-- <scroller :key="'model'" :scrollerdata="wzorFilter2" :folder="wzor.folder" v-show="activetab.bez=='Model'"  @clear="myset('wariant','S')"></scroller> -->
 </div>
 </template>
 
@@ -131,18 +115,22 @@ export default {
         this.$store.state.product.inoxkolor = this.$store.getters.ramkakolorfilter[0].artnr;
       }
     },
+    "product.samozamykacz":function(val){
+      this.$store.state.product.samozamykaczKolor = this.samkolorfilter[0].artnr;
+      console.log(val);
+      if(val=='-'){
+        this.$store.state.product.samozamykaczKolor = '';
+      }
+    },
     "product.klamka":function(){
       this.$store.state.product.klamkakolor = this.klamkakolorfilter[0].artnr;
     },
     "product.inoxstrona":function(newval,val){
-      console.log(val);
-      console.log(newval);
+
       if(newval == '0' || newval==''){
-        console.log('dziala');
         return
       }else {
         this.$store.state.product.szyba = '00';
-        console.log(this.$store.state.product.szyba);
       }
     }
   },
@@ -190,6 +178,7 @@ export default {
    showInox:'showInox',
    ramkakolorfilter:'ramkakolorfilter',
    klamkakolorfilter:'klamkakolorfilter',
+   samozamykaczFilter:'samozamykaczFilter',
    samkolorfilter:'samkolorfilter',
    cena:'cena'
 

@@ -65,12 +65,12 @@ export default new Vuex.Store({
     koloryklamek:all.koloryklamek,
     activeKolorTyp:'DEK',
     samozamykacz:{dane:[
-      {artnr:'-',bez:'Brak'},
-      {artnr:'LN',bez:'Samozamykacz listwowy nawierzchniowy'},
-      {artnr:'LC',bez:'Samozamykacz listwowy chowany'},
-      {artnr:'R',bez:'Samozamykacz z ramieniem'},
-      {artnr:'RB',bez:'Samozamykacz z ramieniem i blokadą'},
-      {artnr:'W',bez:'Tylko wzmocnienie pod samozamykacz'}
+      {artnr:'-',bez:'Brak',cena:0},
+      {artnr:'LN',bez:'Samozamykacz listwowy nawierzchniowy',cena:630},
+      {artnr:'LC',bez:'Samozamykacz listwowy chowany',cena:720},
+      {artnr:'R',bez:'Samozamykacz z ramieniem',cena:250},
+      {artnr:'RB',bez:'Samozamykacz z ramieniem i blokadą',cena:380},
+      {artnr:'W',bez:'Tylko wzmocnienie pod samozamykacz',cena:60}
     ]},
     kolorsam:{bez:'Kolor samozamykacza', dane:[
       {artnr:'srebrny',bez:'Srebrny'},
@@ -81,11 +81,16 @@ export default new Vuex.Store({
       {artnr:'S',bez:'Szerokokątny' },
       {artnr:'C',bez:'Cyfrowy' }
     ]},
+    wizjerCena:{
+      '-':{20:0,30:0,41:0},
+      'S':{20:25,30:30,41:35},
+      'C':{20:380,30:380,41:380}
+    },
     kopniak:{bez:'Kopniak',dane:[
-      {artnr:'-',bez:'Brak'},
-      {artnr:'1',bez:'Wewnątrz' },
-      {artnr:'2',bez:'Zewnątrz' },
-      {artnr:'3',bez:'Obustronnie' }
+      {artnr:'-',bez:'Brak',cena:0},
+      {artnr:'1',bez:'Wewnątrz',cena:80 },
+      {artnr:'2',bez:'Zewnątrz',cena:80 },
+      {artnr:'3',bez:'Obustronnie',cena:160 }
     ]},
     elektrozaczep:{bez:'Elektrozaczep',dane:[
       {artnr:'N',bez:'NIE' },
@@ -105,7 +110,7 @@ export default new Vuex.Store({
     ]},
     product:{
       kolekcja:'all',
-      wzor: '01',
+      wzor: 'F2A',
       wariant:'S',
       kolor: '04',
       kolor2: '04',
@@ -113,8 +118,8 @@ export default new Vuex.Store({
       ramka:'',
       seria:'30',
       kierunek:'Lw',
-      sposobotw:'PP',
-      klamka:'P120o90',
+      sposobotw:'KK',
+      klamka:'Magnus',
       klamkakolor:'10301',
       inoxstrona:'',
       inoxkolor:'',
@@ -250,8 +255,7 @@ export default new Vuex.Store({
   },
   klamkifilter:(state,getters) => {
        if(getters.activeModel && getters.activeSotw){
-         // console.log(state.klamka.dane.filter((el)=>state.wzorydoklamki[el.artnr].indexOf('12')>=0));
-       return state.klamka.dane.filter((el)=>state.wzorydoklamki[el.artnr].indexOf(getters.activeModel.artnr)>=0).filter((el)=>el.typ==getters.activeSotw.artnr)
+       return state.klamka.dane.filter((el)=>state.wzorydoklamki[el.artnr].indexOf(state.product.wzor)>=0).filter((el)=>el.typ==state.product.sposobotw)
      }else{
        return []
      }
@@ -269,7 +273,7 @@ export default new Vuex.Store({
    },
    showInox:(state,getters) => {
       if(getters.activeModel){
-        return state.inoxlista.indexOf(getters.activeModel.artnr)>=0 ? true : false
+        return state.inoxlista.indexOf(state.product.wzor)>=0 ? true : false
       }else{
         return false
       }
@@ -286,6 +290,12 @@ export default new Vuex.Store({
     stronaramkifilter:(state) =>{
      return state.product.szyba!='00' ? state.inoxstrona.dane.slice(0,1) : state.inoxstrona.dane;
    },
+   samozamykaczFilter:(state) => {
+     if(state.product.seria!='31' && state.product.seria!='41'){
+       return state.samozamykacz.dane.filter((el)=>el.artnr != 'LC')
+     }else{
+       return state.samozamykacz.dane
+   }},
    samkolorfilter:(state)=>{
      if(state.product.samozamykacz=='LC' || state.product.samozamykacz=='LN' ){
        return state.kolorsam.dane.slice(0,1);
@@ -293,6 +303,30 @@ export default new Vuex.Store({
        return state.kolorsam.dane
      }
 
+   },
+   samozamykaczCena:(state)=>{
+     return state.samozamykacz.dane.find((el)=>el.artnr==state.product.samozamykacz).cena
+   },
+   wizjerCena:(state,getters)=>{
+     return state.wizjerCena[state.product.wizjer][getters.seriac]
+   },
+   ezaczepCena:(state,getters)=>{
+     if(state.product.elektrozaczep=='J' && state.product.seria=='41'){
+       return 180*3
+     }else if (state.product.elektrozaczep=='J'){
+       return 180
+     }else{
+       return 0
+     }
+
+   },
+   kopniakCena:(state)=>{
+     return state.kopniak.dane.find((el)=>el.artnr==state.product.kopniak).cena
+   },
+   seriac:(state)=>{
+     if(state.product.seria=='21'){ return '20'}
+     else if(state.product.seria=='31'){return '30'}
+     else {return state.product.seria}
    },
 
     tabsFilter:(state,getters)=>{
