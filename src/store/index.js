@@ -110,7 +110,7 @@ export default new Vuex.Store({
     ]},
     product:{
       kolekcja:'all',
-      wzor: 'F2A',
+      wzor: '01',
       wariant:'S',
       kolor: '04',
       kolor2: '04',

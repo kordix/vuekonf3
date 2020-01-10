@@ -7,6 +7,7 @@
     <v-image id="gora" :config="{image:nt,x:grubosc,height:grubosc,width:width-2*grubosc,crop:{width:272,height:110,x:0,y:0}}"></v-image>
     <v-image id="prawegora" :config="{image:nlt,x:width,height:grubosc,width:grubosc,scaleX:-1,crop:{width:101,height:101,x:0,y:0}}"></v-image>
     <v-image id="prawe" :config="{image:nl,x:width,height:height-grubosc,y:grubosc,width:grubosc,scaleX:-1,crop:{width:110,height:280,x:0,y:0}}"></v-image>
+    
 
   </v-group>
 </template>

@@ -1,9 +1,14 @@
 <template>
     <v-layer :config="{scaleX:scalexprop,scaleY:scaleyprop,x:xprop,y:yprop}">
       <v-group :config="{x:flipCx,scaleX:flipCscale,name:'D1',draggable:dragprop }" ref="mygroup">
-      <oscieznica :grubosc="gruboscc" :height="height" :width="width" :back="backbool"></oscieznica>
-      <skrzydlo :left="gruboscc" :top="gruboscc" :height="height-gruboscc" :width="width-2*gruboscc"  :back="backbool" ></skrzydlo>
+        <oscieznica :grubosc="gruboscc" :height="height" :width="width" :back="backbool"></oscieznica>
+        <skrzydlo :left="gruboscc" :top="gruboscc" :height="height-gruboscc" :width="width-2*gruboscc"  :back="backbool" ></skrzydlo>
       </v-group>
+      <v-group :config="{x:width}" v-if="drawnaswietle">
+        <v-rect :config="{height:height,y:0,fill:'blue',width:200}"></v-rect>
+        <oscieznica :grubosc="20" :height="height" :width="200" :back="backbool"></oscieznica>
+      </v-group>
+
       <v-transformer ref="transformer" />
 
     </v-layer>
@@ -23,8 +28,8 @@ export default {
     oscieznica,skrzydlo
   },
   props:{
-    width:Number,
-    height:Number,
+    // width:Number,
+    // height:Number,
     scalexprop:{type:Number,default:1},
     scaleyprop:{type:Number,default:1},
     xprop:{type:Number,default:0},
@@ -34,11 +39,12 @@ export default {
   },
   data(){
     return{
-      // height:600,
-      // width:300,
+      height:600,
+      width:300,
       back:false,
       xdata:0,
-      exportImageObj:null
+      exportImageObj:null,
+      drawnaswietle:false
     }
   },
   watch:{

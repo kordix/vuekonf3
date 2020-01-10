@@ -27,7 +27,7 @@ export default {
       // grubosc:20,
       // gruboscback:10,
       height:600,
-      width:300,
+      width:500,
       back:false
     }
   },
