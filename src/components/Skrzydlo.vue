@@ -5,6 +5,7 @@
       <v-image id="tloczenie" :config="{width:width,height:height,image:tloczenieimage}"></v-image>
       <v-image id="klamka" :config="{width:width,height:height,image:klamkaimage}"></v-image>
       <v-image id="szyba" :config="{width:width,height:height,image:szybaimage}"></v-image>
+      <v-rect :config="{width:width,height:left-12,fill:'#999999',y:height-left+12}" ></v-rect>
   </v-group>
 </template>
 
@@ -13,7 +14,7 @@ import {mapState} from 'vuex';
 import {mapGetters} from 'vuex';
 
 export default {
-  props:['left','top','width','height'],
+  props:['left','top','width','height','back'],
   data(){
     return{
       okleinaimage:null,
@@ -58,6 +59,7 @@ export default {
     },
     "product.szyba":function(){
       this.drawSzyba();
+      this.drawTloczenie();
     },
     "product.wzor":function(){
       this.drawTloczenie();
@@ -108,7 +110,7 @@ export default {
         this.szybaimage = imageObj;
       };
     },
-    drawTloczenie(){
+    drawTloczenie:function(){
       this.tloczenieimage = null;
       const imageObj = new Image();
 
@@ -128,6 +130,8 @@ export default {
        if(this.inoxpelne==true){
          file = this.product.wzor+'_PELNE';
        }
+
+       console.log(file);
 
       imageObj.src = '/images/tloczenia/'+file+'.png';
       imageObj.onload = () => {
@@ -153,14 +157,14 @@ export default {
      return (this.mixdanetab.find((el)=>el.model == this.product.wzor)) ? this.mixdanetab.find((el)=>el.model == this.product.wzor).dane : {}
     },
     mixcCorrectX(){
-      return this.selectedwidok == 'W' ? this.mixc.x + this.mixc.correctx : this.mixc.x
+      return this.back == true ? this.mixc.x + this.mixc.correctx : this.mixc.x
     },
     mixcCorrectWidth(){
-      return this.selectedwidok == 'W' ? this.mixc.width + this.mixc.correctwidth : this.mixc.width
+      return this.back == true ? this.mixc.width + this.mixc.correctwidth : this.mixc.width
     },
     mixbool(){
       if(this.product.wzor){
-      return (this.mixkolorlista.indexOf(this.product.wzor)>= 0) ? true : false;
+      return (this.mixkolorlista.indexOf(this.product.wzor)>= 0 && this.product.wariant == 'M') ? true : false;
       }else{return false}
     },
     szybac(){

@@ -2,7 +2,7 @@
     <v-layer :config="{scaleX:scalexprop,scaleY:scaleyprop,x:xprop,y:yprop}">
       <v-group :config="{x:flipCx,scaleX:flipCscale,name:'D1',draggable:dragprop }" ref="mygroup">
       <oscieznica :grubosc="gruboscc" :height="height" :width="width" :back="backbool"></oscieznica>
-      <skrzydlo :left="gruboscc" :top="gruboscc" :height="height-gruboscc" :width="width-2*gruboscc"  ></skrzydlo>
+      <skrzydlo :left="gruboscc" :top="gruboscc" :height="height-gruboscc" :width="width-2*gruboscc"  :back="backbool" ></skrzydlo>
       </v-group>
       <v-transformer ref="transformer" />
 
@@ -34,8 +34,6 @@ export default {
   },
   data(){
     return{
-      grubosc:30,
-      gruboscback:10,
       // height:600,
       // width:300,
       back:false,

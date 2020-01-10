@@ -24,8 +24,8 @@ export default {
   },
   data(){
     return{
-      grubosc:20,
-      gruboscback:10,
+      // grubosc:20,
+      // gruboscback:10,
       height:600,
       width:300,
       back:false
@@ -64,22 +64,8 @@ export default {
     ...mapState({
       selectedwidok:'selectedwidok',
       product:'product'
-    }),
-    gruboscc:function(){
-      if(this.selectedwidok=='Z'){
-        return 20
-      }else {
-        return 15
-      }
-    },
+    })
 
-    flipC:function(){
-      if(this.selectedwidok=='Z'){
-        return {scaleX:1,x:0,draggable:true}
-      }else {
-        return {scaleX:-1,x:this.width,draggable:true}
-      }
-    }
 
   }
 

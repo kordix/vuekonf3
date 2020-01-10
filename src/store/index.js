@@ -117,7 +117,7 @@ export default new Vuex.Store({
       szyba:'00',
       ramka:'',
       seria:'30',
-      kierunek:'Lw',
+      kierunek:'Pw',
       sposobotw:'KK',
       klamka:'Magnus',
       klamkakolor:'10301',
@@ -132,6 +132,8 @@ export default new Vuex.Store({
     },
     cenytablica:ceny,
     cenyPochwytTablica:cenyPochwyt,
+    priceokucia:0,
+    basicprice:0,
 
     backgrounds:[
    {url:'/images/backgrounds/1.jpg',x:330,y:312,scalex:0.15,scaley:0.15},

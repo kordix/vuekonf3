@@ -54,8 +54,6 @@ methods:{
   },
   makePDF(){
     let self = this;
-
-
     let pdf = new jsPDF('p','pt');
     let data =new Date();
     let data2 = data.toLocaleDateString("pl",{hour:'numeric',minute:'numeric'});
