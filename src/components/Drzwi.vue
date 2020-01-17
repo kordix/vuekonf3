@@ -1,14 +1,15 @@
 <template>
     <v-layer :config="{scaleX:scalexprop,scaleY:scaleyprop,x:xprop,y:yprop}">
-      <v-group :config="{x:flipCx,scaleX:flipCscale,name:'D1',draggable:dragprop }" ref="mygroup">
-        <oscieznica :grubosc="gruboscc" :height="height" :width="width" :back="backbool"></oscieznica>
-        <skrzydlo :left="gruboscc" :top="gruboscc" :height="height-gruboscc" :width="width-2*gruboscc"  :back="backbool" ></skrzydlo>
+      <v-group id="all" :config="{x:grpx,scaleX:grpsx,name:'D1',draggable:dragprop }" ref="mygroup">
+        <v-group id="drzwi"  >
+          <oscieznica :grubosc="gruboscc" :height="wysokoscdrzwi" :width="szerokoscdrzwi" :back="backbool"></oscieznica>
+          <skrzydlo :left="gruboscc" :top="gruboscc" :height="wysokoscdrzwi-gruboscc" :width="szerokoscdrzwi-2*gruboscc"  :back="backbool" ></skrzydlo>
+        </v-group>
+        <v-group :config="{x:szerokoscdrzwi,y:ynb2}" v-if="drawnb2">
+          <v-rect :config="{height:wysokoscdrzwi,fill:'blue',width:szerokoscnb2}"></v-rect>
+          <naswietle :grubosc="20" :height="wysokoscdrzwi" :width="szerokoscnb2" :back="backbool"></naswietle>
+        </v-group>
       </v-group>
-      <v-group :config="{x:width}" v-if="drawnaswietle">
-        <v-rect :config="{height:height,y:0,fill:'blue',width:200}"></v-rect>
-        <oscieznica :grubosc="20" :height="height" :width="200" :back="backbool"></oscieznica>
-      </v-group>
-
       <v-transformer ref="transformer" />
 
     </v-layer>
@@ -18,6 +19,8 @@
 import {mapState} from 'vuex';
 import {mapGetters} from 'vuex';
 import oscieznica from '@/components/Oscieznicakonva.vue';
+import naswietle from '@/components/Naswietle.vue';
+
 import skrzydlo from '@/components/Skrzydlo.vue';
 import { EventBus } from '@/event-bus.js';
 
@@ -25,7 +28,7 @@ import { EventBus } from '@/event-bus.js';
 
 export default {
   components:{
-    oscieznica,skrzydlo
+    oscieznica,skrzydlo,naswietle
   },
   props:{
     // width:Number,
@@ -39,12 +42,25 @@ export default {
   },
   data(){
     return{
+      grpx:0,grpsx:1,
       height:600,
       width:300,
       back:false,
       xdata:0,
       exportImageObj:null,
-      drawnaswietle:false
+      drawnaswietle:true,
+      szerokoscdrzwi:300,
+      szerokoscall:300,
+      wysokoscdrzwi:600,
+      szerokoscnb1:200,
+      szerokoscnb2:200,
+      wysokoscng:500,
+      szerokoscng:100,
+      xdrzwi:0,ydrzwi:0,
+      xnb1:0,ynb1:0,
+      xnb2:0,ynb2:0,
+      xng:0,yng:0,
+      drawnb2:false,drawnb1:false,drawng:false
     }
   },
   watch:{
@@ -53,7 +69,27 @@ export default {
     },
     "product.szyba":function(){
       this.fadeIn();
-    }
+    },
+    selectedwidok:function(){
+     if((this.product.kierunek == 'Lz' || this.product.kierunek == 'Pw') && this.selectedwidok=='Z'){
+       this.grpsx = 1;this.grpx=0;
+     };
+     if((this.product.kierunek == 'Lw' || this.product.kierunek == 'Pz') && this.selectedwidok=='Z'){
+       this.grpsx = -1;this.grpx=this.szerokoscall;
+     };
+     if((this.product.kierunek == 'Lz' || this.product.kierunek == 'Pw') && this.selectedwidok=='W'){
+       this.grpsx = -1;this.grpx=this.szerokoscall;
+     };
+     if((this.product.kierunek == 'Lw' || this.product.kierunek == 'Pz') && this.selectedwidok=='W'){
+       this.grpsx = 1;this.grpx=0;
+     };
+   },
+   "product.typ":function(){
+    this.handleZestaw();
+  }
+
+
+
   },
   methods:{
     handleExports(){
@@ -99,10 +135,40 @@ export default {
       setTimeout(function(){
         document.getElementById("wizcon").style.opacity = 1 ;
       },400);
+    },
+    handleZestaw(){
+      this.drawnb1=false;this.drawnb2=false;this.drawng=false;this.ynb1=0;this.ynb2=0;this.ydrzwi=0;
+      if(this.product.typ == 'D1'){ //drzwi
+        this.xdrzwi=0;this.drawnb1=false;this.drawnb2=false;this.szerokoscall=this.szerokoscdrzwi;
+      }
+      if(this.product.typ == 'D1N01'){ //nb po lewej
+        this.szerokoscall=this.szerokoscdrzwi+this.szerokoscnb1;
+        this.xdrzwi=this.szerokoscnb1;this.drawnb1=true;
+      }
+      if(this.product.typ == 'D1N02'){ //nb po prawej
+        this.szerokoscall=this.szerokoscdrzwi+this.szerokoscnb2;
+        this.xdrzwi=0;this.xnb2=this.szerokoscdrzwi;this.drawnb2=true;
+      }
+      if(this.product.typ == 'D1N03'){ //oba nb
+        this.xdrzwi=this.szerokoscnb1;
+        this.xnb2=this.szerokoscnb1+this.szerokoscdrzwi;
+        this.drawnb2=true;this.drawnb1=true;
+      }
+      if(this.product.typ == 'D1N04'){ //nb górne
+        this.szerokoscall=this.szerokoscdrzwi;
+        this.drawnb1=false;this.drawnb2=false;
+        this.xdrzwi=0;this.ydrzwi=this.wysokoscng;this.drawng=true;this.szerokoscng=this.szerokoscdrzwi;
+      }
+      if(this.product.typ == 'D1N07'){ //wszystkie
+        this.szerokoscall=this.szerokoscdrzwi+this.szerokoscnb1+this.szerokoscnb2;
+        this.xdrzwi=this.szerokoscnb1;this.xnb2=this.szerokoscnb1+this.szerokoscdrzwi;this.ydrzwi=this.wysokoscng;this.ynb1=this.wysokoscng;this.ynb2=this.wysokoscng;this.drawnb1=true;this.drawng=true;this.drawnb2=true;
+        this.szerokoscng=this.szerokoscdrzwi+this.szerokoscnb1+this.szerokoscnb2;
+      }
     }
   },
   mounted(){
     this.fadeIn();
+    this.handleZestaw();
     EventBus.$on('exportImages', payload => {
       this.handleExports();
     // this.exportImage();
@@ -151,6 +217,9 @@ export default {
       else if(this.selectedwidokc=='W' && this.product.kierunek=='Pz'){return 1}
       else if(this.selectedwidokc=='W' && this.product.kierunek=='Pw'){return -1}
     },
+
+
+
     selectedwidokc:function(){
       if(this.turnable==false){
         return 'Z'

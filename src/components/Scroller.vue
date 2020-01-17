@@ -6,10 +6,10 @@
       <div v-for="item in scrollerdata" class="scroller-item mycolumn col-4"  :class="{active:item.artnr==activeItem,col5k:col=='5',col4k:col=='4'}"  @click="handleitemclick(item.artnr)">
         <div class="" style="margin:15px 15px 5px 15px">
           <img v-if="noimage" style="display:none">
-          <img v-else-if="folder=='Przeszklenia' && item.artnr=='00'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/pusty.jpg.png' ">
-          <img v-else-if="folder=='Przeszklenia' && item.artnr=='19'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/'+odpszybkonf+'_06.jpg' ">
-          <img v-else-if="folder=='Przeszklenia'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/'+odpszybkonf+'_'+item.artnr+'.jpg' ">
-         <img v-else class="img-fluid" :src="`/images/konfigurator/${folder}/${item.artnr}.jpg` ">
+          <img v-else-if="folder=='Przeszklenia' && item.artnr=='00'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/pusty.png' ">
+          <img v-else-if="folder=='Przeszklenia' && item.artnr=='19'" class="img-fluid"  :src="`/images/konfigurator/Przeszklenia/${odpszybkonf}_06.${ext}` ">
+          <img v-else-if="folder=='Przeszklenia'" class="img-fluid"  :src="`/images/konfigurator/Przeszklenia/${odpszybkonf}_${item.artnr}.${ext}` ">
+         <img v-else class="img-fluid" :src="`/images/konfigurator/${folder}/${item.artnr}.${ext}` ">
          <label class="caption" style="cursor:pointer" :class="{captionnoimg:noimage}">{{item.bez}}</label></b>
          </div>
       </div>
@@ -21,8 +21,12 @@
 </template>
 
 <script>
+    import { EventBus } from '@/event-bus.js';
+
+
     export default {
-      props:{attr:String,scroll:{type:Boolean,default:true},scrollerdata:Array,folder:String,odpszyb:String,noimage:Boolean,scroll:{type:Boolean,default:false},col:{type:String,default:'col-3'},height:{type:String,default:"400"} },
+      props:{attr:String,scroll:{type:Boolean,default:true},scrollerdata:Array,folder:String,odpszyb:String,noimage:Boolean,scroll:{type:Boolean,default:false},
+      col:{type:String,default:'col-3'},height:{type:String,default:"400"},ext:{type:String,default:'jpg'}  },
         data(){
           return{
             thevalue:null
@@ -33,6 +37,7 @@
         },
         methods:{
           handleitemclick:function(val){
+            EventBus.$emit('scroller', this.attr);
             let self = this;
             this.thevalue = val;
             let payload = {'attr': this.attr, 'val': this.thevalue};
@@ -60,7 +65,7 @@ max-width:800px;
 
 .scroll{
   overflow-y:auto;
-  max-height:600px;
+  max-height:400px;
 }
 
 .myrow{

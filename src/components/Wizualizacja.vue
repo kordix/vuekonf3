@@ -1,11 +1,13 @@
 <template>
   <div class="" id="wizcon" style="transition:1s;opacity:1;position:relative">
+    <div :style="{height:extraheight+'px'}" style="transition:1s">
 
-  <v-stage :config="{width:width,height:height}">
-    <drzwi :width="width" :height="height"></drzwi>
+    </div>
+    <v-stage :config="{width:width,height:height}">
+      <drzwi :width="width" :height="height"></drzwi>
 
-  </v-stage>
-</div>
+    </v-stage>
+  </div>
 
 
 </template>
@@ -28,7 +30,8 @@ export default {
       // gruboscback:10,
       height:600,
       width:500,
-      back:false
+      back:false,
+      extraheight:0
     }
   },
   watch:{
@@ -54,7 +57,19 @@ export default {
       setTimeout(function(){
         document.getElementById("wizcon").style.opacity = 1 ;
       },400);
+    },
+    handleScroll(){
+      if(window.innerWidth < 900){
+        return 
+      }
+
+      if (window.scrollY > 600 ){this.extraheight = 400; document.getElementById("masthead").style.display="none" }
+      else if (window.scrollY >8000 ){this.extraheight = 600}else {this.extraheight=0;document.getElementById("masthead").style.display="block"}
     }
+  },
+  created(){
+      window.addEventListener('scroll', this.handleScroll);
+
   },
   mounted(){
     // this.fadeIn();

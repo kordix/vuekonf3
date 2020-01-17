@@ -6,6 +6,9 @@
 import {mapState} from 'vuex';
 import {mapGetters} from 'vuex';
 import {EventBus} from '@/event-bus.js';
+// import * as jsPDF from 'jspdf';
+// import * as metropolisnormal from '@/Metropolis-normal.js';
+
 
 
 
@@ -57,6 +60,7 @@ methods:{
     let pdf = new jsPDF('p','pt');
     let data =new Date();
     let data2 = data.toLocaleDateString("pl",{hour:'numeric',minute:'numeric'});
+    console.log(pdf.getFontList());
     pdf.setFont("Metropolis","normal");
     pdf.setFontSize(9);
     pdf.text(200,800,'WIKED Sp. z o.o. Sp. k.');
@@ -123,7 +127,9 @@ methods:{
 
        pdf.addImage(imgsrc, 'JPEG', 400, 120, 150, targetheight);
        pdf.addImage(imgsrcinner, 'JPEG', 400, 450, 150, targetheight);
-       pdf.output('dataurlnewwindow');
+       pdf.output('save','konfigurator.pdf');
+
+      //  pdf.output('dataurlnewwindow');
 
 
   },

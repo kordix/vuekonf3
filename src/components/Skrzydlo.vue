@@ -3,8 +3,8 @@
       <v-image id="okleina" :config="{width:width,height:height,image:okleinaimage}"></v-image>
       <v-image id="mixokleina" v-if="mixbool" :config="{width:mixcCorrectWidth,height:height,x:mixcCorrectX,image:okleinaimage2,crop:{width:mixc.cropwidth,height:1000}}"></v-image>
       <v-image id="tloczenie" :config="{width:width,height:height,image:tloczenieimage}"></v-image>
-      <v-image id="klamka" :config="{width:width,height:height,image:klamkaimage}"></v-image>
       <v-image id="szyba" :config="{width:width,height:height,image:szybaimage}"></v-image>
+      <v-image id="klamka" :config="{width:width,height:height,image:klamkaimage}"></v-image>
       <v-rect :config="{width:width,height:left-12,fill:'#999999',y:height-left+12}" ></v-rect>
   </v-group>
 </template>

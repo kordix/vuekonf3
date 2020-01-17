@@ -66,10 +66,10 @@ export default new Vuex.Store({
     activeKolorTyp:'DEK',
     samozamykacz:{dane:[
       {artnr:'-',bez:'Brak',cena:0},
-      {artnr:'LN',bez:'Samozamykacz listwowy nawierzchniowy',cena:630},
-      {artnr:'LC',bez:'Samozamykacz listwowy chowany',cena:720},
-      {artnr:'R',bez:'Samozamykacz z ramieniem',cena:250},
-      {artnr:'RB',bez:'Samozamykacz z ramieniem i blokadą',cena:380},
+      {artnr:'LN',bez:'Listwowy nawierzchniowy',cena:630},
+      {artnr:'LC',bez:'Listwowy chowany',cena:720},
+      {artnr:'R',bez:'Z ramieniem',cena:250},
+      {artnr:'RB',bez:'Z ramieniem i blokadą',cena:380},
       {artnr:'W',bez:'Tylko wzmocnienie pod samozamykacz',cena:60}
     ]},
     kolorsam:{bez:'Kolor samozamykacza', dane:[
@@ -108,6 +108,22 @@ export default new Vuex.Store({
     {artnr:'Z',bez:'Zbliżeniowy'}
 
     ]},
+    typ:{bez:'Wybierz produkt',dane:[{artnr:'D1',bez:'Drzwi 1-skrzydłowe',current:true},
+    {artnr:'D1F01',bez:'Drzwi z dostawką po lewej',current:false},
+    {artnr:'D1F02',bez:'Drzwi z dostawką po prawej',current:false},
+    {artnr:'D1F03',bez:'Drzwi z dostawkami bocznymi',current:false},
+    {artnr:'D1N01',bez:'Drzwi z naświetlem bocznym po lewej',current:false},
+    {artnr:'D1N02',bez:'Drzwi z naświetlem bocznym po prawej ',current:false},
+    {artnr:'D1N03',bez:'Drzwi z naświetlami bocznymi',current:false},
+    {artnr:'D1N04',bez:'Drzwi z naświetlem górnym',current:false},
+    {artnr:'D1N05',bez:'Drzwi z naświetlem górnym i bocznym lewym',current:false},
+    {artnr:'D1N06',bez:'Drzwi z naświetlem górnym i bocznym prawym',current:false},
+    {artnr:'D1N07',bez:'Drzwi z naświetlem górnym i bocznymi',current:false}
+    // {artnr:'D2CL',bez:'Drzwi 2-skrzydłowe skrzydło czynne po lewej',current:false},
+    // {artnr:'D2CP',bez:'Drzwi 2-skrzydłowe skrzydło czynne po prawej',current:false}
+    ]},
+
+
     product:{
       kolekcja:'all',
       wzor: '01',
@@ -128,7 +144,8 @@ export default new Vuex.Store({
       wizjer:'-',
       kopniak:'-',
       elektrozaczep:'N',
-      automatyka:'-'
+      automatyka:'-',
+      typ:'D1'
     },
     cenytablica:ceny,
     cenyPochwytTablica:cenyPochwyt,
@@ -207,11 +224,17 @@ export default new Vuex.Store({
   wariantFilter: state => {
       return (state.mixkolorlista.indexOf(state.product.wzor) == -1 ) ? state.wariant.dane.slice(0,2) : state.wariant.dane.filter((el)=>el.artnr != 'B')
     },
+    activeSeria: state => {
+      return state.seria.dane.find((el)=>el.artnr == state.product.seria);
+    },
   activeModel: state => {
     return state.wzor.dane.find((el)=>el.artnr == state.product.wzor);
   },
   activeKolekcja: state => {
     return state.kolekcja.dane.find((el)=>el.artnr == state.product.kolekcja);
+  },
+  activeKolor: state => {
+    return state.kolor.dane.find((el)=>el.artnr == state.product.kolor);
   },
   activeKlamka: state => {
     return state.klamka.dane.find((el)=>el.artnr == state.product.klamka);
@@ -228,6 +251,23 @@ export default new Vuex.Store({
   activeKierunek: state => {
     return state.kierunek.dane.find((el)=>el.artnr == state.product.kierunek);
   },
+  activeWizjer: state => {
+    return state.wizjer.dane.find((el)=>el.artnr == state.product.wizjer);
+  },
+  activeSamozamykacz: state => {
+    return state.samozamykacz.dane.find((el)=>el.artnr == state.product.samozamykacz);
+  },
+  activeSamozamykaczKolor: state => {
+    return state.kolorsam.dane.find((el)=>el.artnr == state.product.samozamykaczKolor);
+  },
+  activeAutomatyka: state => {
+    return state.automatyka.dane.find((el)=>el.artnr == state.product.automatyka);
+  },
+  activeEzaczep: state => {
+    return state.elektrozaczep.dane.find((el)=>el.artnr == state.product.elektrozaczep);
+  },
+
+
   kolorc: state => {
       return (state.selectedwidok=='W' && state.product.wariant=='B') ? state.product.kolor2 : state.product.kolor
   },

@@ -5,6 +5,8 @@
     <div :key="'seria'" id="Seria" class="" v-show="activeTab=='Seria'">
       <p class="scrollerheading">Seria</p>
       <scroller :scrollerdata="seria.dane" :attr="'seria'" :folder="'serie'" :col="'5'"></scroller>
+      <p class="scrollerheading">Typ</p>
+      <scroller :scrollerdata="typ.dane" :attr="'typ'" :folder="'Einheiten'" :col="'5'" :ext="'png'"></scroller>
     </div>
 
   <div id="Model" :key="'a'" class="" v-show="activeTab=='Model'" >
@@ -161,7 +163,8 @@ export default {
    kopniak:'kopniak',
    elektrozaczep:'elektrozaczep',
    automatyka:'automatyka',
-   wariant:'wariant'
+   wariant:'wariant',
+   typ:'typ'
 
 
 
@@ -193,28 +196,6 @@ export default {
 </script>
 
 <style scoped>
-.list-item {
-  display: inline-block;
-  margin-right: 10px;
-}
-.list-enter-active{
-  transition: all 1s;
-}
-
-.list-leave-active {
-  transition: all 0s;
-}
-
-.list-enter /* .list-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.list-leave-to{
-  opacity: 0;
-  transform: translateY(30px);
-}
-
 .test-enter  {
   opacity: 0;
   transition:1s;

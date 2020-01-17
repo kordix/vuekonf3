@@ -8,7 +8,7 @@
     <span class="tabline"></span>
     <span class="dotdummy" v-if="activeTab==tab.bez"></span>
 
-    <p class="caption" :style="{left:'-'+tab.offset+'px'}">{{tab.bez}}</p>
+    <p class="caption"  :style="{left:'-'+tab.offset+'px'}">{{tab.bez}}</p>
   </li>
 
 </ul>
@@ -176,6 +176,10 @@ ul{
   border:2px var(--mygreen) solid !important;
 }
 
+.tablineparent{
+  transition:.3s;
+}
+
 .tablineparent.nonactive:hover > .tabline{
   transition:0.3s;
 
@@ -226,7 +230,7 @@ width:0px;
 
 .caption{
   font-weight:500;
-  color:var(--mygray) !important;
+   color:var(--mygray);
   /* transition:0.3s; */
   font-size:14px !important;
   cursor: pointer;

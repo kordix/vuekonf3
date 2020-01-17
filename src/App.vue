@@ -6,14 +6,21 @@
       <konfigurator></konfigurator>
     </div>
       <div class="col-md-4">
+      <!--<p id="dummy" style="height:200px"></p>-->
         <wizualizacja style="z-index:10"></wizualizacja>
         <switcher></switcher>
-        <p style="font-size:18px">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
-        <p v-if="priceokucia>0" style="font-size:18px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
-        <p v-if="samozamykaczCena>0" style="font-size:18px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
-        <p v-if="wizjerCena>0" style="font-size:18px">Wizjer: <span style="font-weight:bold">{{parseInt(wizjerCena)}} zł</span></p>
-        <p v-if="ezaczepCena>0" style="font-size:18px">Elektrozaczep<span v-if="$store.state.product.seria == 41">(x3)</span>: <span style="font-weight:bold">{{parseInt(ezaczepCena)}} zł</span></p>
-        <p v-if="kopniakCena>0" style="font-size:18px">Kopniak: <span style="font-weight:bold">{{parseInt(kopniakCena)}} zł</span></p>
+        <podsumowanie></podsumowanie>       
+
+        <div class="ceny"> 
+          <p style="font-size:18px">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
+          <p v-if="priceokucia>0" style="font-size:18px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
+          <p v-if="samozamykaczCena>0" style="font-size:18px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
+          <p v-if="wizjerCena>0" style="font-size:18px">Wizjer: <span style="font-weight:bold">{{parseInt(wizjerCena)}} zł</span></p>
+          <p v-if="ezaczepCena>0" style="font-size:18px">Elektrozaczep<span v-if="$store.state.product.seria == 41">(x3)</span>: <span style="font-weight:bold">{{parseInt(ezaczepCena)}} zł</span></p>
+          <p v-if="kopniakCena>0" style="font-size:18px">Kopniak: <span style="font-weight:bold">{{parseInt(kopniakCena)}} zł</span></p>
+        </div>
+      
+       
 
       </div>
   </div>
@@ -26,13 +33,15 @@ import Konfigurator from '@/components/Konfigurator.vue';
 import Wizualizacja from '@/components/Wizualizacja.vue';
 import switcher from '@/components/Switch.vue';
 import Prezenter from '@/components/Prezenter.vue';
+import Podsumowanie from '@/components/Podsumowanie.vue';
+
 import {mapState} from 'vuex';
 import { mapGetters} from 'vuex';
 
 
 export default {
   components:{
-    Konfigurator,Tabs,Wizualizacja,switcher,Prezenter
+    Konfigurator,Tabs,Wizualizacja,switcher,Prezenter,Podsumowanie
   },
   watch:{
     product:{
@@ -103,6 +112,9 @@ export default {
     },
     getCenaPochwyt(){
       if(this.product.sposobotw=='KK') return;
+      if(this.activeKlamka.typ =='KK') return;
+
+
 
       let kolorlocal = '';
       if(this.product.klamkakolor=='10301') kolorlocal = 'INOX';
@@ -127,7 +139,8 @@ export default {
       samozamykaczCena:'samozamykaczCena',
       wizjerCena:'wizjerCena',
       ezaczepCena:'ezaczepCena',
-      kopniakCena:'kopniakCena'
+      kopniakCena:'kopniakCena',
+      activeKlamka:'activeKlamka'
     }),
     seriac(){
       if(this.product.seria=='21') return '20'
@@ -145,4 +158,9 @@ export default {
   --mygreenhov: rgb(0,200,50);
   --mygray:#c2c2c2;
 }
+
+.ceny > p {
+  margin-bottom:0px;
+}
+
 </style>

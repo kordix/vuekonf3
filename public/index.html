@@ -17,14 +17,65 @@
 
   <title>vuekonf3</title>
   <style>
+    .test-enter {
+      opacity: 0;
+      transition: 1s;
+    
+    }
 
+    .test-enter-to {
+      opacity: 1;
+      transition-delay:5s;
+      transition: 1s;
+  
+
+    }
+
+    .test-leave-to {
+      opacity: 0;
+      transition-delay:0s;
+
+      transition: 0s;
+   
+
+    }
+
+    .list-item {
+      display: inline-block;
+      margin-right: 10px;
+   
+
+    }
+
+    .list-enter-active {
+      transition: all 1s;
+    }
+
+    .list-leave-active {
+      transition: all 0s;
+    }
+
+    .list-enter
+
+    /* .list-leave-active below version 2.1.8 */
+      {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .list-leave-to {
+      opacity: 0;
+      transform: translateY(30px);
+    }
   </style>
 </head>
 
 <body>
+  <div id="masthead"></div>
   <div class="container">
     <noscript>
-      <strong>We're sorry but vuekonf3 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong>We're sorry but vuekonf3 doesn't work properly without JavaScript enabled. Please enable it to
+        continue.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->

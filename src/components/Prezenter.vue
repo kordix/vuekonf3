@@ -1,7 +1,7 @@
 <template>
   <div class="">
 
-  <v-stage ref="stage" :config="{width:650,height:550,draggable:true}" @mousedown="handleStageMouseDown" @wheel="zoom">
+  <v-stage ref="stage" :config="{width:600,height:550,draggable:true}" @mousedown="handleStageMouseDown" @wheel="zoom">
     <v-layer id="tlo">
       <v-image :config="{image:backgroundimage}" id="tloimage"></v-image>
     </v-layer>
