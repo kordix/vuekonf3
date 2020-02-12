@@ -48,7 +48,7 @@
     <p class="scrollerheading">Sposób otwierania:</p>
     <scroller :attr="'sposobotw'" :scrollerdata="sposobotw.dane" :folder="'sposobyotw'" :col="'5'" ></scroller>
     <p class="scrollerheading">Klamka </p>
-    <scroller :attr="'klamka'" :scrollerdata="klamkifilter" :folder="'Klamki'" :col="'5'" :scroll="true"></scroller>
+    <scroller :attr="'klamka'" :scrollerdata="klamkifilter" :folder="'Klamki'" :col="'5'" :scroll="true" :addmargins="false"></scroller>
     <p class="scrollerheading">Kolor klamki:</p>
     <scroller :attr="'klamkakolor'" :scrollerdata="klamkakolorfilter" :folder="'koloryakc'" :col="'5'" ></scroller>
   </div>
@@ -60,8 +60,8 @@
        <scroller :key="'b'" :scrollerdata="samkolorfilter" :folder="'koloryakc'" v-if="product.samozamykacz != '-'" :attr="'samozamykaczKolor'" :col="'4'"></scroller>
      </transition-group>
 
-     <p class="scrollerheading " >Wizjer</p>
-     <scroller :scrollerdata="wizjer.dane" :attr="'wizjer'" :folder="'wizjer'" :col="'4'"></scroller>
+     <!-- <p class="scrollerheading " >Wizjer</p> -->
+     <!-- <scroller :scrollerdata="wizjer.dane" :attr="'wizjer'" :folder="'wizjer'" :col="'4'"></scroller> -->
      <p class="scrollerheading" :noimage="true" >Elektrozaczep</p>
      <scroller :scrollerdata="elektrozaczep.dane" :attr="'elektrozaczep'" :noimage="true" :col="'4'"></scroller>
      <p class="scrollerheading">Kopniak</p>

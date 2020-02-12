@@ -1,7 +1,7 @@
 <template>
 <transition name="fade" tag="div">
   <div class="" style="display:flex;margin-top:10px" v-if="show" @event="">
-    <button type="button" name="button" class="btn btn-secondary" style="margin-right:auto;background-color:#c6c6c6" v-if="activeTab!='Model'" @click="next">Cofnij</button>
+    <button type="button" name="button" class="btn btn-secondary" style="margin-right:auto;background-color:#c6c6c6" v-if="activeTab!='Seria'" @click="next">Cofnij</button>
     <button type="button" name="button" class="btn btn-primary" style="margin-left:auto;background-color:#8fcc25" @click="prev" v-if="activeTab!='Podsumowanie'">Dalej</button>
   </div>
 </transition>

@@ -109,16 +109,16 @@ export default new Vuex.Store({
 
     ]},
     typ:{bez:'Wybierz produkt',dane:[{artnr:'D1',bez:'Drzwi 1-skrzydłowe',current:true},
-    {artnr:'D1F01',bez:'Drzwi z dostawką po lewej',current:false},
-    {artnr:'D1F02',bez:'Drzwi z dostawką po prawej',current:false},
-    {artnr:'D1F03',bez:'Drzwi z dostawkami bocznymi',current:false},
-    {artnr:'D1N01',bez:'Drzwi z naświetlem bocznym po lewej',current:false},
+    // {artnr:'D1F01',bez:'Drzwi z dostawką po lewej',current:false},
+    // {artnr:'D1F02',bez:'Drzwi z dostawką po prawej',current:false},
+    // {artnr:'D1F03',bez:'Drzwi z dostawkami bocznymi',current:false},
+    // {artnr:'D1N01',bez:'Drzwi z naświetlem bocznym po lewej',current:false},
     {artnr:'D1N02',bez:'Drzwi z naświetlem bocznym po prawej ',current:false},
-    {artnr:'D1N03',bez:'Drzwi z naświetlami bocznymi',current:false},
-    {artnr:'D1N04',bez:'Drzwi z naświetlem górnym',current:false},
-    {artnr:'D1N05',bez:'Drzwi z naświetlem górnym i bocznym lewym',current:false},
-    {artnr:'D1N06',bez:'Drzwi z naświetlem górnym i bocznym prawym',current:false},
-    {artnr:'D1N07',bez:'Drzwi z naświetlem górnym i bocznymi',current:false}
+    // {artnr:'D1N03',bez:'Drzwi z naświetlami bocznymi',current:false},
+    // {artnr:'D1N04',bez:'Drzwi z naświetlem górnym',current:false},
+    // {artnr:'D1N05',bez:'Drzwi z naświetlem górnym i bocznym lewym',current:false},
+    // {artnr:'D1N06',bez:'Drzwi z naświetlem górnym i bocznym prawym',current:false},
+    // {artnr:'D1N07',bez:'Drzwi z naświetlem górnym i bocznymi',current:false}
     // {artnr:'D2CL',bez:'Drzwi 2-skrzydłowe skrzydło czynne po lewej',current:false},
     // {artnr:'D2CP',bez:'Drzwi 2-skrzydłowe skrzydło czynne po prawej',current:false}
     ]},
@@ -218,8 +218,22 @@ export default new Vuex.Store({
 
   },
   getters:{
-    kolorFilter: state => {
-    return state.kolor.dane.filter((el)=>el.typ == state.activeKolorTyp);
+    kolorFilter: (state,getters) => {
+      let filtered = state.kolor.dane.filter((el)=>el.typ == state.activeKolorTyp);
+
+      if(state.product.seria.indexOf('1') == -1 ){
+        filtered = filtered.filter((el)=>el.artnr != '11').filter((el)=>el.artnr != '13').filter((el)=>el.artnr != '12')
+      }
+
+      if(getters.activeModel.typ == 'PCV' && state.product.szyba != '00'){
+        filtered = filtered.filter((el)=> el.artnr != '11').filter((el)=>el.artnr != '13')
+      }
+
+      if(getters.activeModel.typ == 'PCV'){
+        filtered = filtered.filter((el)=> el.artnr != '14')
+      }
+
+    return filtered;
   },
   wariantFilter: state => {
       return (state.mixkolorlista.indexOf(state.product.wzor) == -1 ) ? state.wariant.dane.slice(0,2) : state.wariant.dane.filter((el)=>el.artnr != 'B')

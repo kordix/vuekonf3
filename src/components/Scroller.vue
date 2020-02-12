@@ -4,7 +4,7 @@
     <div class="myrow scroller" :class="{scroll:scroll}" >
       <!-- :class="{active:item.artnr==activeItem}" -->
       <div v-for="item in scrollerdata" class="scroller-item mycolumn col-4"  :class="{active:item.artnr==activeItem,col5k:col=='5',col4k:col=='4'}"  @click="handleitemclick(item.artnr)">
-        <div class="" style="margin:15px 15px 5px 15px">
+        <div class="" style="" :class="{addmargins:addmargins }">
           <img v-if="noimage" style="display:none">
           <img v-else-if="folder=='Przeszklenia' && item.artnr=='00'" class="img-fluid"  :src="'/images/konfigurator/Przeszklenia/pusty.png' ">
           <img v-else-if="folder=='Przeszklenia' && item.artnr=='19'" class="img-fluid"  :src="`/images/konfigurator/Przeszklenia/${odpszybkonf}_06.${ext}` ">
@@ -26,7 +26,7 @@
 
     export default {
       props:{attr:String,scroll:{type:Boolean,default:true},scrollerdata:Array,folder:String,odpszyb:String,noimage:Boolean,scroll:{type:Boolean,default:false},
-      col:{type:String,default:'col-3'},height:{type:String,default:"400"},ext:{type:String,default:'jpg'}  },
+      col:{type:String,default:'col-3'},height:{type:String,default:"400"},ext:{type:String,default:'jpg'},addmargins:{type:Boolean,default:true}  },
         data(){
           return{
             thevalue:null
@@ -63,6 +63,10 @@ cursor:pointer;
 max-width:800px;
 }
 
+.addmargins{
+  margin:15px 15px 5px 15px
+}
+
 .scroll{
   overflow-y:auto;
   max-height:400px;
@@ -81,6 +85,9 @@ max-width:800px;
   width:190px;
   height:auto;
   transition: box-shadow 0.6s, border 0.2s;
+  /* padding:15px 0px 0px 0px */
+
+  /*  */
 }
 
 

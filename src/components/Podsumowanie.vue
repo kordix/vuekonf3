@@ -33,6 +33,10 @@ export default {
     },
         fadeIn(elem){
       let self = this;
+      if(document.getElementById(elem)== null){
+        return
+      }
+
       document.getElementById(elem).style.transition = '0s' ;
       document.getElementById(elem).style.opacity = 0 ;
       setTimeout(function(){

@@ -11,13 +11,24 @@
         <switcher></switcher>
         <podsumowanie></podsumowanie>       
 
+<!-- +parseInt(priceokucia) + parseInt(samozamykaczCena) +parseInt(ezaczepCena) + parseInt(kopniakCena) -->
+
         <div class="ceny"> 
-          <p style="font-size:18px">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
-          <p v-if="priceokucia>0" style="font-size:18px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
-          <p v-if="samozamykaczCena>0" style="font-size:18px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
-          <p v-if="wizjerCena>0" style="font-size:18px">Wizjer: <span style="font-weight:bold">{{parseInt(wizjerCena)}} zł</span></p>
-          <p v-if="ezaczepCena>0" style="font-size:18px">Elektrozaczep<span v-if="$store.state.product.seria == 41">(x3)</span>: <span style="font-weight:bold">{{parseInt(ezaczepCena)}} zł</span></p>
-          <p v-if="kopniakCena>0" style="font-size:18px">Kopniak: <span style="font-weight:bold">{{parseInt(kopniakCena)}} zł</span></p>
+          <p style="font-size:18px" :class="{sumborder:priceAll != basicprice }" >Suma:  <b> {{priceAll}} zł</b></p>
+          <p style="font-size:14px" v-if="priceAll != basicprice">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
+          <p v-if="priceokucia>0" style="font-size:14px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
+          <p v-if="samozamykaczCena>0" style="font-size:14px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
+          <!-- <p v-if="wizjerCena>0" style="font-size:14px">Wizjer: <span style="font-weight:bold">{{parseInt(wizjerCena)}} zł</span></p> -->
+          <p v-if="ezaczepCena>0" style="font-size:14px">Elektrozaczep<span v-if="$store.state.product.seria == 41">(x3)</span>: <span style="font-weight:bold">{{parseInt(ezaczepCena)}} zł</span></p>
+          <p v-if="kopniakCena>0" style="font-size:14px">Kopniak: <span style="font-weight:bold">{{parseInt(kopniakCena)}} zł</span></p>
+          <p v-if="product.wariant == 'M' && mixkolorCena > 0 " style="font-size:14px">Mixkolor: <b>{{mixkolorCena}} zł </b></p>
+          <p v-if="product.wariant == 'B' && bikolorCena > 0" style="font-size:14px">Bikolor: <span style="font-weight:bold">{{bikolorCena}} zł</span></p> 
+          <p v-if="product.automatyka == 'B'" style="font-size:14px">System biometryczny:  <span style="font-weight:bold">3300 zł</span> </p>
+          <p v-if="product.automatyka == 'K'" style="font-size:14px">System kodowy:  <span style="font-weight:bold">3050 zł</span> </p>
+          <p v-if="product.automatyka == 'Z'" style="font-size:14px">System zbliżeniowy:  <span style="font-weight:bold">3050 zł</span> </p>
+
+
+        
         </div>
       
        
@@ -103,7 +114,7 @@ export default {
       if(this.product.klamka == 'PrestigeZ') this.priceokucia = 200;
       if(this.product.klamka == 'Prestige') this.priceokucia = 160;
       if(model == 'PrestigeZ_10304') this.priceokucia=300;
-      if(this.product.artnr=='MagnusZ') this.priceokucia=200;
+      if(this.product.klamka=='MagnusZ') this.priceokucia=200;
       if(this.product.klamka=='PrestigeZG') this.priceokucia=255;
       if(this.product.klamka=='MagnusG') this.priceokucia=70;
       if(this.product.klamka=='ManitobaG') this.priceokucia=70;
@@ -113,9 +124,6 @@ export default {
     getCenaPochwyt(){
       if(this.product.sposobotw=='KK') return;
       if(this.activeKlamka.typ =='KK') return;
-
-
-
       let kolorlocal = '';
       if(this.product.klamkakolor=='10301') kolorlocal = 'INOX';
       if(this.product.klamkakolor=='10304') kolorlocal = 'BLACK';
@@ -133,6 +141,7 @@ export default {
       product:'product',
       cenytablica:'cenytablica',
       cenyPochwytTablica:'cenyPochwytTablica',
+      mixkolorlista:'mixkolorlista',
       product:'product'
     }),
     ...mapGetters({
@@ -146,6 +155,42 @@ export default {
       if(this.product.seria=='21') return '20'
       if(this.product.seria=='31') return '30'
       return this.product.seria
+    },
+    bikolorCena(){
+      if(this.product.wariant != 'B'){
+        return 0
+      }
+
+      if(this.product.kolor == this.product.kolor2){
+        return 0
+      }
+      
+      if (this.seriac=='20'){
+         return 280 
+      }else{
+        return 380    
+      }
+    },
+    mixkolorCena(){
+      if(this.product.wariant != 'M'){
+        return 0
+      }
+
+      if(this.product.wariant == 'M'){
+        return 200
+      }
+    },
+    cenaAutomatyka(){
+      if(this.product.automatyka=='B'){return 3300}
+      else if(this.product.automatyka=='K'){return 3050} 
+      else if(this.product.automatyka=='Z'){return 3050} 
+      else return 0
+
+
+    },
+    priceAll(){
+      return parseInt(this.basicprice) + parseInt(this.ezaczepCena) + parseInt(this.priceokucia) + parseInt(this.samozamykaczCena)+parseInt(this.kopniakCena)+parseInt(this.bikolorCena)+parseInt(this.mixkolorCena)+parseInt(this.cenaAutomatyka) ;
+
     }
   }
 }
@@ -161,6 +206,10 @@ export default {
 
 .ceny > p {
   margin-bottom:0px;
+}
+
+.sumborder{
+border-bottom:1px black solid;width:150px
 }
 
 </style>
