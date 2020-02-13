@@ -65,6 +65,9 @@ export default {
       this.drawTloczenie();
       this.drawSzyba();
     },
+    "product.seria":function(){
+      this.drawKlamka();
+    },
     "product.inoxkolor":function(){
       this.drawTloczenie()
     },
@@ -95,9 +98,14 @@ export default {
         this.okleinaimage2 = imageObj;
       };
     },
-    drawKlamka(){
+    drawKlamka:function(){
       const imageObj = new Image();
-      imageObj.src = '/images/klamki/'+this.product.klamka+'_'+this.product.klamkakolor+'.png';
+      let folder = 'klamki';
+      if(this.product.seria == '41'){
+        folder = 'klamkibezrozety'
+      }
+
+      imageObj.src = '/images/'+folder  +'/'+this.product.klamka+'_'+this.product.klamkakolor+'.png';
       imageObj.onload = () => {
         this.klamkaimage = imageObj;
       };

@@ -7,13 +7,7 @@
     </div>
       <div class="col-md-4">
       <!--<p id="dummy" style="height:200px"></p>-->
-        <wizualizacja style="z-index:10"></wizualizacja>
-        <switcher></switcher>
-        <podsumowanie></podsumowanie>       
-
-<!-- +parseInt(priceokucia) + parseInt(samozamykaczCena) +parseInt(ezaczepCena) + parseInt(kopniakCena) -->
-
-        <div class="ceny"> 
+              <div class="ceny"> 
           <p style="font-size:18px" :class="{sumborder:priceAll != basicprice }" >Suma:  <b> {{priceAll}} zł</b></p>
           <p style="font-size:14px" v-if="priceAll != basicprice">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
           <p v-if="priceokucia>0" style="font-size:14px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
@@ -30,6 +24,13 @@
 
         
         </div>
+        <wizualizacja style="z-index:10"></wizualizacja>
+        <switcher></switcher>
+        <podsumowanie></podsumowanie>       
+
+<!-- +parseInt(priceokucia) + parseInt(samozamykaczCena) +parseInt(ezaczepCena) + parseInt(kopniakCena) -->
+
+
       
        
 
@@ -88,8 +89,12 @@ export default {
         this.basicprice -= 200;
       }
 
-      if(this.product.seria=='31' || this.product.seria=='21'){
-        this.basicprice = parseInt(this.basicprice)+700;
+      if(this.product.seria=='21'){
+        this.basicprice = parseInt(this.basicprice)+680;
+      }
+
+        if(this.product.seria=='31'){
+        this.basicprice = parseInt(this.basicprice)+750;
       }
 
     },
@@ -211,5 +216,16 @@ export default {
 .sumborder{
 border-bottom:1px black solid;width:150px
 }
+
+.page-id-1277 .minimized{
+  display:none !important
+}
+
+@media (max-width:600px){
+  .tabscontainer{
+    background:white !important;
+  }
+}
+
 
 </style>

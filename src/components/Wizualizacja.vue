@@ -62,13 +62,20 @@ export default {
       if(window.innerWidth < 900){
         return 
       }
+      // if (window.scrollY > 100 ){document.getElementById("masthead").style.display="none";} 
+      
 
-      if (window.scrollY > 600 ){this.extraheight = 400; document.getElementById("masthead").style.display="none" }
+      
+
+      // if (window.scrollY > 600 ){this.extraheight = 400;} 
       else if (window.scrollY >8000 ){this.extraheight = 600}else {this.extraheight=0;document.getElementById("masthead").style.display="block"}
     }
   },
   created(){
       window.addEventListener('scroll', this.handleScroll);
+      document.getElementById('content').style.marginTop = '10px';
+      document.getElementById('content').style.paddingTop = '10px';
+
 
   },
   mounted(){

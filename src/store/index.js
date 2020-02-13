@@ -17,7 +17,7 @@ export default new Vuex.Store({
       {artnr:'21',bez:'Premium Termo'},
       {artnr:'30',bez:'Optimum'},
       {artnr:'31',bez:'Optimum Termo'},
-      {artnr:'41',bez:'Prestige Termo'}
+      {artnr:'41',bez:'Prestige Termo Lux'}
     ]
     },
 

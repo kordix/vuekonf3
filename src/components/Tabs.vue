@@ -1,4 +1,5 @@
 <template>
+<div id="tabsall">
 <div class="" class="tabscontainer">
 
 <div class="">
@@ -24,6 +25,7 @@
     <option :value="tab.bez" v-for="tab in tabsFilter">{{tab.bez}}</option>
 
   </select>
+</div>
 </div>
 
 </template>
@@ -257,7 +259,6 @@ width:0px;
     font-size:7px !important;
   }
 }
-
 
 
 </style>
