@@ -71,7 +71,21 @@ export default {
       this.fadeIn();
     },
     selectedwidok:function(){
-     if((this.product.kierunek == 'Lz' || this.product.kierunek == 'Pw') && this.selectedwidok=='Z'){
+     this.handleMirror();
+   },
+   "product.kierunek":function(){
+     this.handleMirror();
+   },
+   "product.typ":function(){
+    this.handleZestaw();
+  }
+
+
+
+  },
+  methods:{
+    handleMirror(){
+      if((this.product.kierunek == 'Lz' || this.product.kierunek == 'Pw') && this.selectedwidok=='Z'){
        this.grpsx = 1;this.grpx=0;
      };
      if((this.product.kierunek == 'Lw' || this.product.kierunek == 'Pz') && this.selectedwidok=='Z'){
@@ -83,15 +97,8 @@ export default {
      if((this.product.kierunek == 'Lw' || this.product.kierunek == 'Pz') && this.selectedwidok=='W'){
        this.grpsx = 1;this.grpx=0;
      };
-   },
-   "product.typ":function(){
-    this.handleZestaw();
-  }
-
-
-
-  },
-  methods:{
+    },
+    
     handleExports(){
       let self = this;
       self.$store.state.selectedwidok='Z';

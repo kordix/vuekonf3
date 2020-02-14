@@ -1,6 +1,6 @@
 <template>
-<div id="tabsall">
-<div class="" class="tabscontainer">
+<div id="tabsall" :class="{fixedall:fixed}" >
+<div class="" class="tabscontainer" :class="{fixedtcontainer:fixed}">
 
 <div class="">
   <ul style="display:flex;justify-content:center;align-items:center;">
@@ -42,6 +42,7 @@ import {EventBus} from '@/event-bus.js';
 export default {
   data(){
     return{
+      fixed:false
       // tabs:['model','kolor','szyba','okucia']
     }
   },
@@ -260,5 +261,15 @@ width:0px;
   }
 }
 
+.fixedall{
+position:fixed;
 
+}
+
+.fixedtcontainer{
+  position:relative;
+  width:1000px;
+  max-width:1200px;
+
+}
 </style>

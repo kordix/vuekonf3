@@ -1,14 +1,8 @@
 <template>
   <div id="app">
     <tabs></tabs>
-    <div class="row">
-    <div class="col-md-8">
-      <konfigurator></konfigurator>
-    </div>
-      <div class="col-md-4">
-      <!--<p id="dummy" style="height:200px"></p>-->
-              <div class="ceny"> 
-          <p style="font-size:18px" :class="{sumborder:priceAll != basicprice }" >Suma:  <b> {{priceAll}} zł</b></p>
+        <div class="ceny" style="display:flex"> 
+          <p style="font-size:18px;cursor:default" :class="{sumborder:priceAll != basicprice }" >Suma:  <b> {{priceAll}} zł</b></p>
           <p style="font-size:14px" v-if="priceAll != basicprice">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
           <p v-if="priceokucia>0" style="font-size:14px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
           <p v-if="samozamykaczCena>0" style="font-size:14px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
@@ -20,20 +14,17 @@
           <p v-if="product.automatyka == 'B'" style="font-size:14px">System biometryczny:  <span style="font-weight:bold">3300 zł</span> </p>
           <p v-if="product.automatyka == 'K'" style="font-size:14px">System kodowy:  <span style="font-weight:bold">3050 zł</span> </p>
           <p v-if="product.automatyka == 'Z'" style="font-size:14px">System zbliżeniowy:  <span style="font-weight:bold">3050 zł</span> </p>
-
-
-        
         </div>
+    <div class="row">
+    <div class="col-md-8">
+      <konfigurator></konfigurator>
+    </div>
+      <div class="col-md-4">
+      <!--<p id="dummy" style="height:200px"></p>-->
+    
         <wizualizacja style="z-index:10"></wizualizacja>
         <switcher></switcher>
         <podsumowanie></podsumowanie>       
-
-<!-- +parseInt(priceokucia) + parseInt(samozamykaczCena) +parseInt(ezaczepCena) + parseInt(kopniakCena) -->
-
-
-      
-       
-
       </div>
   </div>
   </div>
@@ -211,14 +202,20 @@ export default {
 
 .ceny > p {
   margin-bottom:0px;
+  cursor:pointer;
+  margin-right:5px;
 }
 
 .sumborder{
-border-bottom:1px black solid;width:150px
+border-right:1px var(--mygray) solid;width:120px
 }
 
 .page-id-1277 .minimized{
   display:none !important
+}
+
+.page-id-1277 .container{
+  max-width: 1140px;
 }
 
 @media (max-width:600px){

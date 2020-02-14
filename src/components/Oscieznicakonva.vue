@@ -46,6 +46,11 @@ export default {
     },
     selectedwidok:function(){
       this.drawOkleina();
+      this.drawOscieznicaParts();
+
+    },
+    "product.kierunek":function(){
+      this.drawOscieznicaParts();
     }
   },
   methods:{
