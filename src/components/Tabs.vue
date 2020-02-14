@@ -1,6 +1,6 @@
 <template>
-<div id="tabsall" :class="{fixedall:fixed}" >
-<div class="" class="tabscontainer" :class="{fixedtcontainer:fixed}">
+<div id="tabsall" :class="{fixed:fixed}" >
+<div class="" class="tabscontainer">
 
 <div class="">
   <ul style="display:flex;justify-content:center;align-items:center;">
@@ -84,6 +84,22 @@ export default {
     })
   },
   mounted(){
+    let self = this;
+    window.addEventListener('scroll',function(){
+      // console.log(window.scrollY);
+      
+      if(window.scrollY > 300){
+        self.fixed = false;
+      }else if (window.scrollY < 100){
+        // console.log('mniej niż 100');
+        
+        self.fixed = false;
+        
+      }
+
+
+    })
+
   }
 }
 </script>
@@ -261,8 +277,20 @@ width:0px;
   }
 }
 
+.fixed{
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    display: block;
+    animation-name: fadeInDown;
+    animation-duration: 0.25s;
+    z-index:1000;
+}
+
 .fixedall{
 position:fixed;
+z-index:1000;
 
 }
 
@@ -270,6 +298,20 @@ position:fixed;
   position:relative;
   width:1000px;
   max-width:1200px;
+  z-index:1000;
 
 }
+
+ @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translate3d(0, -100%, 0);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
 </style>

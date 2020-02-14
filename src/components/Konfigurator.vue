@@ -40,7 +40,7 @@
 
   <div id="Szyba" :key="'o'" class="" v-show="activeTab=='Szyba'">
     <p class="scrollerheading">Przeszklenie:</p>
-    <scroller :attr="'szyba'" :folder="'Przeszklenia'" :scrollerdata="szybyFilter" ></scroller>
+    <scroller :attr="'szyba'" :folder="'Przeszklenia'" :scrollerdata="szybyFilter" :col="'4'"></scroller>
   </div>
   <div id="Okucia" :key="'p'"  class="" v-show="activeTab=='Okucia'">
     <p class="scrollerheading">Kierunek otwierania:</p>

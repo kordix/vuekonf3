@@ -67,15 +67,18 @@ export default {
 
       
 
-      if (window.scrollY > 600 ){this.extraheight = 400;} 
+      if (window.scrollY > 400 ){this.extraheight = 400;} 
       else if (window.scrollY >8000 ){this.extraheight = 600}else {this.extraheight=0;document.getElementById("masthead").style.display="block"}
     }
   },
   created(){
       window.addEventListener('scroll', this.handleScroll);
+    if(document.getElementById('content')){
       document.getElementById('content').style.marginTop = '10px';
       document.getElementById('content').style.paddingTop = '10px';
+    }
 
+    
 
   },
   mounted(){

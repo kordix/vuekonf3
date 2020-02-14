@@ -24,7 +24,21 @@
     
         <wizualizacja style="z-index:10"></wizualizacja>
         <switcher></switcher>
-        <podsumowanie></podsumowanie>       
+        <podsumowanie></podsumowanie>
+         <div class="ceny" style=""> 
+          <p style="font-size:18px;cursor:default" :class="{sumborder2:priceAll != basicprice }" >Suma:  <b> {{priceAll}} zł</b></p>
+          <p style="font-size:14px" v-if="priceAll != basicprice">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
+          <p v-if="priceokucia>0" style="font-size:14px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
+          <p v-if="samozamykaczCena>0" style="font-size:14px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
+          <!-- <p v-if="wizjerCena>0" style="font-size:14px">Wizjer: <span style="font-weight:bold">{{parseInt(wizjerCena)}} zł</span></p> -->
+          <p v-if="ezaczepCena>0" style="font-size:14px">Elektrozaczep<span v-if="$store.state.product.seria == 41">(x3)</span>: <span style="font-weight:bold">{{parseInt(ezaczepCena)}} zł</span></p>
+          <p v-if="kopniakCena>0" style="font-size:14px">Kopniak: <span style="font-weight:bold">{{parseInt(kopniakCena)}} zł</span></p>
+          <p v-if="product.wariant == 'M' && mixkolorCena > 0 " style="font-size:14px">Mixkolor: <b>{{mixkolorCena}} zł </b></p>
+          <p v-if="product.wariant == 'B' && bikolorCena > 0" style="font-size:14px">Bikolor: <span style="font-weight:bold">{{bikolorCena}} zł</span></p> 
+          <p v-if="product.automatyka == 'B'" style="font-size:14px">System biometryczny:  <span style="font-weight:bold">3300 zł</span> </p>
+          <p v-if="product.automatyka == 'K'" style="font-size:14px">System kodowy:  <span style="font-weight:bold">3050 zł</span> </p>
+          <p v-if="product.automatyka == 'Z'" style="font-size:14px">System zbliżeniowy:  <span style="font-weight:bold">3050 zł</span> </p>
+        </div>       
       </div>
   </div>
   </div>
@@ -208,6 +222,10 @@ export default {
 
 .sumborder{
 border-right:1px var(--mygray) solid;width:120px
+}
+
+.sumborder2{
+border-bottom:1px var(--mygray) solid;width:120px
 }
 
 .page-id-1277 .minimized{
