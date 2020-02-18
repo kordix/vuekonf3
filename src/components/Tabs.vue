@@ -275,6 +275,10 @@ width:0px;
     width:17% !important;
     font-size:7px !important;
   }
+
+  .tabscontainer{
+    background:white;
+  }
 }
 
 .fixed{

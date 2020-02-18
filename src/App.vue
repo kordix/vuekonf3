@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <tabs></tabs>
-        <div class="ceny" style="display:flex"> 
-          <p style="font-size:18px;cursor:default" :class="{sumborder:priceAll != basicprice }" >Suma:  <b> {{priceAll}} zł</b></p>
-          <p style="font-size:14px" v-if="priceAll != basicprice">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
-          <p v-if="priceokucia>0" style="font-size:14px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
+        <div class="ceny" style="display:flex;flex-wrap:wrap"> 
+          <p style="font-size:18px;cursor:default" :class="{sumborder:priceAll != basicPrice}" >Suma:  <b> {{priceAll}} zł</b></p>
+          <p style="font-size:14px" v-if="priceAll != basicPrice">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicPrice)}} zł</span></p>
+          <p v-if="cenaOkucia>0" style="font-size:14px">Cena okuć: <span style="font-weight:bold">{{parseInt(cenaOkucia)}} zł</span></p>
           <p v-if="samozamykaczCena>0" style="font-size:14px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
           <!-- <p v-if="wizjerCena>0" style="font-size:14px">Wizjer: <span style="font-weight:bold">{{parseInt(wizjerCena)}} zł</span></p> -->
           <p v-if="ezaczepCena>0" style="font-size:14px">Elektrozaczep<span v-if="$store.state.product.seria == 41">(x3)</span>: <span style="font-weight:bold">{{parseInt(ezaczepCena)}} zł</span></p>
@@ -26,9 +26,10 @@
         <switcher></switcher>
         <podsumowanie></podsumowanie>
          <div class="ceny" style=""> 
-          <p style="font-size:18px;cursor:default" :class="{sumborder2:priceAll != basicprice }" >Suma:  <b> {{priceAll}} zł</b></p>
-          <p style="font-size:14px" v-if="priceAll != basicprice">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicprice)}} zł</span></p>
-          <p v-if="priceokucia>0" style="font-size:14px">Cena okuć: <span style="font-weight:bold">{{parseInt(priceokucia)}} zł</span></p>
+           <!-- <p>{{$store.getters.kopniakCena2}}</p> -->
+          <p style="font-size:18px;cursor:default" :class="{sumborder2:priceAll != basicPrice }" >Suma:  <b> {{priceAll}} zł</b></p>
+          <p style="font-size:14px" v-if="priceAll != basicPrice">Cena bazowa: <span style="font-weight:bold">{{parseInt(basicPrice)}} zł</span></p>
+          <p v-if="cenaOkucia>0" style="font-size:14px">Cena okuć: <span style="font-weight:bold">{{parseInt(cenaOkucia)}} zł</span></p>
           <p v-if="samozamykaczCena>0" style="font-size:14px">Samozamykacz: <span style="font-weight:bold">{{parseInt(samozamykaczCena)}} zł</span></p>
           <!-- <p v-if="wizjerCena>0" style="font-size:14px">Wizjer: <span style="font-weight:bold">{{parseInt(wizjerCena)}} zł</span></p> -->
           <p v-if="ezaczepCena>0" style="font-size:14px">Elektrozaczep<span v-if="$store.state.product.seria == 41">(x3)</span>: <span style="font-weight:bold">{{parseInt(ezaczepCena)}} zł</span></p>
@@ -76,11 +77,12 @@ export default {
     this.getBasicPrice();
     this.getCenaPochwyt();
 
+
   },
   data(){
     return {
-      basicprice:0,
-      priceokucia:0
+      // basicprice:0,
+      // priceokucia:0
     }
   },
   methods:{
@@ -129,7 +131,6 @@ export default {
       if(this.product.klamka=='MagnusG') this.priceokucia=70;
       if(this.product.klamka=='ManitobaG') this.priceokucia=70;
 
-
     },
     getCenaPochwyt(){
       if(this.product.sposobotw=='KK') return;
@@ -147,6 +148,9 @@ export default {
 
   },
   computed:{
+    test(){
+      return this.$store.state.ceny.count
+    },
     ...mapState({
       product:'product',
       cenytablica:'cenytablica',
@@ -155,52 +159,22 @@ export default {
       product:'product'
     }),
     ...mapGetters({
-      samozamykaczCena:'samozamykaczCena',
+      samozamykaczCena:'SamozamykaczCena',
       wizjerCena:'wizjerCena',
-      ezaczepCena:'ezaczepCena',
-      kopniakCena:'kopniakCena',
-      activeKlamka:'activeKlamka'
+      ezaczepCena:'EzaczepCena',
+      kopniakCena:'KopniakCena',
+      activeKlamka:'ActiveKlamka',
+      cenaKlamka:'CenaKlamka',
+      priceAll:'PriceAll',
+      basicPrice:'BasicPrice',
+      cenaOkucia:'CenaOkucia',
+      bikolorCena:'BikolorCena',
+      mixkolorCena:'MixkolorCena'
     }),
     seriac(){
       if(this.product.seria=='21') return '20'
       if(this.product.seria=='31') return '30'
       return this.product.seria
-    },
-    bikolorCena(){
-      if(this.product.wariant != 'B'){
-        return 0
-      }
-
-      if(this.product.kolor == this.product.kolor2){
-        return 0
-      }
-      
-      if (this.seriac=='20'){
-         return 280 
-      }else{
-        return 380    
-      }
-    },
-    mixkolorCena(){
-      if(this.product.wariant != 'M'){
-        return 0
-      }
-
-      if(this.product.wariant == 'M'){
-        return 200
-      }
-    },
-    cenaAutomatyka(){
-      if(this.product.automatyka=='B'){return 3300}
-      else if(this.product.automatyka=='K'){return 3050} 
-      else if(this.product.automatyka=='Z'){return 3050} 
-      else return 0
-
-
-    },
-    priceAll(){
-      return parseInt(this.basicprice) + parseInt(this.ezaczepCena) + parseInt(this.priceokucia) + parseInt(this.samozamykaczCena)+parseInt(this.kopniakCena)+parseInt(this.bikolorCena)+parseInt(this.mixkolorCena)+parseInt(this.cenaAutomatyka) ;
-
     }
   }
 }

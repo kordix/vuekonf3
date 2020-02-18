@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import all from './dane.js'
 import ceny from './ceny.js'
 import cenyPochwyt from './cenypochwyt.js'
+ import cenymodule from'./cenymodule.js'
 
 
 Vue.config.devtools = true
@@ -10,6 +11,9 @@ Vue.config.devtools = true
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules:{
+    ceny:cenymodule
+  },
   state: {
     seria:{
       dane:[
@@ -20,7 +24,6 @@ export default new Vuex.Store({
       {artnr:'41',bez:'Prestige Termo Lux'}
     ]
     },
-
     tabs2:[{bez:'Typ',bez2:'typ',available:false,shown:true,offset:2 },
     {bez:'Seria',bez2:'serię',available:true,shown:true,offset:5},
     {bez:'Model',bez2:'model',available:true,shown:false,offset:8},
@@ -50,10 +53,10 @@ export default new Vuex.Store({
       {artnr:'Pw',bez:'Prawe do wewnątrz'},
       {artnr:'Pz',bez:'Prawe do zewnątrz'}]},
    sposobotw:{dane:[
-    {artnr:'KG',bez:'Klamko-gałka'},
-    {artnr:'KK',bez:'Klamko-klamka'},
-    {artnr:'PP',bez:'Pochwyt-pochwyt'},
-    {artnr:'KP',bez:'Klamko-pochwyt'}
+     {artnr:'KK',bez:'Klamko-klamka'},
+     {artnr:'KP',bez:'Klamko-pochwyt'},
+     {artnr:'PP',bez:'Pochwyt-pochwyt'},
+    {artnr:'KG',bez:'Klamko-gałka'}
     ]},
     klamka:{dane:all.klamkatablica},
     wzorydoklamki:all.wzorydoklamki,
@@ -360,25 +363,6 @@ export default new Vuex.Store({
      }
 
    },
-   samozamykaczCena:(state)=>{
-     return state.samozamykacz.dane.find((el)=>el.artnr==state.product.samozamykacz).cena
-   },
-   wizjerCena:(state,getters)=>{
-     return state.wizjerCena[state.product.wizjer][getters.seriac]
-   },
-   ezaczepCena:(state,getters)=>{
-     if(state.product.elektrozaczep=='J' && state.product.seria=='41'){
-       return 180*3
-     }else if (state.product.elektrozaczep=='J'){
-       return 180
-     }else{
-       return 0
-     }
-
-   },
-   kopniakCena:(state)=>{
-     return state.kopniak.dane.find((el)=>el.artnr==state.product.kopniak).cena
-   },
    seriac:(state)=>{
      if(state.product.seria=='21'){ return '20'}
      else if(state.product.seria=='31'){return '30'}
@@ -387,10 +371,9 @@ export default new Vuex.Store({
 
     tabsFilter:(state,getters)=>{
       return state.tabs2.filter((el)=>el.available==true)
-    }
+    },
 
-  },
+  
 
-  modules: {
   }
 })

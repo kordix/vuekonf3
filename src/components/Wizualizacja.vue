@@ -67,7 +67,7 @@ export default {
 
       
 
-      if (window.scrollY > 400 ){this.extraheight = 400;} 
+      if (window.scrollY > 400 ){this.extraheight = 300;} 
       else if (window.scrollY >8000 ){this.extraheight = 600}else {this.extraheight=0;document.getElementById("masthead").style.display="block"}
     }
   },
