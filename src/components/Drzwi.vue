@@ -1,7 +1,15 @@
 <template>
     <v-layer :config="{scaleX:scalexprop,scaleY:scaleyprop,x:xprop,y:yprop}">
       <v-group id="all" :config="{x:grpx,scaleX:grpsx,name:'D1',draggable:dragprop }" ref="mygroup">
-        <v-group id="drzwi"  >
+        <v-group :config="{x:0,y:0,height:wysokoscng}" v-if="drawng">
+          <v-rect :config="{height:wysokoscng,width:szerokoscng}"></v-rect>
+          <naswietle :grubosc="20" :height="wysokoscng" :width="szerokoscng" :back="backbool"></naswietle>
+        </v-group>  
+        <v-group :config="{x:0,y:ynb1}" v-if="drawnb1">
+          <v-rect :config="{height:wysokoscdrzwi,fill:'blue',width:szerokoscnb1}"></v-rect>
+          <naswietle :grubosc="20" :height="wysokoscdrzwi" :width="szerokoscnb1" :back="backbool"></naswietle>
+        </v-group>  
+        <v-group id="drzwi"  :config="{x:xdrzwi,y:ydrzwi}">
           <oscieznica :grubosc="gruboscc" :height="wysokoscdrzwi" :width="szerokoscdrzwi" :back="backbool"></oscieznica>
           <skrzydlo :left="gruboscc" :top="gruboscc" :height="wysokoscdrzwi-gruboscc" :width="szerokoscdrzwi-2*gruboscc"  :back="backbool" ></skrzydlo>
         </v-group>
@@ -54,7 +62,7 @@ export default {
       wysokoscdrzwi:600,
       szerokoscnb1:200,
       szerokoscnb2:200,
-      wysokoscng:500,
+      // wysokoscng:150,
       szerokoscng:100,
       xdrzwi:0,ydrzwi:0,
       xnb1:0,ynb1:0,
@@ -78,7 +86,10 @@ export default {
    },
    "product.typ":function(){
     this.handleZestaw();
-  }
+    },
+    "product.wysokoscng":function(){
+    this.handleZestaw();
+    }
 
 
 
@@ -189,7 +200,22 @@ export default {
     ...mapState({
       selectedwidok:'selectedwidok',
       product:'product'
+      // wysokoscng:'product.wysokoscng'
     }),
+    wysokoscng(){
+      let wys = parseInt(this.$store.state.product.wysokoscng);
+      if(wys == 100){return 80}
+      else if (wys==200){return 110}
+      else if (wys==300){return 140}
+      else if (wys==400){return 170}
+      else if (wys==500){return 200}
+      else if (wys==600){return 230}
+      else if (wys==700){return 260}
+      else if (wys==800){return 290}
+
+      else return wys*0.4
+      //return parseInt(this.$store.state.product.wysokoscng);
+    },
     gruboscc:function(){
       if(this.backbool==true){
         return 15

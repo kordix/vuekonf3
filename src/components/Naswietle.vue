@@ -1,6 +1,6 @@
 <template>
   <v-group>
-    <!-- <v-rect :config="{width:50,height:50,fill:'red'}"></v-rect> -->
+   
     <v-image id="okleina" :config="{image:okleinaimage,width:width,height:height }"></v-image>
     <v-image id="lewe" :config="{image:nl,y:grubosc,width:grubosc,height:height-2*grubosc,crop:{width:110,height:280,x:0,y:0}}"></v-image>
     <v-image id="prawe" :config="{image:nl,x:width,height:height-2*grubosc,y:grubosc,width:grubosc,scaleX:-1,crop:{width:110,height:280,x:0,y:0}}"></v-image>
@@ -11,6 +11,7 @@
     <v-image id="prawegora" :config="{image:nlt,x:width,height:grubosc,width:grubosc,scaleX:-1,crop:{width:101,height:101,x:0,y:0}}"></v-image>
     <v-image id="prawedol" :config="{image:nlt,x:width,height:grubosc,width:grubosc,scaleX:-1,scaleY:-1,y:height,crop:{width:101,height:101,x:0,y:0}}"></v-image>
     <v-rect id="szyba" :config="{x:grubosc,y:grubosc,width:width-2*grubosc,height:height-2*grubosc,fill:'#cceeff'}"></v-rect>
+     <!-- <v-rect v-for="elem in paski" :config="{x:grubosc,y:elem,height:5,width:width-2*grubosc,fill:'#000099',opacity:0.3}"></v-rect> -->
 
 
 
@@ -30,6 +31,7 @@ export default {
   },
   data(){
     return {
+    paski:[100,200]  ,
     nl:null,
     nlt:null,
     nt:null,

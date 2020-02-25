@@ -15,10 +15,10 @@
           <p v-if="product.automatyka == 'K'" style="font-size:14px">System kodowy:  <span style="font-weight:bold">3050 zł</span> </p>
           <p v-if="product.automatyka == 'Z'" style="font-size:14px">System zbliżeniowy:  <span style="font-weight:bold">3050 zł</span> </p>
         </div>
-    <div class="row">
-    <div class="col-md-8">
-      <konfigurator></konfigurator>
-    </div>
+    <div class="row" style="display:flex;flex-wrap:wrap">
+      <div class="col-md-8">
+        <konfigurator></konfigurator>
+      </div>
       <div class="col-md-4">
       <!--<p id="dummy" style="height:200px"></p>-->
     
@@ -39,6 +39,7 @@
           <p v-if="product.automatyka == 'B'" style="font-size:14px">System biometryczny:  <span style="font-weight:bold">3300 zł</span> </p>
           <p v-if="product.automatyka == 'K'" style="font-size:14px">System kodowy:  <span style="font-weight:bold">3050 zł</span> </p>
           <p v-if="product.automatyka == 'Z'" style="font-size:14px">System zbliżeniowy:  <span style="font-weight:bold">3050 zł</span> </p>
+          <p v-if="CenaNaswietlaG>0" style="font-size:14px" >Naświetle górne: <span style="font-weight:bold">{{CenaNaswietlaG}} zł</span> </p>
         </div>       
       </div>
   </div>
@@ -65,8 +66,8 @@ export default {
     product:{
       deep:true,
       handler:function(val){
-        this.getBasicPrice();
-        this.getCenaOkucia();
+        // this.getBasicPrice();
+        // this.getCenaOkucia();
         if(this.$store.state.product.wariant=='S'){
           this.$store.state.product.kolor2 = this.$store.state.product.kolor;
         }
@@ -74,8 +75,8 @@ export default {
     },
   },
   mounted(){
-    this.getBasicPrice();
-    this.getCenaPochwyt();
+    // this.getBasicPrice();
+    // this.getCenaPochwyt();
 
 
   },
@@ -86,66 +87,7 @@ export default {
     }
   },
   methods:{
-    getBasicPrice(){
-      let column = this.seriac;
-      if (this.product.szyba != '00'){column += 's'}
-
-      this.basicprice =  this.cenytablica.find((el)=>el.model == this.product.wzor)[column];
-
-      if(this.product.inoxstrona == "1" || this.product.inoxstrona == "2" ){
-        this.basicprice -= 200;
-      }
-
-      if(this.product.seria=='21'){
-        this.basicprice = parseInt(this.basicprice)+680;
-      }
-
-        if(this.product.seria=='31'){
-        this.basicprice = parseInt(this.basicprice)+750;
-      }
-
-    },
-    getCenaOkucia(){
-      this.product.sposobotw=='KK' ||  this.product.sposobotw=='KG' ? this.getCenaKlamka() : this.getCenaPochwyt();
-    },
-    getCenaKlamka(){
-      let model = this.product.klamka+'_'+this.product.klamkakolor;
-      let column = this.seriac;
-      let Manitoba_10304 = {"20":70,"30":60,"41":70};
-      let Magnus_10304 = {"20":40,"30":60,"41":70};
-      let PrestigeZ = {"20":200,"30":180,"41":200};
-      let Prestige = {"20":160,"30":140,"41":160};
-      let PrestigeZ_10304 = {"20":300,"30":280,"41":300};
-      let MagnusZ = {"20":200,"30":180,"41":200};
-      let PrestigeZG = {"20":255,"30":9999,"41":9999};
-      // let MagnusG = {"20":,"30":,"41":};
-      // let ManitobaG = {"20":,"30":,"41":};
-      this.priceokucia=0;
-      if(model == 'Manitoba_10304') this.priceokucia = Manitoba_10304[column];
-      if(model == 'Magnus_10304') this.priceokucia = 70;
-      if(this.product.klamka == 'PrestigeZ') this.priceokucia = 200;
-      if(this.product.klamka == 'Prestige') this.priceokucia = 160;
-      if(model == 'PrestigeZ_10304') this.priceokucia=300;
-      if(this.product.klamka=='MagnusZ') this.priceokucia=200;
-      if(this.product.klamka=='PrestigeZG') this.priceokucia=255;
-      if(this.product.klamka=='MagnusG') this.priceokucia=70;
-      if(this.product.klamka=='ManitobaG') this.priceokucia=70;
-
-    },
-    getCenaPochwyt(){
-      if(this.product.sposobotw=='KK') return;
-      if(this.activeKlamka.typ =='KK') return;
-      let kolorlocal = '';
-      if(this.product.klamkakolor=='10301') kolorlocal = 'INOX';
-      if(this.product.klamkakolor=='10304') kolorlocal = 'BLACK';
-
-      let model = this.product.klamka+'_'+kolorlocal;
-      let column = this.product.sposobotw;
-
-      this.priceokucia =  this.cenyPochwytTablica.find((el)=>el.model == model)[column];
-
-    }
-
+ 
   },
   computed:{
     test(){
@@ -157,19 +99,24 @@ export default {
       cenyPochwytTablica:'cenyPochwytTablica',
       mixkolorlista:'mixkolorlista',
       product:'product'
+  
     }),
     ...mapGetters({
       samozamykaczCena:'SamozamykaczCena',
-      wizjerCena:'wizjerCena',
+      //wizjerCena:'wizjerCena',
       ezaczepCena:'EzaczepCena',
       kopniakCena:'KopniakCena',
-      activeKlamka:'ActiveKlamka',
+      activeKlamka:'activeKlamka',
       cenaKlamka:'CenaKlamka',
       priceAll:'PriceAll',
       basicPrice:'BasicPrice',
       cenaOkucia:'CenaOkucia',
       bikolorCena:'BikolorCena',
-      mixkolorCena:'MixkolorCena'
+      mixkolorCena:'MixkolorCena',
+      CenaNaswietlaG:'CenaNaswietlaG',
+      CenaNaswietlaBufor:'CenaNaswietlaBufor',
+      activeWysokoscng:'activeWysokoscng',
+      CenaNaswietlaG:'CenaNaswietlaG'
     }),
     seriac(){
       if(this.product.seria=='21') return '20'

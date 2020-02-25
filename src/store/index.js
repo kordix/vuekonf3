@@ -3,7 +3,12 @@ import Vuex from 'vuex'
 import all from './dane.js'
 import ceny from './ceny.js'
 import cenyPochwyt from './cenypochwyt.js'
- import cenymodule from'./cenymodule.js'
+import cenymodule from'./cenymodule.js'
+import cenynaswietla from './cenynaswietla.js'
+import wymiarymodule from './wymiarymodule.js'
+import sizecodedimensions from './sizecodes.js'
+
+
 
 
 Vue.config.devtools = true
@@ -12,9 +17,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules:{
-    ceny:cenymodule
+    ceny:cenymodule,
+    wymiary:wymiarymodule
   },
   state: {
+    sizecodedimensions:sizecodedimensions,
     seria:{
       dane:[
       {artnr:'20',bez:'Premium'},
@@ -24,6 +31,16 @@ export default new Vuex.Store({
       {artnr:'41',bez:'Prestige Termo Lux'}
     ]
     },
+    kodyrozmiaru:{
+      dane:[
+        {artnr:'75',bez:'75'},
+        {artnr:'80',bez:'80'},
+        {artnr:'85',bez:'85'},
+        {artnr:'90',bez:'90'},
+        {artnr:'100',bez:'100'}
+      ]
+    },
+
     tabs2:[{bez:'Typ',bez2:'typ',available:false,shown:true,offset:2 },
     {bez:'Seria',bez2:'serię',available:true,shown:true,offset:5},
     {bez:'Model',bez2:'model',available:true,shown:false,offset:8},
@@ -69,9 +86,9 @@ export default new Vuex.Store({
     activeKolorTyp:'DEK',
     samozamykacz:{dane:[
       {artnr:'-',bez:'Brak',cena:0},
-      {artnr:'LN',bez:'Listwowy nawierzchniowy',cena:630},
-      {artnr:'LC',bez:'Listwowy chowany',cena:720},
-      {artnr:'R',bez:'Z ramieniem',cena:250},
+      {artnr:'LN',bez:'Listwowy nawierzchniowy',cena:630+60},
+      {artnr:'LC',bez:'Listwowy chowany',cena:720+60},
+      {artnr:'R',bez:'Z ramieniem',cena:250+60},
       {artnr:'RB',bez:'Z ramieniem i blokadą',cena:380},
       {artnr:'W',bez:'Tylko wzmocnienie pod samozamykacz',cena:60}
     ]},
@@ -111,22 +128,32 @@ export default new Vuex.Store({
     {artnr:'Z',bez:'Zbliżeniowy'}
 
     ]},
-    typ:{bez:'Wybierz produkt',dane:[{artnr:'D1',bez:'Drzwi 1-skrzydłowe',current:true},
+    typ:{bez:'Wybierz produkt',dane:[{artnr:'D1',bez:'Drzwi 1-skrzydłowe',rodzaj:'brak'},
     // {artnr:'D1F01',bez:'Drzwi z dostawką po lewej',current:false},
     // {artnr:'D1F02',bez:'Drzwi z dostawką po prawej',current:false},
     // {artnr:'D1F03',bez:'Drzwi z dostawkami bocznymi',current:false},
-    // {artnr:'D1N01',bez:'Drzwi z naświetlem bocznym po lewej',current:false},
-    {artnr:'D1N02',bez:'Drzwi z naświetlem bocznym po prawej ',current:false},
+    // {artnr:'D1N01',bez:'Drzwi z naświetlem bocznym po lewej',rodzaj:'NB'},
+    // {artnr:'D1N02',bez:'Drzwi z naświetlem bocznym po prawej ',rodzaj:'NB'},
     // {artnr:'D1N03',bez:'Drzwi z naświetlami bocznymi',current:false},
-    // {artnr:'D1N04',bez:'Drzwi z naświetlem górnym',current:false},
+    // {artnr:'D1N04',bez:'Drzwi z naświetlem górnym',rodzaj:'NG'},
     // {artnr:'D1N05',bez:'Drzwi z naświetlem górnym i bocznym lewym',current:false},
     // {artnr:'D1N06',bez:'Drzwi z naświetlem górnym i bocznym prawym',current:false},
     // {artnr:'D1N07',bez:'Drzwi z naświetlem górnym i bocznymi',current:false}
     // {artnr:'D2CL',bez:'Drzwi 2-skrzydłowe skrzydło czynne po lewej',current:false},
     // {artnr:'D2CP',bez:'Drzwi 2-skrzydłowe skrzydło czynne po prawej',current:false}
     ]},
-
-
+    wysokosci:{
+      dane:[
+        // {artnr:'100',bez:'100'},
+      {artnr:'200',bez:'200'},
+      {artnr:'300',bez:'300'},
+      {artnr:'400',bez:'400'},
+      {artnr:'500',bez:'500'},
+      {artnr:'600',bez:'600'},
+      {artnr:'700',bez:'700'},
+      {artnr:'800',bez:'800'}
+    ]
+    },
     product:{
       kolekcja:'all',
       wzor: '01',
@@ -135,7 +162,7 @@ export default new Vuex.Store({
       kolor2: '04',
       szyba:'00',
       ramka:'',
-      seria:'30',
+      seria:'31',
       kierunek:'Pw',
       sposobotw:'KK',
       klamka:'Magnus',
@@ -148,9 +175,13 @@ export default new Vuex.Store({
       kopniak:'-',
       elektrozaczep:'N',
       automatyka:'-',
-      typ:'D1'
+      kodrozmiaru:'90',
+      typ:'D1',
+      wysokoscng:200
     },
     cenytablica:ceny,
+    cenynaswietliNB:cenynaswietla.cenynaswietliNB,
+    cenynaswietliNG:cenynaswietla.cenynaswietliNG,
     cenyPochwytTablica:cenyPochwyt,
     priceokucia:0,
     basicprice:0,
@@ -268,9 +299,15 @@ export default new Vuex.Store({
   activeKierunek: state => {
     return state.kierunek.dane.find((el)=>el.artnr == state.product.kierunek);
   },
-  activeWizjer: state => {
-    return state.wizjer.dane.find((el)=>el.artnr == state.product.wizjer);
+  activeKolor: state => {
+    return state.kolor.dane.find((el)=>el.artnr == state.product.kolor);
   },
+  activeKolor2: state => {
+    return state.kolor.dane.find((el)=>el.artnr == state.product.kolor2);
+  },
+  // activeWizjer: state => {
+  //   return state.wizjer.dane.find((el)=>el.artnr == state.product.wizjer);
+  // },
   activeSamozamykacz: state => {
     return state.samozamykacz.dane.find((el)=>el.artnr == state.product.samozamykacz);
   },
@@ -283,8 +320,9 @@ export default new Vuex.Store({
   activeEzaczep: state => {
     return state.elektrozaczep.dane.find((el)=>el.artnr == state.product.elektrozaczep);
   },
-
-
+  activeTyp: state => {
+    return state.typ.dane.find((el)=>el.artnr == state.product.typ);
+  },
   kolorc: state => {
       return (state.selectedwidok=='W' && state.product.wariant=='B') ? state.product.kolor2 : state.product.kolor
   },

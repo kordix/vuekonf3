@@ -73,7 +73,6 @@ export default {
        self.nlt = nlt;
        self.nl = nl;
        self.nt = nt;
-       console.log(nt.width);
        if(nt.width == 0 || nl.width == 0 || nlt.width == 0 ){
          self.drawOscieznicaParts()
        }

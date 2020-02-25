@@ -33,6 +33,8 @@ computed:{
     activeModel:'activeModel',
     activeSzyba:'activeSzyba',
     activeSotw:'activeSotw',
+    activeKolor:'activeKolor',
+    activeKolor2:'activeKolor2',
     activeKlamka:'activeKlamka',
     activeKlamkaKolor:'activeKlamkaKolor',
     activeKierunek:'activeKierunek',
@@ -40,12 +42,24 @@ computed:{
     activeSamozamykaczKolor:'activeSamozamykaczKolor',
     activeAutomatyka:'activeAutomatyka',
     activeEzaczep:'activeEzaczep',
-    PriceAll:'PriceAll'
+    PriceAll:'PriceAll',
+    KopniakCena:'KopniakCena',
+    EzaczepCena:'EzaczepCena',
+    SamozamykaczCena:'SamozamykaczCena',
+    WizjerCena:'WizjerCena',
+    BasicPrice:'BasicPrice',
+    CenaOkucia:'CenaOkucia',
+    BikolorCena:'BikolorCena',
+    MixkolorCena:'MixkolorCena',
+    CenaAutomatyka:'CenaAutomatyka',
+    
   }),
   ...mapState({
     exportImageObj:'exportImageObj',
     exportImageObjInner:'exportImageObjInner',
-    logoobject:'logoobject'
+    logoobject:'logoobject',
+    product:'product'
+
 
 
   })
@@ -90,31 +104,104 @@ methods:{
     pdf.text(150,150, self.activeSzyba.bez);
     pdf.text(150,170, self.activeKierunek.bez);
     pdf.text(150,190, self.activeSotw.bez);
-    pdf.text(150,210, self.activeKlamka.bez);
-    pdf.text(150,230, self.activeKlamkaKolor.bez);
+    pdf.text(150,210, self.activeKlamka.bez,{maxWidth:250});
+    let zm = 0;  
+    if(self.activeKlamka.bez.length>37){
+      zm=15
+    }
+    pdf.text(150,230+zm, self.activeKlamkaKolor.bez);
+    let kolor =  self.activeKolor.bez;
+    if(self.product.wariant == 'B' || self.product.wariant == 'M'){
+      kolor += ' / '+self.activeKolor2.bez;
+    }
+
+    pdf.text(150,250+zm, kolor);
+
+
 
     let samozamykacz = '';
 
-    if(self.activeSamozamykacz.artnr == '-'){
-      samozamykacz = '';
-    }else {
-      samozamykacz = "samozamykacz "+self.activeSamozamykacz.bez+" "+self.activeSamozamykacz.artnr;
+    if(self.SamozamykaczCena >  0){
+      samozamykacz = "samozamykacz "+self.activeSamozamykacz.bez+' '+self.SamozamykaczCena.toString()+' zł';
     }
 
      if(self.activeSamozamykaczKolor){
-      samozamykacz += self.activeSamozamykaczKolor.bez;
+      samozamykacz += ' '+self.activeSamozamykaczKolor.bez;
     }
+
+    let automatyka = '';
+
+    if(self.activeAutomatyka.artnr == '-'){
+      automatyka = '';
+    }else {
+      automatyka = " system automatyki: "+self.activeAutomatyka.bez;
+    }
+
+    let ezaczep = '';
+
+     if(self.activeEzaczep.artnr == '-'){
+      ezaczep = '';
+    }else {
+      ezaczep = "elektrozaczep";
+    }
+
+
 
     //+self.activeSamozamykaczKolor.bez
     //+  + self.activeAutomatyka.bez + self.activeEzaczep.bez
-    let akcesoria = samozamykacz;
-    pdf.text(150,250, akcesoria, {maxWidth:250});
+    let akcesoria = samozamykacz+' '+automatyka;
+    pdf.text(150,250, akcesoria.toLowerCase(), {maxWidth:250});
 
 
      pdf.setFontSize(16);
       pdf.setFont("Metropolis","bold");
-      pdf.text(30,300,`Cena: `); 
-      pdf.text(100,300,self.PriceAll.toString()+ ' zł'); 
+      pdf.text(30,320,`Cena: `); 
+      pdf.text(100,320,self.PriceAll.toString()+ ' zł'); 
+
+      if(self.PriceAll > self.BasicPrice){
+
+       pdf.line(30,330,300,330);
+
+     pdf.setFontSize(13); 
+     pdf.text(30,350,'Cena bazowa:'+self.BasicPrice.toString()+' zł');
+       let zm2 = 0; 
+     if(self.CenaOkucia > 0){
+       zm2 += 20;
+       let cenaokuciastring = self.CenaOkucia.toString(); 
+       
+     pdf.text(30,350+zm2,'Okucie: '+cenaokuciastring+' zł');
+     //pdf.text(30,370,'Okucie '+self.activeKlamka.bez+' '+self.activeKlamkaKolor.bez+''+self.CenaOkucia+' zł');
+
+     }
+   
+
+     if(self.CenaAutomatyka > 0){
+       zm2 += 20;
+     pdf.text(30,350+zm2,'System automatyki:'+automatyka+' '+self.CenaAutomatyka.toString()+' zł');
+     }
+
+     if(self.BikolorCena > 0 ){
+       zm2 += 20;
+     pdf.text(30,350+zm2,'Bikolor:'+self.BikolorCena.toString()+' zł');
+     }
+
+        if(self.MixkolorCena > 0 ){
+       zm2 += 20;
+     pdf.text(30,350+zm2,'Mixkolor:'+self.MixkolorCena.toString()+' zł');
+     }
+
+
+     if(self.SamozamykaczCena > 0){
+       zm2 += 20;
+     pdf.text(30,350+zm2,samozamykacz,{maxWidth:250} );
+     }
+  
+     if(self.EzaczepCena>0){
+       zm2 += 20;
+       pdf.text(30,350+zm2,ezaczep+' '+self.EzaczepCena.toString()+' zł')
+     };
+
+    }
 
     pdf.setFont("Metropolis","bold");
     pdf.setFontSize(14);
@@ -129,8 +216,11 @@ methods:{
      pdf.text(30,170,`Kierunek otwierania `);
      pdf.text(30,190,`Sposób otwierania `);
      pdf.text(30,210,`Klamka / pochwyt `);
-     pdf.text(30,230,`Kolor okuć `);
-     pdf.text(30,250,`Akcesoria `);
+     pdf.text(30,230+zm,`Kolor okuć `);
+      pdf.text(30,250+zm,`Kolor `);
+    //  pdf.text(30,250,`Akcesoria `);
+
+    
 
   
 

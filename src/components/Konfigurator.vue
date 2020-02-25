@@ -5,8 +5,18 @@
     <div :key="'seria'" id="Seria" class="" v-show="activeTab=='Seria'">
       <p class="scrollerheading">Seria</p>
       <scroller :scrollerdata="seria.dane" :attr="'seria'" :folder="'serie'" :col="'5'"></scroller>
-      <p class="scrollerheading">Typ</p>
-      <scroller :scrollerdata="typ.dane" :attr="'typ'" :folder="'Einheiten'" :col="'5'" :ext="'png'"></scroller>
+     
+        <p class="scrollerheading">Typ</p>
+        <scroller :scrollerdata="typ.dane" :attr="'typ'" :folder="'Einheiten'" :col="'5'" :ext="'png'"></scroller>
+      <div v-if="product.typ.indexOf('N')>0">  
+        <p class="scrollerheading">Kod rozmiaru</p>
+        <scroller :scrollerdata="kodyrozmiaru.dane" :attr="'kodrozmiaru'" :folder="'kodyrozmiaru'" :col="'5'" :ext="'png'"></scroller>
+        <p class="scrollerheading">Wysokość naświetla</p>
+        <scroller :scrollerdata="wysokosci.dane" :attr="'wysokoscng'" :noimage="true" :col="'5'"></scroller>
+      </div>
+      <!-- {{szerokosc}}x{{wysokosc}} -->
+
+
     </div>
 
   <div id="Model" :key="'a'" class="" v-show="activeTab=='Model'" >
@@ -47,7 +57,7 @@
     <scroller :attr="'kierunek'"  :scrollerdata="kierunek.dane" :folder="'kotw'" :col="'5'" ></scroller>
     <p class="scrollerheading">Sposób otwierania:</p>
     <scroller :attr="'sposobotw'" :scrollerdata="sposobotw.dane" :folder="'sposobyotw'" :col="'5'" ></scroller>
-    <p class="scrollerheading">Klamka </p>
+    <p class="scrollerheading"><span v-if="product.sposobotw=='KP' || product.sposobotw=='PP' ">Pochwyt</span><span v-else>Klamka</span> </p>
     <scroller :attr="'klamka'" :scrollerdata="klamkifilter" :folder="'Klamki'" :col="'5'" :scroll="true" :addmargins="false"></scroller>
     <p class="scrollerheading">Kolor klamki:</p>
     <scroller :attr="'klamkakolor'" :scrollerdata="klamkakolorfilter" :folder="'koloryakc'" :col="'5'" ></scroller>
@@ -164,11 +174,9 @@ export default {
    elektrozaczep:'elektrozaczep',
    automatyka:'automatyka',
    wariant:'wariant',
-   typ:'typ'
-
-
-
-
+   typ:'typ',
+   kodyrozmiaru:'kodyrozmiaru',
+   wysokosci:'wysokosci'
  }),
  ...mapGetters({
    wariantFilter:'wariantFilter',
@@ -183,7 +191,9 @@ export default {
    klamkakolorfilter:'klamkakolorfilter',
    samozamykaczFilter:'samozamykaczFilter',
    samkolorfilter:'samkolorfilter',
-   cena:'cena'
+   cena:'cena',
+   szerokosc:'szerokosc',
+   wysokosc:'wysokosc'
 
  })
 

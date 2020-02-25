@@ -81,6 +81,7 @@ export default {
     selectedwidok:function(){
       this.drawTloczenie();
       this.drawOkleina();
+      this.drawKlamka();
     }
   },
   methods:{
@@ -105,7 +106,7 @@ export default {
         folder = 'klamkibezrozety'
       }
 
-      imageObj.src = '/images/'+folder  +'/'+this.product.klamka+'_'+this.product.klamkakolor+'.png';
+      imageObj.src = '/images/'+folder  +'/'+this.klamkac+'_'+this.product.klamkakolor+'.png';
       imageObj.onload = () => {
         this.klamkaimage = imageObj;
       };
@@ -139,8 +140,6 @@ export default {
          file = this.product.wzor+'_PELNE';
        }
 
-       console.log(file);
-
       imageObj.src = '/images/tloczenia/'+file+'.png';
       imageObj.onload = () => {
         this.tloczenieimage = imageObj;
@@ -152,13 +151,14 @@ export default {
     ...mapState({
       product:'product',
       selectedwidok:'selectedwidok',
-      activeSotw:'activeSotw',
       mixkolorlista:'mixkolorlista'
     }),
     ...mapGetters({
       odpszyb:'odpszyb',
       inoxpelne:'inoxpelne',
       activeModel:'activeModel',
+      activeKlamka:'activeKlamka',
+      activeSotw:'activeSotw',
       kolorc:'kolorc'
     }),
     mixc(){
@@ -185,12 +185,14 @@ export default {
        }
      },
      klamkac(){
-      if(this.selectedwidok=='W' && this.activesotw.artnr =='KG'){
-        return this.product.klamka.artnr.slice(0,-1)
-      } else if (this.selectedwidok=='W' && this.activesotw.artnr =='KP' && this.activeklamka.artnr){
+      if(this.selectedwidok=='W' && this.activeSotw.artnr =='KG'){
+        return this.product.klamka.slice(0,-1)
+      } else if (this.selectedwidok=='W' && this.product.sposobotw =='KP' && this.product.klamka){
+          console.log('slimsolo');
+          
         return "SlimSolo"
       }else{
-        return this.activeklamka.artnr
+        return this.product.klamka
       }
     },
     tloczeniepcv(){
