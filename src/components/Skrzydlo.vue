@@ -14,7 +14,7 @@ import {mapState} from 'vuex';
 import {mapGetters} from 'vuex';
 
 export default {
-  props:['left','top','width','height','back'],
+  props:['left','top','width','height','back','turnable'],
   data(){
     return{
       okleinaimage:null,
@@ -87,7 +87,14 @@ export default {
   methods:{
     drawOkleina:function(){
       const imageObj = new Image();
-      imageObj.src = `/images/okleiny/${this.kolorc}.jpg`;
+      let kolor = '';
+      if(this.turnable==false){
+        kolor = this.product.kolor;
+      }else{
+        kolor = this.kolorc;
+      }
+
+      imageObj.src = `/images/okleiny/${kolor}.jpg`;
       imageObj.onload = () => {
         this.okleinaimage = imageObj;
       };

@@ -10,8 +10,8 @@
           <naswietle :grubosc="20" :height="wysokoscdrzwi" :width="szerokoscnb1" :back="backbool"></naswietle>
         </v-group>  
         <v-group id="drzwi"  :config="{x:xdrzwi,y:ydrzwi}">
-          <oscieznica :grubosc="gruboscc" :height="wysokoscdrzwi" :width="szerokoscdrzwi" :back="backbool"></oscieznica>
-          <skrzydlo :left="gruboscc" :top="gruboscc" :height="wysokoscdrzwi-gruboscc" :width="szerokoscdrzwi-2*gruboscc"  :back="backbool" ></skrzydlo>
+          <oscieznica :grubosc="gruboscc" :height="wysokoscdrzwi" :width="szerokoscdrzwi" :back="backbool" :turnable="turnable"></oscieznica>
+          <skrzydlo :left="gruboscc" :top="gruboscc" :height="wysokoscdrzwi-gruboscc" :width="szerokoscdrzwi-2*gruboscc"  :back="backbool" :turnable="turnable"></skrzydlo>
         </v-group>
         <v-group :config="{x:szerokoscdrzwi,y:ynb2,x:xnb2 }" v-if="drawnb2">
           <v-rect :config="{height:wysokoscdrzwi,fill:'blue',width:szerokoscnb2}"></v-rect>

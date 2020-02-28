@@ -81,7 +81,11 @@ export default {
     ...mapGetters({
       tabsFilter:'tabsFilter',
       szybyFilter:'szybyFilter'
-    })
+    }),
+    screen(){
+      return window.width;
+
+    }
   },
   mounted(){
     let self = this;
