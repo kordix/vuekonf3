@@ -21,6 +21,8 @@ export default new Vuex.Store({
     wymiary:wymiarymodule
   },
   state: {
+    showmodal:false,
+    wizscale:1,
     sizecodedimensions:sizecodedimensions,
     seria:{
       dane:[
@@ -129,16 +131,16 @@ export default new Vuex.Store({
 
     ]},
     typ:{bez:'Wybierz produkt',dane:[{artnr:'D1',bez:'Drzwi 1-skrzydłowe',rodzaj:'brak'},
-    // {artnr:'D1F01',bez:'Drzwi z dostawką po lewej',current:false},
+    // {artnr:'D1F01',bez:'Drzwi z dostawką po lewej',current:fal},
     // {artnr:'D1F02',bez:'Drzwi z dostawką po prawej',current:false},
     // {artnr:'D1F03',bez:'Drzwi z dostawkami bocznymi',current:false},
     // {artnr:'D1N01',bez:'Drzwi z naświetlem bocznym po lewej',rodzaj:'NB'},
     // {artnr:'D1N02',bez:'Drzwi z naświetlem bocznym po prawej ',rodzaj:'NB'},
-    // {artnr:'D1N03',bez:'Drzwi z naświetlami bocznymi',current:false},
+    // {artnr:'D1N03',bez:'Drzwi z naświetlami bocznymi'},
     // {artnr:'D1N04',bez:'Drzwi z naświetlem górnym',rodzaj:'NG'},
-    // {artnr:'D1N05',bez:'Drzwi z naświetlem górnym i bocznym lewym',current:false},
-    // {artnr:'D1N06',bez:'Drzwi z naświetlem górnym i bocznym prawym',current:false},
-    // {artnr:'D1N07',bez:'Drzwi z naświetlem górnym i bocznymi',current:false}
+    // {artnr:'D1N05',bez:'Drzwi z naświetlem górnym i bocznym lewym',rodzaj:'NGNB'},
+    // {artnr:'D1N06',bez:'Drzwi z naświetlem górnym i bocznym prawym',rodzaj:'NGNB'},
+    // {artnr:'D1N07',bez:'Drzwi z naświetlem górnym i bocznymi',rodzaj:'NGNB'}
     // {artnr:'D2CL',bez:'Drzwi 2-skrzydłowe skrzydło czynne po lewej',current:false},
     // {artnr:'D2CP',bez:'Drzwi 2-skrzydłowe skrzydło czynne po prawej',current:false}
     ]},
@@ -177,7 +179,10 @@ export default new Vuex.Store({
       automatyka:'-',
       kodrozmiaru:'90',
       typ:'D1',
-      wysokoscng:200
+      wysokoscng:200,
+      szerokoscnb1:200,
+      szerokoscnb2:200
+
     },
     cenytablica:ceny,
     cenynaswietliNB:cenynaswietla.cenynaswietliNB,
@@ -356,6 +361,14 @@ export default new Vuex.Store({
      }else{
        return []
      }
+   },
+   klamkifilter2:(state,getters) => {
+      let seria = state.product.seria;
+      if(seria == '30' || seria == '31' || seria == '41'){
+        return getters.klamkifilter.filter((el)=>el.artnr !== 'PrestigeZG')
+      }else{
+        return getters.klamkifilter
+      }
    },
    klamkakolorfilter:(state,getters) => {
     if(state.product.klamka){

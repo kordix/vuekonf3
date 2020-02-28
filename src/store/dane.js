@@ -33,12 +33,12 @@ kolekcjatablica:[
 
 ],
 wzorytablica:[
-  {"artnr":"G1A","bez":"G1A","typ":"GD","odpszyb":"G1A","odpszybkonf":"G1A"},
-  {"artnr":"G1B","bez":"G1B","typ":"GD","odpszyb":"G1B","odpszybkonf":"G1B"},
-  {"artnr":"G1C","bez":"G1C","typ":"GD","odpszyb":"G1C","odpszybkonf":"G1C"},
-  {"artnr":"G2A","bez":"G2A","typ":"GD","odpszyb":"G2A","odpszybkonf":"G2A"},
-  {"artnr":"G2B","bez":"G2B","typ":"GD","odpszyb":"G2B","odpszybkonf":"G2B"},
-  {"artnr":"G3A","bez":"G3A","typ":"GD","odpszyb":"G3A","odpszybkonf":"G3A"},
+  {"artnr":"G1A","bez":"GD01A","typ":"GD","odpszyb":"G1A","odpszybkonf":"G1A"},
+  {"artnr":"G1B","bez":"GD01B","typ":"GD","odpszyb":"G1B","odpszybkonf":"G1B"},
+  {"artnr":"G1C","bez":"GD01C","typ":"GD","odpszyb":"G1C","odpszybkonf":"G1C"},
+  {"artnr":"G2A","bez":"GD02A","typ":"GD","odpszyb":"G2A","odpszybkonf":"G2A"},
+  {"artnr":"G2B","bez":"GD02B","typ":"GD","odpszyb":"G2B","odpszybkonf":"G2B"},
+  {"artnr":"G3A","bez":"GD03A","typ":"GD","odpszyb":"G3A","odpszybkonf":"G3A"},
   {"artnr":"F1A","bez":"FI01A","typ":"FI","odpszyb":"FI01A","odpszybkonf":"FI01A"},
   {"artnr":"F1B","bez":"FI01B","typ":"FI","odpszyb":"FI01B","odpszybkonf":"FI01B"},
   {"artnr":"F1C","bez":"FI01C","typ":"FI","odpszyb":"FI01C","odpszybkonf":"FI01C"},

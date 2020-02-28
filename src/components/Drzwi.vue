@@ -13,7 +13,7 @@
           <oscieznica :grubosc="gruboscc" :height="wysokoscdrzwi" :width="szerokoscdrzwi" :back="backbool"></oscieznica>
           <skrzydlo :left="gruboscc" :top="gruboscc" :height="wysokoscdrzwi-gruboscc" :width="szerokoscdrzwi-2*gruboscc"  :back="backbool" ></skrzydlo>
         </v-group>
-        <v-group :config="{x:szerokoscdrzwi,y:ynb2}" v-if="drawnb2">
+        <v-group :config="{x:szerokoscdrzwi,y:ynb2,x:xnb2 }" v-if="drawnb2">
           <v-rect :config="{height:wysokoscdrzwi,fill:'blue',width:szerokoscnb2}"></v-rect>
           <naswietle :grubosc="20" :height="wysokoscdrzwi" :width="szerokoscnb2" :back="backbool"></naswietle>
         </v-group>
@@ -60,8 +60,8 @@ export default {
       szerokoscdrzwi:300,
       szerokoscall:300,
       wysokoscdrzwi:600,
-      szerokoscnb1:200,
-      szerokoscnb2:200,
+      // szerokoscnb1:200,
+      szerokoscnb2:100,
       // wysokoscng:150,
       szerokoscng:100,
       xdrzwi:0,ydrzwi:0,
@@ -89,6 +89,9 @@ export default {
     },
     "product.wysokoscng":function(){
     this.handleZestaw();
+    },
+    "product.szerokoscnb1":function(){
+    this.handleZestaw();
     }
 
 
@@ -96,16 +99,16 @@ export default {
   },
   methods:{
     handleMirror(){
-      if((this.product.kierunek == 'Lz' || this.product.kierunek == 'Pw') && this.selectedwidok=='Z'){
+      if((this.product.kierunek == 'Lz' || this.product.kierunek == 'Pw') && this.selectedwidokc=='Z'){
        this.grpsx = 1;this.grpx=0;
      };
-     if((this.product.kierunek == 'Lw' || this.product.kierunek == 'Pz') && this.selectedwidok=='Z'){
+     if((this.product.kierunek == 'Lw' || this.product.kierunek == 'Pz') && this.selectedwidokc=='Z'){
        this.grpsx = -1;this.grpx=this.szerokoscall;
      };
-     if((this.product.kierunek == 'Lz' || this.product.kierunek == 'Pw') && this.selectedwidok=='W'){
+     if((this.product.kierunek == 'Lz' || this.product.kierunek == 'Pw') && this.selectedwidokc=='W'){
        this.grpsx = -1;this.grpx=this.szerokoscall;
      };
-     if((this.product.kierunek == 'Lw' || this.product.kierunek == 'Pz') && this.selectedwidok=='W'){
+     if((this.product.kierunek == 'Lw' || this.product.kierunek == 'Pz') && this.selectedwidokc=='W'){
        this.grpsx = 1;this.grpx=0;
      };
     },
@@ -154,7 +157,7 @@ export default {
         document.getElementById("wizcon").style.opacity = 1 ;
       },400);
     },
-    handleZestaw(){
+    handleZestaw:function(){
       this.drawnb1=false;this.drawnb2=false;this.drawng=false;this.ynb1=0;this.ynb2=0;this.ydrzwi=0;
       if(this.product.typ == 'D1'){ //drzwi
         this.xdrzwi=0;this.drawnb1=false;this.drawnb2=false;this.szerokoscall=this.szerokoscdrzwi;
@@ -168,15 +171,28 @@ export default {
         this.xdrzwi=0;this.xnb2=this.szerokoscdrzwi;this.drawnb2=true;
       }
       if(this.product.typ == 'D1N03'){ //oba nb
-        this.xdrzwi=this.szerokoscnb1;
-        this.xnb2=this.szerokoscnb1+this.szerokoscdrzwi;
-        this.drawnb2=true;this.drawnb1=true;
+        this.szerokoscall=this.szerokoscdrzwi+this.szerokoscnb1+this.szerokoscnb2;
+        this.xdrzwi=this.szerokoscnb1;this.ydrzwi=0;this.ynb1=0;this.ynb2=0;this.drawnb1=true;this.drawng=false;this.drawnb2=true;
+        this.szerokoscng=this.szerokoscdrzwi+this.szerokoscnb1+this.szerokoscnb2;
+         this.xnb2=this.szerokoscnb1+this.szerokoscdrzwi;
       }
       if(this.product.typ == 'D1N04'){ //nb górne
         this.szerokoscall=this.szerokoscdrzwi;
         this.drawnb1=false;this.drawnb2=false;
         this.xdrzwi=0;this.ydrzwi=this.wysokoscng;this.drawng=true;this.szerokoscng=this.szerokoscdrzwi;
       }
+        if(this.product.typ == 'D1N05'){ //nb górne i boczne lewe
+        this.szerokoscall=this.szerokoscdrzwi+this.szerokoscnb1+this.szerokoscnb2;
+        this.xdrzwi=this.szerokoscnb1;this.xnb2=this.szerokoscnb1+this.szerokoscdrzwi;this.ydrzwi=this.wysokoscng;this.ynb1=this.wysokoscng;this.ynb2=this.wysokoscng;this.drawnb1=true;this.drawng=true;this.drawnb2=false;
+        this.szerokoscng=this.szerokoscdrzwi+this.szerokoscnb1;
+      }
+
+       if(this.product.typ == 'D1N06'){ //nb górne i boczne prawe
+        this.szerokoscall=this.szerokoscdrzwi+this.szerokoscnb2;
+        this.xdrzwi=0;this.xnb2=this.szerokoscdrzwi;this.ydrzwi=this.wysokoscng;this.ynb1=this.wysokoscng;this.ynb2=this.wysokoscng;this.drawnb1=false;this.drawng=true;this.drawnb2=true;
+        this.szerokoscng=this.szerokoscdrzwi+this.szerokoscnb2;
+      }
+
       if(this.product.typ == 'D1N07'){ //wszystkie
         this.szerokoscall=this.szerokoscdrzwi+this.szerokoscnb1+this.szerokoscnb2;
         this.xdrzwi=this.szerokoscnb1;this.xnb2=this.szerokoscnb1+this.szerokoscdrzwi;this.ydrzwi=this.wysokoscng;this.ynb1=this.wysokoscng;this.ynb2=this.wysokoscng;this.drawnb1=true;this.drawng=true;this.drawnb2=true;
@@ -202,6 +218,10 @@ export default {
       product:'product'
       // wysokoscng:'product.wysokoscng'
     }),
+    szerokoscnb1(){
+      let wys = parseInt(this.$store.state.product.szerokoscnb1);
+      return wys *0.4;
+    },
     wysokoscng(){
       let wys = parseInt(this.$store.state.product.wysokoscng);
       if(wys == 100){return 80}

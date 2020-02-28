@@ -5,14 +5,17 @@
     <div :key="'seria'" id="Seria" class="" v-show="activeTab=='Seria'">
       <p class="scrollerheading">Seria</p>
       <scroller :scrollerdata="seria.dane" :attr="'seria'" :folder="'serie'" :col="'5'"></scroller>
-     
         <p class="scrollerheading">Typ</p>
         <scroller :scrollerdata="typ.dane" :attr="'typ'" :folder="'Einheiten'" :col="'5'" :ext="'png'"></scroller>
-      <div v-if="product.typ.indexOf('N')>0">  
+      <div v-if="['D1N03','D1N04','D1N05','D1N06','D1N07'].indexOf(product.typ) >=0">  
         <p class="scrollerheading">Kod rozmiaru</p>
         <scroller :scrollerdata="kodyrozmiaru.dane" :attr="'kodrozmiaru'" :folder="'kodyrozmiaru'" :col="'5'" :ext="'png'"></scroller>
         <p class="scrollerheading">Wysokość naświetla</p>
-        <scroller :scrollerdata="wysokosci.dane" :attr="'wysokoscng'" :noimage="true" :col="'5'"></scroller>
+        <scroller  :scrollerdata="wysokosci.dane" :attr="'wysokoscng'" :noimage="true" :col="'5'"></scroller>
+      </div>
+      <div v-if="['D1N01','D1N02','D1N05','D1N06','D1N07'].indexOf(product.typ) >=0">
+        <p class="scrollerheading" >Szerokość naświetla</p>
+        <scroller  :scrollerdata="wysokosci.dane" :attr="'szerokoscnb1'" :noimage="true" :col="'5'"></scroller>
       </div>
       <!-- {{szerokosc}}x{{wysokosc}} -->
 
@@ -58,7 +61,7 @@
     <p class="scrollerheading">Sposób otwierania:</p>
     <scroller :attr="'sposobotw'" :scrollerdata="sposobotw.dane" :folder="'sposobyotw'" :col="'5'" ></scroller>
     <p class="scrollerheading"><span v-if="product.sposobotw=='KP' || product.sposobotw=='PP' ">Pochwyt</span><span v-else>Klamka</span> </p>
-    <scroller :attr="'klamka'" :scrollerdata="klamkifilter" :folder="'Klamki'" :col="'5'" :scroll="true" :addmargins="false"></scroller>
+    <scroller :attr="'klamka'" :scrollerdata="klamkifilter2" :folder="'Klamki'" :col="'5'" :scroll="true" :addmargins="false"></scroller>
     <p class="scrollerheading">Kolor klamki:</p>
     <scroller :attr="'klamkakolor'" :scrollerdata="klamkakolorfilter" :folder="'koloryakc'" :col="'5'" ></scroller>
   </div>
@@ -127,6 +130,9 @@ export default {
         this.$store.state.product.inoxkolor = this.$store.getters.ramkakolorfilter[0].artnr;
       }
     },
+    "product.sposobotw":function(){
+      this.$store.state.product.klamka= this.klamkifilter[0].artnr;
+    },
     "product.samozamykacz":function(val){
       this.$store.state.product.samozamykaczKolor = this.samkolorfilter[0].artnr;
       console.log(val);
@@ -183,6 +189,8 @@ export default {
    kolorFilter:'kolorFilter',
    szybyFilter:'szybyFilter',
    klamkifilter:'klamkifilter',
+   klamkifilter2:'klamkifilter2',
+
    wzorFilter:'wzorFilter',
    activeSotw:'activeSotw',
    activeKlamka:'activeKlamka',
@@ -193,7 +201,8 @@ export default {
    samkolorfilter:'samkolorfilter',
    cena:'cena',
    szerokosc:'szerokosc',
-   wysokosc:'wysokosc'
+   wysokosc:'wysokosc',
+   activeTyp:'activeTyp'
 
  })
 

@@ -53,7 +53,7 @@ export default {
       }, 400);
     },
     handleScroll() {
-      if (window.innerWidth < 900) {
+      if (window.innerWidth < 600) {
         return;
       }
       // if (window.scrollY > 100 ){document.getElementById("masthead").style.display="none";}
@@ -98,7 +98,7 @@ export default {
       //return parseInt(this.$store.state.product.wysokoscng);
     },
     heightc() {
-      if (this.product.typ == "D1N04") {
+      if (this.product.typ == "D1N04" || this.product.typ == "D1N05" || this.product.typ == "D1N06" || this.product.typ == "D1N07") {
         return 600 + this.wysokoscng;
       } else {
         return 600;

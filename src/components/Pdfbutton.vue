@@ -1,5 +1,13 @@
 <template>
-<button type="button" class="btn btn-primary" style="background-color:#8fcc25" @click="handlePDF">Zapisz pdf</button>
+<div style="display:inline-block">
+  <div style="display:flex">
+<button type="button" class="btn btn-primary" style="background-color:#8fcc25" @click="handlePDF" :class="{loadingbutton:loading}"><span v-if="loading">Ładowanie...</span><span v-else>Zapisz PDF</span> </button>
+<!-- <p v-if="loading" style="margin-left:10px;position:absolute">ładowanie...</p> -->
+</div>
+
+</div>
+
+
 </template>
 
 <script>
@@ -15,6 +23,9 @@ import {EventBus} from '@/event-bus.js';
 export default {
 data(){
   return {
+    loading:false
+
+    
 
   }
 },
@@ -67,9 +78,11 @@ computed:{
 methods:{
   handlePDF(){
     let self = this;
+    this.loading = true;
     EventBus.$emit('exportImages', '');
     setTimeout(function(){
-      self.makePDF();
+      self.loading = false;
+      self.tryMakePDF();
     },5000);
   },
   test(){
@@ -100,6 +113,9 @@ methods:{
     pdf.text(470,90, data2);
     pdf.setFont("Metropolis","normal");
     pdf.setFontSize(12);
+
+    //OPISY CECH
+
     pdf.text(150,130, self.activeModel.bez);
     pdf.text(150,150, self.activeSzyba.bez);
     pdf.text(150,170, self.activeKierunek.bez);
@@ -122,7 +138,7 @@ methods:{
     let samozamykacz = '';
 
     if(self.SamozamykaczCena >  0){
-      samozamykacz = "samozamykacz "+self.activeSamozamykacz.bez+' '+self.SamozamykaczCena.toString()+' zł';
+      samozamykacz = "samozamykacz "+' '+self.activeSamozamykacz.bez;
     }
 
      if(self.activeSamozamykaczKolor){
@@ -142,17 +158,19 @@ methods:{
      if(self.activeEzaczep.artnr == '-'){
       ezaczep = '';
     }else {
-      ezaczep = "elektrozaczep";
+      ezaczep = "Elektrozaczep:";
     }
 
 
 
     //+self.activeSamozamykaczKolor.bez
     //+  + self.activeAutomatyka.bez + self.activeEzaczep.bez
-    let akcesoria = samozamykacz+' '+automatyka;
-    pdf.text(150,250, akcesoria.toLowerCase(), {maxWidth:250});
+    let akcesoria = samozamykacz;
+    pdf.text(150,270+zm, akcesoria.toLowerCase(), {maxWidth:250});
 
+    //KONIEC OPIS CECH
 
+    //CENY
      pdf.setFontSize(16);
       pdf.setFont("Metropolis","bold");
       pdf.text(30,320,`Cena: `); 
@@ -177,7 +195,7 @@ methods:{
 
      if(self.CenaAutomatyka > 0){
        zm2 += 20;
-     pdf.text(30,350+zm2,'System automatyki:'+automatyka+' '+self.CenaAutomatyka.toString()+' zł');
+     pdf.text(30,350+zm2,automatyka+' '+self.CenaAutomatyka.toString()+' zł');
      }
 
      if(self.BikolorCena > 0 ){
@@ -193,7 +211,7 @@ methods:{
 
      if(self.SamozamykaczCena > 0){
        zm2 += 20;
-     pdf.text(30,350+zm2,samozamykacz,{maxWidth:250} );
+     pdf.text(30,350+zm2,'Samozamykacz: '+self.SamozamykaczCena+' zł',{maxWidth:250} );
      }
   
      if(self.EzaczepCena>0){
@@ -201,7 +219,14 @@ methods:{
        pdf.text(30,350+zm2,ezaczep+' '+self.EzaczepCena.toString()+' zł')
      };
 
+    if(self.KopniakCena>0){
+       zm2 += 20;
+       pdf.text(30,350+zm2,'Kopniak:'+self.KopniakCena.toString()+' zł')
+     };
+
     }
+
+    //KONIEC CEN
 
     pdf.setFont("Metropolis","bold");
     pdf.setFontSize(14);
@@ -211,6 +236,8 @@ methods:{
     pdf.text(352,70, 'DRZWI ZEWNĘTRZNYCH');
     pdf.setFontSize(12);
      pdf.setTextColor(143, 204, 37);
+
+     //NAGŁÓWKI CECH
      pdf.text(30,130,`Wzór `);
      pdf.text(30,150,`Szyba `);
      pdf.text(30,170,`Kierunek otwierania `);
@@ -218,8 +245,10 @@ methods:{
      pdf.text(30,210,`Klamka / pochwyt `);
      pdf.text(30,230+zm,`Kolor okuć `);
       pdf.text(30,250+zm,`Kolor `);
-    //  pdf.text(30,250,`Akcesoria `);
-
+      if(akcesoria.length > 1){
+      pdf.text(30,270+zm,`Akcesoria `);
+      }
+    //KONIEC NAGŁÓWKI CEN
     
 
   
@@ -258,6 +287,14 @@ methods:{
 
 
   },
+  tryMakePDF(){
+    try{
+    this.makePDF();
+    }catch(e){
+      console.log(e.message);
+      this.$store.state.showmodal = true;
+    }
+  }
 
 
 }
@@ -266,4 +303,9 @@ methods:{
 </script>
 
 <style>
+
+.loadingbutton{
+  background-color:#444444 !important;
+}
+
 </style>

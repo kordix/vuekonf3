@@ -34,12 +34,11 @@ const ceny = {
       let model = rootState.product.klamka + '_' + rootState.product.klamkakolor;
       let column = getters.seriac;
       let Manitoba_10304 = { "20": 70, "30": 60, "41": 70 };
-      let Magnus_10304 = { "20": 40, "30": 60, "41": 70 };
+      let Magnus_10304 = { "20": 70, "30": 60, "41": 70 };
       let PrestigeZ = { "20": 200, "30": 180, "41": 200 };
       let Prestige = { "20": 160, "30": 140, "41": 160 };
       let PrestigeZ_10304 = { "20": 300, "30": 280, "41": 300 };
       let MagnusZ = { "20": 200, "30": 180, "41": 200 };
-      let PrestigeZG = { "20": 255, "30": 9999, "41": 9999 };
       // let MagnusG = {"20":,"30":,"41":};
       // let ManitobaG = {"20":,"30":,"41":};
       let priceokucia = 0;
@@ -128,7 +127,8 @@ const ceny = {
       else return 0
     },
     PriceAll(state, getters, rootState) {
-      return parseInt(getters.BasicPrice) + parseInt(getters.EzaczepCena) + parseInt(getters.CenaOkucia) + parseInt(getters.SamozamykaczCena) + parseInt(getters.KopniakCena) + parseInt(getters.BikolorCena) + parseInt(getters.MixkolorCena) + parseInt(getters.CenaAutomatyka)+ parseInt(getters.CenaNaswietlaG);
+      return parseInt(getters.BasicPrice) + parseInt(getters.EzaczepCena) + parseInt(getters.CenaOkucia) + parseInt(getters.SamozamykaczCena) + parseInt(getters.KopniakCena) + parseInt(getters.BikolorCena) 
+      + parseInt(getters.MixkolorCena) + parseInt(getters.CenaAutomatyka)+ parseInt(getters.CenaNaswietlaG)+ parseInt(getters.CenaNaswietlaNB1);
 
 
     },
@@ -210,14 +210,19 @@ const ceny = {
       if(rootState.product.typ.indexOf('N')==-1){
         return 0
       }
+      
+      if(getters.activeTyp.rodzaj == 'NB'){
+        return 0
+      }
 
-      let zmienna = 'rootState.cenynaswietli' + getters.activeTyp.rodzaj;
+      let zmienna = 'rootState.cenynaswietliNG';
       let dane = eval(zmienna);
 
       let kodrozmiaru = rootState.product.kodrozmiaru;
       let seria = rootState.product.seria;
       let width = rootState.sizecodedimensions[seria][kodrozmiaru];
-      
+
+
       return dane.find((el)=>el[0] == rootState.product.seria && el[1] == width && el[2] == rootState.product.wysokoscng)[3];
 
       // if (eval(zmienna).find((el) => el[0] == rootState.product.seria && el[1] == 1025 && el[2] == 2100)) {
@@ -225,7 +230,25 @@ const ceny = {
       // }
 
 
+    },
+    CenaNaswietlaNB1(state,getters,rootState){
+      if(rootState.product.typ.indexOf('N')==-1){
+        return 0
+      }
+      if(getters.activeTyp.rodzaj == 'NG'){
+        return 0
+      }
+
+      let zmienna = 'rootState.cenynaswietliNB';
+      let dane = eval(zmienna);
+
+      console.log(dane);
+      
+
+      return dane.find((el)=>el[0] == rootState.product.seria && el[1] == rootState.product.szerokoscnb1 && el[2] == getters.wysokosc)[3];
+
     }
+
 
   }
 }

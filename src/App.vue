@@ -14,6 +14,8 @@
           <p v-if="product.automatyka == 'B'" style="font-size:14px">System biometryczny:  <span style="font-weight:bold">3300 zł</span> </p>
           <p v-if="product.automatyka == 'K'" style="font-size:14px">System kodowy:  <span style="font-weight:bold">3050 zł</span> </p>
           <p v-if="product.automatyka == 'Z'" style="font-size:14px">System zbliżeniowy:  <span style="font-weight:bold">3050 zł</span> </p>
+          <p v-if="CenaNaswietlaG>0" style="font-size:14px" >Naświetle górne: <span style="font-weight:bold">{{CenaNaswietlaG}} zł</span> </p>
+          <p v-if="CenaNaswietlaNB1>0" style="font-size:14px" >Naświetle boczne: <span style="font-weight:bold">{{CenaNaswietlaNB1}} zł</span> </p>
         </div>
     <div class="row" style="display:flex;flex-wrap:wrap">
       <div class="col-md-8">
@@ -40,9 +42,12 @@
           <p v-if="product.automatyka == 'K'" style="font-size:14px">System kodowy:  <span style="font-weight:bold">3050 zł</span> </p>
           <p v-if="product.automatyka == 'Z'" style="font-size:14px">System zbliżeniowy:  <span style="font-weight:bold">3050 zł</span> </p>
           <p v-if="CenaNaswietlaG>0" style="font-size:14px" >Naświetle górne: <span style="font-weight:bold">{{CenaNaswietlaG}} zł</span> </p>
+          <p v-if="CenaNaswietlaNB1>0" style="font-size:14px" >Naświetle boczne: <span style="font-weight:bold">{{CenaNaswietlaNB1}} zł</span> </p>
+
         </div>       
       </div>
   </div>
+  <modal></modal>
   </div>
 </template>
 
@@ -53,6 +58,7 @@ import Wizualizacja from '@/components/Wizualizacja.vue';
 import switcher from '@/components/Switch.vue';
 import Prezenter from '@/components/Prezenter.vue';
 import Podsumowanie from '@/components/Podsumowanie.vue';
+import Modal from '@/components/Modal.vue';
 
 import {mapState} from 'vuex';
 import { mapGetters} from 'vuex';
@@ -60,7 +66,7 @@ import { mapGetters} from 'vuex';
 
 export default {
   components:{
-    Konfigurator,Tabs,Wizualizacja,switcher,Prezenter,Podsumowanie
+    Konfigurator,Tabs,Wizualizacja,switcher,Prezenter,Podsumowanie,Modal
   },
   watch:{
     product:{
@@ -114,9 +120,8 @@ export default {
       bikolorCena:'BikolorCena',
       mixkolorCena:'MixkolorCena',
       CenaNaswietlaG:'CenaNaswietlaG',
-      CenaNaswietlaBufor:'CenaNaswietlaBufor',
-      activeWysokoscng:'activeWysokoscng',
-      CenaNaswietlaG:'CenaNaswietlaG'
+      CenaNaswietlaNB1:'CenaNaswietlaNB1',
+      wysokosc:'wysokosc'
     }),
     seriac(){
       if(this.product.seria=='21') return '20'
